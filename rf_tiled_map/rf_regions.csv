@@ -1,0 +1,87 @@
+region_code,region_name_ru,region_name_en,abbr_ru,abbr_en
+01,Республика Адыгея,Adygeya Republic,АДЫ,AD
+02,Республика Башкортостан,Bashkortostan Republic,БАШ,BA
+03,Республика Бурятия,Buryatia Republic,БУР,BU
+04,Республика Алтай,Altai Republic,АЛР,AL
+05,Республика Дагестан,Daghestan Republic,ДАГ,DA
+06,Республика Ингушетия,Ingushetia Republic,ИНГ,IN
+07,Кабардино-Балкарская Республика,Kabardino-Balkaria Republic,КАБ,KB
+08,Республика Калмыкия,Kalmykia Republic,КАИ,KL
+09,Карачаево-Черкесская Республика,Karachayevo-Cherkessia,КАО,KC
+10,Республика Карелия,Karelia Republic,КАР,KR
+11,Республика Коми,Komi Republic,КОМ,KO
+12,Республика Марий Эл,Marij El Republic,МАР,ME
+13,Республика Мордовия,Mordovia Republic,МОР,MO
+14,Республика Саха (Якутия),Sakha (Yakutia) Republic,ЯКУ,SA
+15,Республика Северная Осетия–Алания,North Ossetia–Alania Republic,СЕВ,SE
+16,Республика Татарстан,Tatarstan Republic,ТАТ,TA
+17,Республика Тыва,Tyva Republic,ТУВ,TY
+18,Удмуртская Республика,Udmurt Republic,УДМ,UD
+19,Республика Хакасия,Khakassia Republic,ХАК,KK
+20,Чеченская Республика,Chechen Republic,ЧЕЧ,CE
+21,Чувашская Республика,Chuvashia Republic,ЧУВ,CU
+22,Алтайский край,Altai krai,АЛТ,ALT
+23,Краснодарский край,Krasnodar krai,КРА,KDA
+24,Красноярский край,Krasnoyarsk krai,КРН,KYA
+25,Приморский край,Primorsky krai,ПРИ,PRI
+26,Ставропольский край,Stavropol krai,СТА,STA
+27,Хабаровский край,Khabarovsk krai,ХАБ,KHA
+28,Амурская область,Amur oblast,АМУ,AMU
+29,Архангельская область,Arkhangelsk oblast,АРХ,ARK
+30,Астраханская область,Astrakhan oblast,АСТ,AST
+31,Белгородская область,Belgorod oblast,БЕЛ,BEL
+32,Брянская область,Bryansk oblast,БРЯ,BRY
+33,Владимирская область,Vladimir oblast,ВЛА,VLA
+34,Волгоградская область,Volgograd oblast,ВОГ,VGG
+35,Вологодская область,Vologda oblast,ВОЛ,VLG
+36,Воронежская область,Voronezh oblast,ВОР,VOR
+37,Ивановская область,Ivanovo oblast,ИВА,IVA
+38,Иркутская область,Irkutsk oblast,ИРК,IRK
+39,Калининградская область,Kaliningrad oblast,КАГ,KGD
+40,Калужская область,Kaluga oblast,КАЛ,KLU
+41,Камчатский край,Kamchatka krai,КАМ,KAM
+42,Кемеровская область,Kemerovo oblast,КЕМ,KEM
+43,Кировская область,Kirov oblast,КИР,KIR
+44,Костромская область,Kostroma oblast,КОС,KOS
+45,Курганская область,Kurgan oblast,КУР,KGN
+46,Курская область,Kursk oblast,КУС,KRS
+47,Ленинградская область,Leningrad oblast,ЛЕН,LEN
+48,Липецкая область,Lipetsk oblast,ЛИП,LIP
+49,Магаданская область,Magadan oblast,МАГ,MAG
+50,Московская область,Moscow oblast,МОЯ,MOS
+51,Мурманская область,Murmansk oblast,МУР,MUR
+52,Нижегородская область,Nizhni Novgorod oblast,НИЖ,NIZ
+53,Новгородская область,Novgorod oblast,НОВ,NGR
+54,Новосибирская область,Novosibirsk oblast,НОС,NVS
+55,Омская область,Omsk oblast,ОМС,OMS
+56,Оренбургская область,Orenburg oblast,ОРЕ,ORE
+57,Орловская область,Oryol oblast,ОРЛ,ORL
+58,Пензенская область,Penza oblast,ПЕН,PNZ
+59,Пермский край,Perm oblast,ПЕР,PER
+60,Псковская область,Pskov oblast,ПСК,PSK
+61,Ростовская область,Rostov oblast,РОС,ROS
+62,Рязанская область,Ryazan oblast,РЯЗ,RYA
+63,Самарская область,Samara oblast,САМ,SAM
+64,Саратовская область,Saratov oblast,САР,SAR
+65,Сахалинская область,Sakhalin oblast,САХ,SAK
+66,Свердловская область,Sverdlovsk oblast,СВЕ,SVE
+67,Смоленская область,Smolensk oblast,СМО,SMO
+68,Тамбовская область,Tambov oblast,ТАМ,TAM
+69,Тверская область,Tver oblast,ТВЕ,TVE
+70,Томская область,Tomsk oblast,ТОМ,TOM
+71,Тульская область,Tula oblast,ТУЛ,TUL
+72,Тюменская область,Tyumen oblast,ТЮМ,TYU
+73,Ульяновская область,Ulyanovsk oblast,УЛЬ,ULY
+74,Челябинская область,Chelyabinsk oblast,ЧЕЛ,CHE
+75,Забайкальский край,Zabaykalsky krai,ЗАБ,ZAB
+76,Ярославская область,Yaroslavl oblast,ЯРО,YAR
+77,Москва,Moscow,МОС,MOW
+78,Санкт-Петербург,Saint-Petersburg,СПБ,SPE
+79,Еврейская автономная область,Jewish autonomous oblast,ЕВР,YEV
+83,Ненецкий автономный округ,Nenets autonomous okrug,НЕН,NEN
+86,Ханты-Мансийский автономный округ,Khanty-Mansijsk autonomous okrug,ХАН,KHM
+87,Чукотский автономный округ,Chukotka autonomous okrug,ЧУК,CHU
+89,Ямало-Ненецкий автономный округ,Yamalo-Nenets autonomous okrug,ЯМА,YAN
+91,Крым,Crimea,КРЫМ,CRIMEA
+92,Севастополь,Sevastopol,СВС,SEV
+95,Территории за пределами РФ,Territories outside the Russian Federation,,

@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" data-name="map" id="map" viewBox="0 0 710 550">
+<g id="tiles_container">
+
+    <rect class="tile" height="40px" width="40px" id="1" regNameAbbrEn="Adyg" regNameAbbrRu="Адыг" regionNameEn="Adygea" regionNameRu="Адыгея" style="fill: rgb(0, 0, 0);"  x="120" y="320">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="2" regNameAbbrEn="Bash" regNameAbbrRu="Башк" regionNameEn="Bashkortostan" regionNameRu="Башкортостан" style="fill: rgb(0, 0, 0);"  x="360" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="3" regNameAbbrEn="Bur" regNameAbbrRu="Бур" regionNameEn="Buryatia" regionNameRu="Бурятия" style="fill: rgb(0, 0, 0);"  x="560" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="4" regNameAbbrEn="Alt" regNameAbbrRu="Алт" regionNameEn="Altai" regionNameRu="Алтай" style="fill: rgb(0, 0, 0);"  x="480" y="240">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="5" regNameAbbrEn="DAG" regNameAbbrRu="Даг" regionNameEn="Dagestan" regionNameRu="Дагестан" style="fill: rgb(0, 0, 0);"  x="280" y="360">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="6" regNameAbbrEn="Ing" regNameAbbrRu="Инг" regionNameEn="Ingushetia" regionNameRu="Ингушетия" style="fill: rgb(0, 0, 0);"  x="240" y="400">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="7" regNameAbbrEn="KB" regNameAbbrRu="КБР" regionNameEn="Kabardino-Balkaria" regionNameRu="Кабардино-Балкария" style="fill: rgb(0, 0, 0);"  x="160" y="400">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="8" regNameAbbrEn="Kalm" regNameAbbrRu="Калм" regionNameEn="Kalmykia" regionNameRu="Калмыкия" style="fill: rgb(0, 0, 0);"  x="240" y="320">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="9" regNameAbbrEn="KCH" regNameAbbrRu="КЧР" regionNameEn="Karachay-Cherkessia" regionNameRu="Карачаево-Черкесия" style="fill: rgb(0, 0, 0);"  x="160" y="360">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="10" regNameAbbrEn="Kar" regNameAbbrRu="Кар" regionNameEn="Kareliya" regionNameRu="Карелия" style="fill: rgb(0, 0, 0);"  x="120" y="40">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="11" regNameAbbrEn="Komi" regNameAbbrRu="Коми" regionNameEn="Komi" regionNameRu="Коми" style="fill: rgb(0, 0, 0);"  x="360" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="12" regNameAbbrEn="Mari" regNameAbbrRu="Мари" regionNameEn="Mari El" regionNameRu="Марий Эл" style="fill: rgb(0, 0, 0);"  x="280" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="13" regNameAbbrEn="Mord" regNameAbbrRu="Мрд" regionNameEn="Mordovia" regionNameRu="Мордовия" style="fill: rgb(0, 0, 0);"  x="240" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="14" regNameAbbrEn="Yaku" regNameAbbrRu="Саха" regionNameEn="Sakha (Yakutia)" regionNameRu="Якутия" style="fill: rgb(0, 0, 0);"  x="600" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="15" regNameAbbrEn="NOA" regNameAbbrRu="Осeт" regionNameEn="North Ossetia–Alania" regionNameRu="Северная Осетия" style="fill: rgb(0, 0, 0);"  x="200" y="400">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="16" regNameAbbrEn="Tat" regNameAbbrRu="Тат" regionNameEn="Tatarstan" regionNameRu="Татарстан" style="fill: rgb(0, 0, 0);"  x="320" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="17" regNameAbbrEn="Tyva" regNameAbbrRu="Тыва" regionNameEn="Tyva" regionNameRu="Тыва" style="fill: rgb(0, 0, 0);"  x="520" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="18" regNameAbbrEn="Udm" regNameAbbrRu="Удм" regionNameEn="Udmurtia" regionNameRu="Удмуртия" style="fill: rgb(0, 0, 0);"  x="360" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="19" regNameAbbrEn="Hks" regNameAbbrRu="Хак" regionNameEn="Hakasia" regionNameRu="Хакасия" style="fill: rgb(0, 0, 0);"  x="520" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="20" regNameAbbrEn="CHE" regNameAbbrRu="Чеч" regionNameEn="Chechnya" regionNameRu="Чечня" style="fill: rgb(0, 0, 0);"  x="240" y="360">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="21" regNameAbbrEn="Chuv" regNameAbbrRu="Чув" regionNameEn="Chuvashia" regionNameRu="Чувашия" style="fill: rgb(0, 0, 0);"  x="280" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="22" regNameAbbrEn="Alt r" regNameAbbrRu="Алт.к." regionNameEn="Altai region" regionNameRu="Алтайский край" style="fill: rgb(0, 0, 0);"  x="480" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="23" regNameAbbrEn="KR" regNameAbbrRu="Крдр" regionNameEn="Krasnodar region" regionNameRu="Краснодарский край" style="fill: rgb(0, 0, 0);"  x="160" y="320">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="24" regNameAbbrEn="Kras" regNameAbbrRu="Крас" regionNameEn="Krasnoyarsk region" regionNameRu="Красноярский край" style="fill: rgb(0, 0, 0);"  x="520" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="25" regNameAbbrEn="Prim" regNameAbbrRu="Прим" regionNameEn="Primorsky region" regionNameRu="Приморский край" style="fill: rgb(0, 0, 0);"  x="640" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="26" regNameAbbrEn="Stav" regNameAbbrRu="Став" regionNameEn="Stavropol region" regionNameRu="Ставропольский край" style="fill: rgb(0, 0, 0);"  x="200" y="360">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="27" regNameAbbrEn="Khab" regNameAbbrRu="Хаб" regionNameEn="Khabarovsk region" regionNameRu="Хабаровский край" style="fill: rgb(0, 0, 0);"  x="640" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="28" regNameAbbrEn="Amur" regNameAbbrRu="Амур" regionNameEn="Amur region" regionNameRu="Амурская область" style="fill: rgb(0, 0, 0);"  x="600" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="29" regNameAbbrEn="Arkh" regNameAbbrRu="Арх" regionNameEn="Arkhangelsk region" regionNameRu="Архангельская область" style="fill: rgb(0, 0, 0);"  x="320" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="30" regNameAbbrEn="Astr" regNameAbbrRu="Аст" regionNameEn="Astrakhan region" regionNameRu="Астраханская область" style="fill: rgb(0, 0, 0);"  x="280" y="320">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="31" regNameAbbrEn="Belg" regNameAbbrRu="Бел" regionNameEn="Belgorod region" regionNameRu="Белгородская область" style="fill: rgb(0, 0, 0);"  x="160" y="280">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="32" regNameAbbrEn="Brnsk" regNameAbbrRu="Бря" regionNameEn="Bryansk region" regionNameRu="Брянская область" style="fill: rgb(0, 0, 0);"  x="80" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="33" regNameAbbrEn="Vlad" regNameAbbrRu="Вла" regionNameEn="Vladimir region" regionNameRu="Владимирская область" style="fill: rgb(0, 0, 0);"  x="200" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="34" regNameAbbrEn="Volg" regNameAbbrRu="Волг" regionNameEn="Volgograd region" regionNameRu="Волгоградская область" style="fill: rgb(0, 0, 0);"  x="240" y="280">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="35" regNameAbbrEn="Vlgd" regNameAbbrRu="Воло" regionNameEn="Volodga region" regionNameRu="Вологодская область" style="fill: rgb(0, 0, 0);"  x="160" y="40">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="36" regNameAbbrEn="Vor" regNameAbbrRu="Врж" regionNameEn="Voronezh region" regionNameRu="Воронежская область" style="fill: rgb(0, 0, 0);"  x="200" y="280">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="37" regNameAbbrEn="Ivan" regNameAbbrRu="Ива" regionNameEn="Ivanovo region" regionNameRu="Ивановская область" style="fill: rgb(0, 0, 0);"  x="200" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="38" regNameAbbrEn="Irk" regNameAbbrRu="Ирк" regionNameEn="Irkutsk region" regionNameRu="Иркутская область" style="fill: rgb(0, 0, 0);"  x="560" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="39" regNameAbbrEn="KLNG" regNameAbbrRu="Клг" regionNameEn="Kaliningrad region" regionNameRu="Калининградская область" style="fill: rgb(0, 0, 0);"  x="0" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="40" regNameAbbrEn="Klg" regNameAbbrRu="Калу" regionNameEn="Kaluga region" regionNameRu="Калужская область" style="fill: rgb(0, 0, 0);"  x="120" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="41" regNameAbbrEn="Kmch" regNameAbbrRu="Кам" regionNameEn="Kamchatka region" regionNameRu="Камчатский край" style="fill: rgb(0, 0, 0);"  x="680" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="42" regNameAbbrEn="Kem" regNameAbbrRu="Кем" regionNameEn="Kemerovo region" regionNameRu="Кемеровская область" style="fill: rgb(0, 0, 0);"  x="520" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="43" regNameAbbrEn="Kir" regNameAbbrRu="Кир" regionNameEn="Kirov region" regionNameRu="Кировская область" style="fill: rgb(0, 0, 0);"  x="320" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="44" regNameAbbrEn="Kstr" regNameAbbrRu="Кос" regionNameEn="Kostroma region" regionNameRu="Костромская область" style="fill: rgb(0, 0, 0);"  x="240" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="45" regNameAbbrEn="Kurg" regNameAbbrRu="Кург" regionNameEn="Kurgan region" regionNameRu="Курганская область" style="fill: rgb(0, 0, 0);"  x="440" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="46" regNameAbbrEn="Krsk" regNameAbbrRu="Курск" regionNameEn="Kursk region" regionNameRu="Курская область" style="fill: rgb(0, 0, 0);"  x="120" y="240">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="47" regNameAbbrEn="SP r" regNameAbbrRu="Лен" regionNameEn="Saint Petersburg region" regionNameRu="Ленинградская область" style="fill: rgb(0, 0, 0);"  x="80" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="48" regNameAbbrEn="Lip" regNameAbbrRu="Лип" regionNameEn="Lipetsk region" regionNameRu="Липецкая область" style="fill: rgb(0, 0, 0);"  x="160" y="240">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="49" regNameAbbrEn="Mdgn" regNameAbbrRu="Маг" regionNameEn="Magadan region" regionNameRu="Магаданская область" style="fill: rgb(0, 0, 0);"  x="640" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="50" regNameAbbrEn="Mos" regNameAbbrRu="Мос" regionNameEn="Moscow region" regionNameRu="Московская область" style="fill: rgb(0, 0, 0);"  x="160" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="51" regNameAbbrEn="Murm" regNameAbbrRu="Мур" regionNameEn="Murmansk region" regionNameRu="Мурманская область" style="fill: rgb(0, 0, 0);"  x="120" y="0">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="52" regNameAbbrEn="Nizh" regNameAbbrRu="Ниж" regionNameEn="Nizhny Novgorod region" regionNameRu="Нижегородская область" style="fill: rgb(0, 0, 0);"  x="240" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="53" regNameAbbrEn="Novg" regNameAbbrRu="Новг" regionNameEn="Novgorod region" regionNameRu="Новгородская область" style="fill: rgb(0, 0, 0);"  x="120" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="54" regNameAbbrEn="Nvsn" regNameAbbrRu="Ново" regionNameEn="Novosibirsk region" regionNameRu="Новосибирская область" style="fill: rgb(0, 0, 0);"  x="480" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="55" regNameAbbrEn="Omsk" regNameAbbrRu="Омск" regionNameEn="Omsk region" regionNameRu="Омская область" style="fill: rgb(0, 0, 0);"  x="440" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="56" regNameAbbrEn="Oren" regNameAbbrRu="Орен" regionNameEn="Orenburg region" regionNameRu="Оренбургская область" style="fill: rgb(0, 0, 0);"  x="320" y="240">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="57" regNameAbbrEn="Orl" regNameAbbrRu="Орёл" regionNameEn="Orlov region" regionNameRu="Орловская область" style="fill: rgb(0, 0, 0);"  x="120" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="58" regNameAbbrEn="Pens" regNameAbbrRu="Пен" regionNameEn="Pensa region" regionNameRu="Пензенская область" style="fill: rgb(0, 0, 0);"  x="240" y="240">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="59" regNameAbbrEn="Perm" regNameAbbrRu="Прм" regionNameEn="Perm region" regionNameRu="Пермский край" style="fill: rgb(0, 0, 0);"  x="360" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="60" regNameAbbrEn="Psk" regNameAbbrRu="Пск" regionNameEn="Pskov region" regionNameRu="Псковская область" style="fill: rgb(0, 0, 0);"  x="80" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="61" regNameAbbrEn="Ros" regNameAbbrRu="Рос" regionNameEn="Rostov region" regionNameRu="Ростовская область" style="fill: rgb(0, 0, 0);"  x="200" y="320">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="62" regNameAbbrEn="Rzn" regNameAbbrRu="Ряз" regionNameEn="Ryazan region" regionNameRu="Рязанская область" style="fill: rgb(0, 0, 0);"  x="200" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="63" regNameAbbrEn="Sam" regNameAbbrRu="Сам" regionNameEn="Samara region" regionNameRu="Самарская область" style="fill: rgb(0, 0, 0);"  x="320" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="64" regNameAbbrEn="Srtv" regNameAbbrRu="Сар" regionNameEn="Saratov region" regionNameRu="Саратовская область" style="fill: rgb(0, 0, 0);"  x="280" y="240">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="65" regNameAbbrEn="Sakh" regNameAbbrRu="Схлн" regionNameEn="Sakhalin region" regionNameRu="Сахалинская область" style="fill: rgb(0, 0, 0);"  x="680" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="66" regNameAbbrEn="Yek" regNameAbbrRu="Свер" regionNameEn="Yekaterinburg region" regionNameRu="Свердловская область" style="fill: rgb(0, 0, 0);"  x="400" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="67" regNameAbbrEn="Smol" regNameAbbrRu="Смол" regionNameEn="Smolensk region" regionNameRu="Смоленская область" style="fill: rgb(0, 0, 0);"  x="80" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="68" regNameAbbrEn="Tamb" regNameAbbrRu="Там" regionNameEn="Tambov region" regionNameRu="Тамбовская область" style="fill: rgb(0, 0, 0);"  x="200" y="240">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="69" regNameAbbrEn="Tver" regNameAbbrRu="Твeр" regionNameEn="Tver region" regionNameRu="Тверская область" style="fill: rgb(0, 0, 0);"  x="120" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="70" regNameAbbrEn="Tmsk" regNameAbbrRu="Том" regionNameEn="Tomsk region" regionNameRu="Томская область" style="fill: rgb(0, 0, 0);"  x="480" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="71" regNameAbbrEn="Tula" regNameAbbrRu="Тул" regionNameEn="Tula region" regionNameRu="Тульская область" style="fill: rgb(0, 0, 0);"  x="160" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="72" regNameAbbrEn="Tyum" regNameAbbrRu="Тюм" regionNameEn="Tyumen region" regionNameRu="Тюменская область" style="fill: rgb(0, 0, 0);"  x="440" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="73" regNameAbbrEn="Uly" regNameAbbrRu="Уль" regionNameEn="Ulyanovsk region" regionNameRu="Ульяновская область" style="fill: rgb(0, 0, 0);"  x="280" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="74" regNameAbbrEn="Chel" regNameAbbrRu="Чел" regionNameEn="Chelyabinsk region" regionNameRu="Челябинская область" style="fill: rgb(0, 0, 0);"  x="400" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="75" regNameAbbrEn="Zab" regNameAbbrRu="Заб" regionNameEn="Zabaykalsky region" regionNameRu="Забайкальский край" style="fill: rgb(0, 0, 0);"  x="560" y="200">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="76" regNameAbbrEn="Yar" regNameAbbrRu="Яро" regionNameEn="Yaroslavl region" regionNameRu="Ярославская область" style="fill: rgb(0, 0, 0);"  x="160" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="77" padding="2px" regNameAbbrEn="MOW" regNameAbbrRu="Мск" regionNameEn="Moscow" regionNameRu="Москва" style="fill: rgb(0, 0, 0);"  x="160" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="78" regNameAbbrEn="SPB" regNameAbbrRu="Спб" regionNameEn="Saint Petersburg" regionNameRu="Санкт-Петербург" style="fill: rgb(0, 0, 0);"  x="40" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="79" regNameAbbrEn="Biro" regNameAbbrRu="Евр" regionNameEn="Birobidzhan region" regionNameRu="Еврейская автономная область" style="fill: rgb(0, 0, 0);"  x="600" y="160">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="83" regNameAbbrEn="Nen" regNameAbbrRu="Нен" regionNameEn="Nenets region" regionNameRu="Ненецкий АО" style="fill: rgb(0, 0, 0);"  x="360" y="40">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="86" regNameAbbrEn="KM" regNameAbbrRu="ХМАО" regionNameEn="Khanty-Mansi region" regionNameRu="Ханты-Мансийский АО" style="fill: rgb(0, 0, 0);"  x="400" y="120">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="87" regNameAbbrEn="Chuk" regNameAbbrRu="Чук" regionNameEn="Chukotka region" regionNameRu="Чукотский АО" style="fill: rgb(0, 0, 0);"  x="640" y="40">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="89" regNameAbbrEn="YN" regNameAbbrRu="ЯНАО" regionNameEn="Yamalo-Nenets region" regionNameRu="Ямало-Ненецкий АО" style="fill: rgb(0, 0, 0);"  x="400" y="80">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="91" regNameAbbrEn="Crim*" regNameAbbrRu="Крм*" regionNameEn="Crimea" regionNameRu="Крым" style="fill: rgb(0, 0, 0);"  x="80" y="320">
+    </rect>
+    <rect class="tile" height="40px" width="40px" id="92" regNameAbbrEn="SEV*" regNameAbbrRu="Сев*" regionNameEn="Sevastopol" regionNameRu="Севастополь" style="fill: rgb(0, 0, 0);"  x="40" y="320">
+    </rect>
+</g>
+<g id="names_container">
+    <text class="name" id="name_1" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="334">Adyg</text>
+    <text class="name" id="name_2" style="fill: rgb(255, 255, 255); font-size: 13px;" x="362" y="214">Bash</text>
+    <text class="name" id="name_3" style="fill: rgb(255, 255, 255); font-size: 13px;" x="562" y="174">Bur</text>
+    <text class="name" id="name_4" style="fill: rgb(255, 255, 255); font-size: 13px;" x="482" y="254">Alt</text>
+    <text class="name" id="name_5" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="374">DAG</text>
+    <text class="name" id="name_6" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="414">Ing</text>
+    <text class="name" id="name_7" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="414">KB</text>
+    <text class="name" id="name_8" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="334">Kalm</text>
+    <text class="name" id="name_9" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="374">KCH</text>
+    <text class="name" id="name_10" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="54">Kar</text>
+    <text class="name" id="name_11" style="fill: rgb(255, 255, 255); font-size: 13px;" x="362" y="94">Komi</text>
+    <text class="name" id="name_12" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="134">Mari</text>
+    <text class="name" id="name_13" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="214">Mord</text>
+    <text class="name" id="name_14" style="fill: rgb(255, 255, 255); font-size: 13px;" x="602" y="94">Yaku</text>
+    <text class="name" id="name_15" style="fill: rgb(255, 255, 255); font-size: 13px;" x="202" y="414">NOA</text>
+    <text class="name" id="name_16" style="fill: rgb(255, 255, 255); font-size: 13px;" x="322" y="174">Tat</text>
+    <text class="name" id="name_17" style="fill: rgb(255, 255, 255); font-size: 13px;" x="522" y="214">Tyva</text>
+    <text class="name" id="name_18" style="fill: rgb(255, 255, 255); font-size: 13px;" x="362" y="174">Udm</text>
+    <text class="name" id="name_19" style="fill: rgb(255, 255, 255); font-size: 13px;" x="522" y="174">Hks</text>
+    <text class="name" id="name_20" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="374">CHE</text>
+    <text class="name" id="name_21" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="174">Chuv</text>
+    <text class="name" id="name_22" style="fill: rgb(255, 255, 255); font-size: 13px;" x="482" y="214">Alt r</text>
+    <text class="name" id="name_23" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="334">KR</text>
+    <text class="name" id="name_24" style="fill: rgb(255, 255, 255); font-size: 13px;" x="522" y="94">Kras</text>
+    <text class="name" id="name_25" style="fill: rgb(255, 255, 255); font-size: 13px;" x="642" y="174">Prim</text>
+    <text class="name" id="name_26" style="fill: rgb(255, 255, 255); font-size: 13px;" x="202" y="374">Stav</text>
+    <text class="name" id="name_27" style="fill: rgb(255, 255, 255); font-size: 13px;" x="642" y="134">Khab</text>
+    <text class="name" id="name_28" style="fill: rgb(255, 255, 255); font-size: 13px;" x="602" y="134">Amur</text>
+    <text class="name" id="name_29" style="fill: rgb(255, 255, 255); font-size: 13px;" x="322" y="94">Arkh</text>
+    <text class="name" id="name_30" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="334">Astr</text>
+    <text class="name" id="name_31" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="294">Belg</text>
+    <text class="name" id="name_32" style="fill: rgb(255, 255, 255); font-size: 13px;" x="82" y="214">Brnsk</text>
+    <text class="name" id="name_33" style="fill: rgb(255, 255, 255); font-size: 13px;" x="202" y="174">Vlad</text>
+    <text class="name" id="name_34" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="294">Volg</text>
+    <text class="name" id="name_35" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="54">Vlgd</text>
+    <text class="name" id="name_36" style="fill: rgb(255, 255, 255); font-size: 13px;" x="202" y="294">Vor</text>
+    <text class="name" id="name_37" style="fill: rgb(255, 255, 255); font-size: 13px;" x="202" y="134">Ivan</text>
+    <text class="name" id="name_38" style="fill: rgb(255, 255, 255); font-size: 13px;" x="562" y="134">Irk</text>
+    <text class="name" id="name_39" style="fill: rgb(255, 255, 255); font-size: 13px;" x="2" y="174">KLNG</text>
+    <text class="name" id="name_40" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="174">Klg</text>
+    <text class="name" id="name_41" style="fill: rgb(255, 255, 255); font-size: 13px;" x="682" y="94">Kmch</text>
+    <text class="name" id="name_42" style="fill: rgb(255, 255, 255); font-size: 13px;" x="522" y="134">Kem</text>
+    <text class="name" id="name_43" style="fill: rgb(255, 255, 255); font-size: 13px;" x="322" y="134">Kir</text>
+    <text class="name" id="name_44" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="134">Kstr</text>
+    <text class="name" id="name_45" style="fill: rgb(255, 255, 255); font-size: 13px;" x="442" y="174">Kurg</text>
+    <text class="name" id="name_46" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="254">Krsk</text>
+    <text class="name" id="name_47" style="fill: rgb(255, 255, 255); font-size: 13px;" x="82" y="94">SP r</text>
+    <text class="name" id="name_48" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="254">Lip</text>
+    <text class="name" id="name_49" style="fill: rgb(255, 255, 255); font-size: 13px;" x="642" y="94">Mdgn</text>
+    <text class="name" id="name_50" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="134">Mos</text>
+    <text class="name" id="name_51" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="14">Murm</text>
+    <text class="name" id="name_52" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="174">Nizh</text>
+    <text class="name" id="name_53" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="94">Novg</text>
+    <text class="name" id="name_54" style="fill: rgb(255, 255, 255); font-size: 13px;" x="482" y="174">Nvsn</text>
+    <text class="name" id="name_55" style="fill: rgb(255, 255, 255); font-size: 13px;" x="442" y="214">Omsk</text>
+    <text class="name" id="name_56" style="fill: rgb(255, 255, 255); font-size: 13px;" x="322" y="254">Oren</text>
+    <text class="name" id="name_57" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="214">Orl</text>
+    <text class="name" id="name_58" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="254">Pens</text>
+    <text class="name" id="name_59" style="fill: rgb(255, 255, 255); font-size: 13px;" x="362" y="134">Perm</text>
+    <text class="name" id="name_60" style="fill: rgb(255, 255, 255); font-size: 13px;" x="82" y="134">Psk</text>
+    <text class="name" id="name_61" style="fill: rgb(255, 255, 255); font-size: 13px;" x="202" y="334">Ros</text>
+    <text class="name" id="name_62" style="fill: rgb(255, 255, 255); font-size: 13px;" x="202" y="214">Rzn</text>
+    <text class="name" id="name_63" style="fill: rgb(255, 255, 255); font-size: 13px;" x="322" y="214">Sam</text>
+    <text class="name" id="name_64" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="254">Srtv</text>
+    <text class="name" id="name_65" style="fill: rgb(255, 255, 255); font-size: 13px;" x="682" y="134">Sakh</text>
+    <text class="name" id="name_66" style="fill: rgb(255, 255, 255); font-size: 13px;" x="402" y="174">Yek</text>
+    <text class="name" id="name_67" style="fill: rgb(255, 255, 255); font-size: 13px;" x="82" y="174">Smol</text>
+    <text class="name" id="name_68" style="fill: rgb(255, 255, 255); font-size: 13px;" x="202" y="254">Tamb</text>
+    <text class="name" id="name_69" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="134">Tver</text>
+    <text class="name" id="name_70" style="fill: rgb(255, 255, 255); font-size: 13px;" x="482" y="134">Tmsk</text>
+    <text class="name" id="name_71" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="214">Tula</text>
+    <text class="name" id="name_72" style="fill: rgb(255, 255, 255); font-size: 13px;" x="442" y="134">Tyum</text>
+    <text class="name" id="name_73" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="214">Uly</text>
+    <text class="name" id="name_74" style="fill: rgb(255, 255, 255); font-size: 13px;" x="402" y="214">Chel</text>
+    <text class="name" id="name_75" style="fill: rgb(255, 255, 255); font-size: 13px;" x="562" y="214">Zab</text>
+    <text class="name" id="name_76" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="94">Yar</text>
+    <text class="name" id="name_77" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="174">MOW</text>
+    <text class="name" id="name_78" style="fill: rgb(255, 255, 255); font-size: 13px;" x="42" y="94">SPB</text>
+    <text class="name" id="name_79" style="fill: rgb(255, 255, 255); font-size: 13px;" x="602" y="174">Biro</text>
+    <text class="name" id="name_83" style="fill: rgb(255, 255, 255); font-size: 13px;" x="362" y="54">Nen</text>
+    <text class="name" id="name_86" style="fill: rgb(255, 255, 255); font-size: 13px;" x="402" y="134">KM</text>
+    <text class="name" id="name_87" style="fill: rgb(255, 255, 255); font-size: 13px;" x="642" y="54">Chuk</text>
+    <text class="name" id="name_89" style="fill: rgb(255, 255, 255); font-size: 13px;" x="402" y="94">YN</text>
+    <text class="name" id="name_91" style="fill: rgb(255, 255, 255); font-size: 13px;" x="82" y="334">Crim*</text>
+    <text class="name" id="name_92" style="fill: rgb(255, 255, 255); font-size: 13px;" x="42" y="334">SEV*</text>
+</g>
+</svg>
