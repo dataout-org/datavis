@@ -1,13 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" data-name="map" id="map" viewBox="0 0 710 550">
-
-    <defs>
-    <!-- Define the diagonal hatch pattern -->
-    <pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
-      <path d="M-1,1 l2,-2 M0,8 l8,-8 M7,9 l2,-2" stroke="black" stroke-width="1"></path>
-    </pattern>
-  </defs>
-
 <g id="tiles_container">
 
     <rect class="tile" height="40px" width="40px" id="1" regNameAbbrEn="Adyg" regNameAbbrRu="Адыг" regionNameEn="Adygea" regionNameRu="Адыгея" style="fill: rgb(0, 0, 0);"  x="120" y="320">
