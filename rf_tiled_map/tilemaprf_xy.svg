@@ -168,9 +168,9 @@
     </rect>
     <rect class="tile" height="40px" width="40px" id="89" regNameAbbrEn="YN" regNameAbbrRu="ЯНАО" regionNameEn="Yamalo-Nenets region" regionNameRu="Ямало-Ненецкий АО" style="fill: rgb(0, 0, 0);"  x="400" y="80">
     </rect>
-    <rect class="tile" height="40px" width="40px" id="91" regNameAbbrEn="Crim*" regNameAbbrRu="Крм*" regionNameEn="Crimea" regionNameRu="Крым" style="fill: rgb(0, 0, 0);"  x="80" y="320">
+    <rect class="tile" height="40px" width="40px" id="91" regNameAbbrEn="Crim*" regNameAbbrRu="Крм*" regionNameEn="Crimea (occupied by Russia)" regionNameRu="Крым (оккупирован Россией)" style="fill: rgb(0, 0, 0);"  x="80" y="320">
     </rect>
-    <rect class="tile" height="40px" width="40px" id="92" regNameAbbrEn="SEV*" regNameAbbrRu="Сев*" regionNameEn="Sevastopol" regionNameRu="Севастополь" style="fill: rgb(0, 0, 0);"  x="40" y="320">
+    <rect class="tile" height="40px" width="40px" id="92" regNameAbbrEn="SEV*" regNameAbbrRu="Сев*" regionNameEn="Sevastopol (occupied by Russia)" regionNameRu="Севастополь (оккупирован Россией)" style="fill: rgb(0, 0, 0);"  x="40" y="320">
     </rect>
 </g>
 <g id="names_container">
