@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2024 by AndreiNesterov (http://jsbin.com/sugirof/7/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.9/jquery.csv.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+ <style id="jsbin-css">
+h2{
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:20px;
+}
+
+#info_box {
+  background-color: rgb(244, 244, 244);;
+  color: black;
+  padding: 12px;
+  border-radius: 4px;
+  font-size:14px;
+  max-width:830px;
+}
+
+#info_box .disclaimer {
+  font-style:italic;
+  color: #575757;
+}
+
+
+#map_table {
+}
+
+#rf_map_container {
+  margin-bottom: -80px;
+}
+
+#rf_map {
+  margin-top:20px;
+}
+
+#table-container{
+  max-width:830px;
+}
+
+.container-fluid{
+  margin-left: 0 !important;
+}
+
+
+#data-table tbody{
+  background-color: rgb(244, 244, 244);
+  font-size:12px;
+  color: black;
+}
+
+thead {
+  font-size:12px;
+  text-align: left;
+  background-color: rgb(244, 244, 244);
+  color: black;
+}
+
+tbody tr:hover{
+  background-color: rgb(179, 179, 179) !important;
+}
+
+.table thead th {
+  vertical-align:top;
+}
+
+#names_container .name {
+  font-size:10px !important;
+}
+
+#tiles_container rect[id="91"] {
+  stroke: black; /* Border color */
+  stroke-width: 1px; /* Border width */
+  stroke-dasharray: 3 2; /* Dashed pattern: 5px on, 5px off */
+}
+
+#tiles_container rect[id="92"] {
+  stroke: black; /* Border color */
+  stroke-width: 1px; /* Border width */
+  stroke-dasharray: 3 2; /* Dashed pattern: 5px on, 5px off */
+}
+
+#tooltip {
+  position: absolute;
+  min-width:80px;
+  font-size:10px;
+  background-color: rgba(0, 0, 0);
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  pointer-events: none; /* Ensure the tooltip doesn't interfere with mouse events */
+  visibility: hidden; /* Hide the tooltip by default */
+}
+
+@media (min-width: 576px) {
+
+}
+</style>
+</head>
+<body>
+  
+  <h2>Hate crimes 2019</h2>
+
+  <div class="container-fluid" id="map_table">
+    
+  <div id="rf_map_container">
+    
+    <div id="info_box">
+      <p>This tiled map of Russia shows number of hate crime victims by regions: darker regions have more victims. Hover on the tiles to see more info. See the full table under the map. Click on a region to filter the table. <br>
+      <div class="disclaimer">* Sevastopol and Crimea are the territories occupied by Russia. We presented them on this map, because data for these regions was availbale on the Russian court websites.</div></p>
+      </div>
+
+    <svg id="rf_map" width="800" height="600"></svg>
+    
+  </div>
+  
+  <div id="tooltip"></div>
+    
+  <div class="container-fluid" id="table-container">
+    <div class="table-sm">
+    <table class="table table-hover table-dark" id="data-table">
+       <thead>
+           <tr></tr>
+       </thead>
+       <tbody class="data-table-body"></tbody>
+      </table>
+      </div>
+     </div>
+  
+      </tbody>
+    </table>
+  </div>
+<script id="jsbin-javascript">
+// Load the SVG map dynamically from GitHub
+d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map/tilemaprf_xy.svg").then(function(svgString) {
+  var parser = new DOMParser();
+  var xml = parser.parseFromString(svgString, "image/svg+xml");
+  var importedNode = document.importNode(xml.documentElement, true);
+  document.getElementById("rf_map").appendChild(importedNode);
+
+  // After the SVG map is loaded, load the CSV data
+  d3.csv("https://raw.githubusercontent.com/dataout-org/rf_court_cases/main/filtered_cases/cases_2019.csv").then(function(data) {
+    // Parse the data to convert string numbers to integers
+    data.forEach(function(d) {
+      d.n_victims = +d.n_victims;
+      d.n_fatalities = +d.n_fatalities;
+      d.n_crimes = +d.n_crimes;
+    });
+    
+
+    // Group data by region_code and calculate total victims for each region
+    var regionData = d3.group(data, d => d.region_code);
+    var victimCounts = new Map();
+
+    regionData.forEach(function(value, key) {
+      var totalVictims = d3.sum(value, d => d.n_victims);
+      victimCounts.set(key, totalVictims);
+    });
+
+    // Define color scale based on the range of victim counts
+    var maxVictims = d3.max(Array.from(victimCounts.values()));
+    var colorScale = d3.scaleSequential()
+      .domain([0, maxVictims])
+      .interpolator(function(t) {
+        return d3.interpolateReds(t);
+      });
+
+ 
+    // Select the group containing the tiles
+    var tilesContainer = d3.select("#tiles_container");
+    var textContainer = d3.select("#names_container");
+    
+    // Select the tooltip element
+    var tooltip = d3.select("#tooltip");
+
+    // Apply colors to the tiles based on the number of victims
+    tilesContainer.selectAll("rect").each(function() {
+      var tile = d3.select(this);
+      var regionCode = tile.attr("id");
+      var regionVictims = victimCounts.get(regionCode);
+      var fillColor;
+      if (regionVictims !== undefined) {
+        fillColor = colorScale(regionVictims);
+      } else {
+        fillColor = "rgb(244, 244, 244)"; // Color tiles with no values white
+      }
+  
+      // Apply fill color
+      tile.style("fill", fillColor);
+      
+      // Determine text color dynamically based on perceived brightness
+      var textColor = getContrastColor(fillColor);
+
+      // Select text element and change color
+      var textElement = d3.select("#name_" + regionCode);
+      textElement.style("fill", textColor);
+      
+      // Add hover event listeners for tiles with data
+      if (regionVictims !== undefined) {
+        tile.on("mouseover", function(event) {
+          // Get tile dimensions and position
+          var tileRect = tile.node().getBoundingClientRect();
+          var tileLeft = tileRect.left + window.scrollX;
+          var tileTop = tileRect.top + window.scrollY;
+          // Display tooltip with region name and number of victims
+          tooltip.style("visibility", "visible")
+                 .html(tile.attr("regionNameEn") + "<br> Victims: " + regionVictims)
+                 .style("left", (tileLeft + tileRect.width / 2) + "px") // Adjust as needed
+                 .style("top", (tileTop + (tileRect.height / 2)) + "px"); // Adjust as needed
+        })
+        .on("mouseout", function() {
+          // Hide tooltip on mouseout
+          tooltip.style("visibility", "hidden");
+        })
+        .on("click", function() {
+            // Reset previously selected tiles
+            textContainer.selectAll("text").style("font-weight", "normal");
+
+            // Highlight the clicked tile's name by making it bold
+            textElement.style("font-weight", "bold");
+            // Filter the CSV data for cases belonging to the clicked region
+            var cases = data.filter(function(d) {
+              return d.region_code === regionCode;
+            });
+        
+      // Generate HTML table dynamically
+            var tableHTML = "<thead><tr><th>Case Number</th><th>Region (RU)</th><th>Article</th><th>Fatalities</th><th>Victims</th><th>Crimes</th><th>Crime Type</th><th>Source</th></tr></thead><tbody>";
+            cases.forEach(function(d) {
+              tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_fatalities + "</td><td>" + d.n_victims + "</td><td>" + d.n_crimes + "</td><td>" + d.crime_type + "</td><td>" + d.source + "</td></tr>";
+            });
+            tableHTML += "</tbody>";
+
+            // Fill the table with the generated HTML
+            document.querySelector("#data-table").innerHTML = tableHTML;
+          });
+      }
+    });
+    
+    // Generate initial HTML table with all cases
+    var initialTableHTML = "<thead><tr><th>Case Number</th><th>Region (RU)</th><th>Article</th><th>Fatalities</th><th>Victims</th><th>Crimes</th><th>Crime Type</th><th>Source</th></tr></thead><tbody>";
+    data.forEach(function(d) {
+      initialTableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_fatalities + "</td><td>" + d.n_victims + "</td><td>" + d.n_crimes + "</td><td>" + d.crime_type + "</td><td>" + d.source + "</td></tr>";
+    });
+    initialTableHTML += "</tbody>";
+
+    // Fill the initial table with the generated HTML
+    document.querySelector("#data-table").innerHTML = initialTableHTML;
+  });
+});
+
+
+
+
+// Function to calculate perceived brightness based on HSL color space
+function getPerceivedBrightness(color) {
+  var rgb = d3.rgb(color);
+  var hsl = d3.hsl(rgb);
+  return hsl.l;
+}
+
+// Function to dynamically determine text color based on perceived brightness
+function getContrastColor(bgColor) {
+  var brightness = getPerceivedBrightness(bgColor);
+  return brightness > 0.5 ? "black" : "white"; // Use black text for light backgrounds, white text for dark backgrounds
+}
+
+</script>
+</body>
+</html>
