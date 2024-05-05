@@ -1,0 +1,102 @@
+body {
+  background: transparent;
+}
+
+h2 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+}
+
+#info_box {
+  background-color: rgb(244, 244, 244);;
+  color: black;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  max-width: 830px;
+}
+
+#info_box .disclaimer {
+  font-style: italic;
+  color: #575757;
+}
+
+
+#map_table {
+}
+
+#rf_map_container {
+  margin-bottom: -80px;
+}
+
+#rf_map {
+  margin-top:20px;
+}
+
+#table-container{
+  max-width:830px;
+}
+
+.container-fluid{
+  margin-left: 0 !important;
+}
+
+
+#data-table tbody{
+  background-color: rgb(244, 244, 244);
+  font-size:12px;
+  color: black;
+}
+
+thead {
+  font-size:12px;
+  text-align: left;
+  background-color: rgb(244, 244, 244);
+  color: black;
+}
+
+tbody tr:hover{
+  background-color: rgb(179, 179, 179) !important;
+}
+
+.table thead th {
+  vertical-align:top;
+}
+
+#names_container .name {
+  font-size:10px !important;
+  pointer-events:none; /* make sure the tile text is not selected */
+}
+
+/* -- occupied regions */
+
+#tiles_container rect[id="91"] {
+  stroke: black;
+  stroke-width: 1px;
+  stroke-dasharray: 3 2;
+}
+
+#tiles_container rect[id="92"] {
+  stroke: black;
+  stroke-width: 1px;
+  stroke-dasharray: 3 2;
+}
+
+/* occupied regions -- */
+
+#tooltip {
+  position: absolute;
+  min-width:80px;
+  font-size:10px;
+  background-color: rgba(0, 0, 0);
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  pointer-events: none; /* the tooltip shouldn't interfere with mouse events */
+  visibility: hidden; /* the tooltip is hidden by default */
+}
+
+@media (min-width: 576px) {
+
+}
