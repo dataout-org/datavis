@@ -23,9 +23,6 @@ h2 {
 }
 
 
-#map_table {
-}
-
 #rf_map_container {
   margin-bottom: -80px;
 }
@@ -95,6 +92,35 @@ tbody tr:hover{
   border-radius: 4px;
   pointer-events: none; /* the tooltip shouldn't interfere with mouse events */
   visibility: hidden; /* the tooltip is hidden by default */
+}
+
+#controls {
+margin-bottom: 10px;
+margin-left: 12px;
+}
+
+#col_pad {
+  padding:4px;
+}
+
+#year_selectors {
+  flex-wrap: nowrap !important;
+  padding-left: 12px;
+}
+
+p.all_years {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+select#yearDropdown {
+  font-size: 12px;
+}
+
+#allYearsButton {
+  width:60px;
+  font-size: 12px;
+  padding: 0px;
 }
 
 @media (min-width: 576px) {
