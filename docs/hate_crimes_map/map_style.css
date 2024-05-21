@@ -119,9 +119,21 @@ select#yearDropdown {
 }
 
 #allYearsButton {
-  width:60px;
+  width:fit-content;
+  padding:1px;
   font-size: 12px;
-  padding: 0px;
+}
+
+#allRegionsButton{
+  width:fit-content;
+  padding:1px;
+  font-size: 12px;
+}
+
+#playButton{
+  width:fit-content;
+  font-size: 12px;
+  padding: 1px;
 }
 
 @media (min-width: 576px) {

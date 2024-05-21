@@ -11,6 +11,7 @@ Released under the CC-BY-SA 4.0 license
 
   <link rel="stylesheet" href="map_style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 
@@ -36,6 +37,8 @@ Released under the CC-BY-SA 4.0 license
         <div class="col-md-auto" id="col_pad"><p class="all_years">Filter by year</p></div>
         <div class="col-md-auto" id="col_pad"><select class="form-select" id="yearDropdown"></select></div>
         <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark" id="allYearsButton">All years</button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark" id="allRegionsButton">All regions</button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark" id="playButton"> <i class="bi bi-play-circle"></i> Dynamic by years</button></div>
   </div>
   </div>
     
@@ -85,6 +88,11 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
     var yearDropdown = document.getElementById("yearDropdown");
 
     // populating the dropdown
+      // first, adding the "all years" option
+    var optionAllYears = document.createElement("option");
+    optionAllYears.text = "All years";
+    yearDropdown.add(optionAllYears);
+      // second, adding all years
     var uniqueYears = [...new Set(data.map(d => d.year))];
     uniqueYears.sort().reverse(); // desc
     uniqueYears.forEach(function(year) {
@@ -93,17 +101,38 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
       yearDropdown.add(option);
   });
 
+
+
     // listen to the dropdown
     yearDropdown.addEventListener("change", function() {
     // selected year
     var selectedYear = yearDropdown.value;
-    updateMap(data, selectedYear);
+    if (selectedYear == "All years"){
+      resetRegionSelection(); //resetting previosly selected region
+      updateMap(data, null);
+    } else {
+      resetRegionSelection(); //resetting previosly selected region
+      updateMap(data, selectedYear);}
   });
 
   // listen to the "All Years"
   var allYearsButton = document.getElementById("allYearsButton");
   allYearsButton.addEventListener("click", function() {
+    yearDropdown.value = "All years";
+    resetRegionSelection(); //resetting previosly selected region
     updateMap(data, null); // null indicates all years
+  });
+
+  //listen to the allRegionsButton
+  var allRegionsButton = document.getElementById("allRegionsButton");
+  allRegionsButton.addEventListener("click", function() {
+    var selectedYear = yearDropdown.value;
+    if (selectedYear == "All years"){
+      resetRegionSelection(); //resetting previosly selected region
+      updateMap(data, null);
+    } else {
+      resetRegionSelection(); //resetting previosly selected region
+      updateMap(data, selectedYear);}
   });
 
   // by default, showing all years
@@ -166,6 +195,11 @@ function updateMap(data, selectedYear) {
 
             var textElement = d3.select("#name_" + regionCode);
             textElement.style("fill", textColor);
+
+            // Remove existing event listeners
+            tile.on("mouseover", null)
+            .on("mouseout", null)
+            .on("click", null);
             
             // hover on tiles with data
             if (regionVictims !== undefined) {
@@ -217,6 +251,15 @@ function updateMap(data, selectedYear) {
 
     document.querySelector("#data-table").innerHTML = initialTableHTML;
   
+}
+
+//resetting region selection when "all years" is clicked
+
+function resetRegionSelection() {
+  // Reset the font-weight of all region names
+  d3.select("#names_container").selectAll("text").style("font-weight", "normal");
+        // Clear the data table
+  document.querySelector("#data-table").innerHTML = "";
 }
 
 // function to calculate perceived brightness based on HSL color space
