@@ -1,12 +1,6 @@
-/* body {
-  background: transparent;
+body {
+  background-color: black !important;
 }
-
-h2 {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-} */
 
 #info_box {
   background-color: rgb(244, 244, 244);;
@@ -14,7 +8,6 @@ h2 {
   padding: 12px;
   border-radius: 4px;
   font-size: 14px;
-  max-width: 830px;
   margin-top: 10px;
 }
 
@@ -24,12 +17,36 @@ h2 {
 }
 
 
-#rf_map_container {
+/* #rf_map_container {
   margin-bottom: -80px;
+} */
+
+/* map legend */
+
+#legend {
+  margin-top: 10px;
+  padding-left: 0px !important;
+}
+
+.legend_label {
+  font-size: 12px;
+  color: white;
+  fill: white;
+}
+
+#n_victims_text {
+  padding-right: 0px;
+}
+
+#no_data {
+  padding-left: 0px;
 }
 
 #rf_map {
-  margin-top:20px;
+  width: 800px;
+  height: 512px;
+  margin-top:10px;
+
 }
 
 #table-container{

@@ -26,7 +26,42 @@ Released under the CC-BY-SA 4.0 license
       <div class="disclaimer">* Sevastopol and Crimea are the territories occupied by Russia. We presented them on this map, because data for these regions was availbale on the Russian court websites.</div></p>
       </div>
 
-    <svg id="rf_map" width="800" height="600"></svg>
+  <div class="container-fluid" id="legend">
+    <div class="row">
+
+        <div class="col-md-auto" id="n_victims_text">
+            <p class="legend_label">N victims: </p>
+        </div>
+
+      <div class="col-md-auto" id="colour_range">
+          <svg width="160" height="16" viewBox="-10 0 160 16"></svg>
+      </div>
+
+      <div class="col-md-auto" id="no_data">
+          <svg width="80" height="16">
+              <defs>
+                  <pattern id="diagonalHatch_legend" width="16" height="16">
+                      <path d="M 0 16 L 16 0 M 6 16 L 16 6 M 12 16 L 16 12 M 10 0 L 0 10 M 4 0 L 0 4"
+                      style="stroke:#777; stroke-width:1" />
+                  </pattern>
+              </defs>
+          <rect width="16" height="16" style='fill: url("#diagonalHatch_legend");'></rect>
+          <text x="20" y="12" class="legend_label">No data</text>
+          </svg>
+      </div>
+
+    </div>
+  </div>
+
+    <svg id="rf_map">
+        <defs>
+            <pattern id="diagonalHatch" width="44.2166" height="44.2166">
+                <path d="M 0 14 L 14 0 M 0 44 L 44 0 M 0 24 L 24 0 M 0 34 L 34 0 M 44 10 L 10 44 M 43 30 L 30 44 M 44 20 L 20 44"
+                style="stroke:#777; stroke-width:1" />
+            </pattern>
+        </defs>
+    </svg>
+      
     
   </div>
   
@@ -64,6 +99,8 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
   var parser = new DOMParser();
   var xml = parser.parseFromString(svgString, "image/svg+xml");
   var importedNode = document.importNode(xml.documentElement, true);
+  // setting the viewBox
+  importedNode.setAttribute("viewBox", "0 0 724 456");
   document.getElementById("rf_map").appendChild(importedNode);
 
   var spreadsheetUrl = "https://docs.google.com/spreadsheets/d/18NSZd6RgeSjEW1RzbYY4lQbFYHWaGKIMb8KLGQuZfDc/export?format=csv";
@@ -162,12 +199,48 @@ function updateMap(data, selectedYear) {
     });
 
     // color scale based on the range of victim counts
+    var minVictims = d3.min(Array.from(victimCounts.values()).filter(v => v > 0)); //min victims except 0
     var maxVictims = d3.max(Array.from(victimCounts.values()));
     var colorScale = d3.scaleSequential()
-      .domain([0, maxVictims])
+      .domain([minVictims, maxVictims])
       .interpolator(function(t) {
-        return d3.interpolateReds(t);
+        return d3.interpolateGreys(t * 0.7 + 0.2);
       });
+
+    //update the legend
+    var legendSVG = d3.select("#colour_range svg");
+    legendSVG.selectAll("*").remove(); // clearing previous legend
+
+      //making legend gradient
+      var defs = legendSVG.append("defs");
+      var linearGradient = defs.append("linearGradient")
+          .attr("id", "linear-gradient");
+
+      linearGradient.selectAll("stop")
+          .data(colorScale.ticks().map((t, i, n) => ({ offset: `${100 * i / n.length}%`, color: colorScale(t) })))
+          .enter().append("stop")
+          .attr("offset", d => d.offset)
+          .attr("stop-color", d => d.color);
+
+      // Draw gradient rectangle
+      legendSVG.append("rect")
+          .attr("width", 134)
+          .attr("height", 16)
+          .style("fill", "url(#linear-gradient)");
+
+      // Add min and max labels
+      legendSVG.append("text")
+          .attr("x", -8)
+          .attr("y", 12)
+          .attr("class", "legend_label")
+          .text(minVictims);
+
+      legendSVG.append("text")
+          .attr("x", 146)
+          .attr("y", 12)
+          .attr("class", "legend_label")
+          .attr("text-anchor", "end")
+          .text(maxVictims);
 
     // select the group containing the tiles
     var tilesContainer = d3.select("#tiles_container");
@@ -181,19 +254,19 @@ function updateMap(data, selectedYear) {
             var tile = d3.select(this);
             var regionCode = tile.attr("id");
             var regionVictims = victimCounts.get(regionCode);
+            var textElement = d3.select("#name_" + regionCode);
             var fillColor;
+            var textColor;
             if (regionVictims !== undefined) {
               fillColor = colorScale(regionVictims);
+              // dynamic text color based on perceived brightness
+              textColor = getContrastColor(fillColor);
             } else {
-              fillColor = "rgb(244, 244, 244)"; // no data tiles
+              fillColor = "url(#diagonalHatch)"; // no data tiles
+              textColor = "rgb(255, 255, 255)";
             }
         
             tile.style("fill", fillColor);
-            
-            // dynamic text color based on perceived brightness
-            var textColor = getContrastColor(fillColor);
-
-            var textElement = d3.select("#name_" + regionCode);
             textElement.style("fill", textColor);
 
             // Remove existing event listeners
