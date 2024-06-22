@@ -204,7 +204,7 @@ function updateMap(data, selectedYear) {
     var colorScale = d3.scaleSequential()
       .domain([minVictims, maxVictims])
       .interpolator(function(t) {
-        return d3.interpolateGreys(t * 0.7 + 0.2);
+        return d3.interpolateGreys(t);
       });
 
     //update the legend
