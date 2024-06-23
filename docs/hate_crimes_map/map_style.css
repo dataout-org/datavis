@@ -90,6 +90,7 @@ tbody tr:hover{
 #dashed_border {
   stroke: white !important;
   stroke-dasharray: 3 2;
+  fill: none !important; /* to overwrite auto colour or #diagonalHatch fill */
 }
 
 /* occupied regions -- */
