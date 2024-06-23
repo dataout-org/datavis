@@ -100,7 +100,7 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
   var xml = parser.parseFromString(svgString, "image/svg+xml");
   var importedNode = document.importNode(xml.documentElement, true);
   // setting the viewBox
-  importedNode.setAttribute("viewBox", "0 0 724 456");
+  importedNode.setAttribute("viewBox", "-4 0 724 456");
   document.getElementById("rf_map").appendChild(importedNode);
 
   var spreadsheetUrl = "https://docs.google.com/spreadsheets/d/18NSZd6RgeSjEW1RzbYY4lQbFYHWaGKIMb8KLGQuZfDc/export?format=csv";

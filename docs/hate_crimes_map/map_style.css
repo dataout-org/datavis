@@ -87,15 +87,8 @@ tbody tr:hover{
 
 /* -- occupied regions */
 
-#tiles_container rect[id="91"] {
-  stroke: black;
-  stroke-width: 1px;
-  stroke-dasharray: 3 2;
-}
-
-#tiles_container rect[id="92"] {
-  stroke: black;
-  stroke-width: 1px;
+#dashed_border {
+  stroke: white !important;
   stroke-dasharray: 3 2;
 }
 
