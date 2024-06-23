@@ -172,7 +172,7 @@
     </rect>
     <rect class="tile" height="40px" width="40px" id="92" regNameAbbrEn="SEV*" regNameAbbrRu="Сев*" regionNameEn="Sevastopol (occupied by Russia)" regionNameRu="Севастополь (оккупирован Россией)" style="fill: rgb(0, 0, 0);"  x="0" y="320">
     </rect>
-    <rect class="tile" id="dashed_border" height="46px" width="85px" y="317" x="-2" style="fill:transparent; stroke-width:1; stroke:black;" >
+    <rect class="tile_border" id="dashed_border" height="46px" width="85px" y="317" x="-2" style="fill:none; stroke-width:1; stroke:black;" >
     </rect>
 </g>
 <g id="names_container">
