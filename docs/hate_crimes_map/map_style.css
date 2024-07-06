@@ -1,6 +1,6 @@
-/* body {
-  background-color: black !important;
-} */
+#map_table {
+	background-color: #1e1e1e;
+}
 
 #info_box {
   background-color: rgb(244, 244, 244);;
@@ -16,13 +16,6 @@
   color: #575757;
 }
 
-
-/* #rf_map_container {
-  margin-bottom: -80px;
-} */
-
-/* map legend */
-
 #legend {
   margin-top: 10px;
   padding-left: 0px !important;
@@ -36,7 +29,6 @@
 
 #n_victims_text {
   padding-right: 0px;
-  padding-top: 4px;
 }
 
 #no_data {
@@ -50,8 +42,10 @@
 
 }
 
-#table-container{
-  max-width:830px;
+#table-container {
+  max-width:840px;
+  max-height: 460px;
+  overflow-y: scroll ;
 }
 
 .container-fluid{
@@ -65,6 +59,10 @@
   color: black;
 }
 
+.table {
+  margin-bottom:0px !important;
+}
+
 thead {
   font-size:12px;
   text-align: left;
@@ -73,11 +71,14 @@ thead {
 }
 
 tbody tr:hover{
-  background-color: rgb(179, 179, 179) !important;
+  background-color: rgb(204, 204, 204) !important;
 }
 
 .table thead th {
   vertical-align:top;
+  position: sticky;
+  top:0;
+  background-color: rgb(204, 204, 204);
 }
 
 #names_container .name {
@@ -124,26 +125,34 @@ margin-left: 12px;
 p.all_years {
   font-size: 12px;
   margin-top: 4px;
+  color: white;
 }
 
 select#yearDropdown {
-  font-size: 12px;
+	font-size: 12px;
+	border-radius: 4px;
+	border: none;
+	height: 24px;
 }
 
-#allYearsButton {
-  width:fit-content;
-  padding:1px;
-  font-size: 12px;
+select#yearDropdown:hover {
+background-color: #b0b0b0;
 }
 
-#allRegionsButton{
-  width:fit-content;
-  padding:1px;
-  font-size: 12px;
+.map_controls_btn {
+  width: fit-content !important;
+  padding: 2px !important;
+  font-size: 12px !important;
+  background-color: #f4f4f4 !important;
+  color: black !important;
+  border-color: #f4f4f4 !important;
 }
 
-#playButton{
-  width:fit-content;
-  font-size: 12px;
-  padding: 1px;
+.map_controls_btn:hover {
+  background-color: #b0b0b0 !important;
+  border-color: #b0b0b0 !important;
+}
+
+#table_bottom {
+  height: 60px;
 }

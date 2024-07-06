@@ -56,8 +56,7 @@ Released under the CC-BY-SA 4.0 license
     <svg id="rf_map">
         <defs>
             <pattern id="diagonalHatch" width="44.2166" height="44.2166">
-                <path d="M 0 14 L 14 0 M 0 44 L 44 0 M 0 24 L 24 0 M 0 34 L 34 0 M 44 10 L 10 44 M 43 30 L 30 44 M 44 20 L 20 44"
-                style="stroke:#8c8c8c; stroke-width:0.7" />
+                <path d="M 0 14 L 14 0 M 0 44 L 44 0 M 0 24 L 24 0 M 0 34 L 34 0 M 44 10 L 10 44 M 43 30 L 30 44 M 44 20 L 20 44" style="stroke:#8c8c8c; stroke-width:0.7"/>
             </pattern>
         </defs>
     </svg>
@@ -71,9 +70,9 @@ Released under the CC-BY-SA 4.0 license
     <div class="row" id="year_selectors">
         <div class="col-md-auto" id="col_pad"><p class="all_years">Filter by year</p></div>
         <div class="col-md-auto" id="col_pad"><select class="form-select" id="yearDropdown"></select></div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark" id="allYearsButton">All years</button></div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark" id="allRegionsButton">All regions</button></div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark" id="playButton"> <i class="bi bi-play-circle"></i> Dynamic by years</button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allYearsButton">Reset years</button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allRegionsButton">Reset regions</button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="playButton"> <i class="bi bi-play-circle"></i> Dynamic by years</button></div>
   </div>
   </div>
     
@@ -86,13 +85,17 @@ Released under the CC-BY-SA 4.0 license
        <tbody class="data-table-body"></tbody>
     </table>
     </div>
+
+  </div>
+
+  <div class="container-fluid" id="table_bottom">
   </div>
 
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
-<script id="jsbin-javascript">
+<script id="d3vis">
   // Load the SVG map dynamically from GitHub
 d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map/tilemaprf_xy.svg")
 .then(function(svgString) {
