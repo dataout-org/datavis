@@ -8,6 +8,7 @@
   padding: 12px;
   border-radius: 4px;
   font-size: 14px;
+  max-width: 840px;
 }
 
 #info_box .disclaimer {
