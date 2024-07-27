@@ -1,0 +1,11 @@
+#github_description {
+  background-color: #1e1e1e;
+}
+
+#text_description {
+	color: rgb(206, 206, 206);
+	font-size: 12px;
+  padding: 10px !important;
+  padding-bottom: 20px !important;
+	margin: 0px !important;
+}
