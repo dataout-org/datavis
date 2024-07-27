@@ -218,7 +218,7 @@ function updateMap(data, selectedYear) {
     var maxVictims = d3.max(Array.from(victimCounts.values()));
     var colorScale = d3.scaleLinear()
       .domain([minVictims, maxVictims])
-      .interpolator(d3.interpolateRgb)
+      .interpolate(d3.interpolateRgb)
       .range(["#e0e0e0", "#6a0303"]);
 
     //update the legend
