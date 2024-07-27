@@ -219,7 +219,7 @@ function updateMap(data, selectedYear) {
     var colorScale = d3.scaleLinear()
       .domain([minVictims, maxVictims])
       .interpolate(d3.interpolateRgb)
-      .range(["#e0e0e0", "#6a0303"]);
+      .range(["rgb(244, 244, 244)", "rgb(112, 0, 0)"]);
 
     //update the legend
     var legendSVG = d3.select("#colour_range svg");
