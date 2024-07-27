@@ -216,11 +216,10 @@ function updateMap(data, selectedYear) {
     // color scale based on the range of victim counts
     var minVictims = d3.min(Array.from(victimCounts.values()).filter(v => v > 0)); //min victims except 0
     var maxVictims = d3.max(Array.from(victimCounts.values()));
-    var colorScale = d3.scaleSequential()
+    var colorScale = d3.scaleLinear()
       .domain([minVictims, maxVictims])
-      .interpolator(function(t) {
-        return d3.interpolateGreys(t);
-      });
+      .interpolator(d3.interpolateRgb)
+      .range(["#e0e0e0", "#6a0303"]);
 
     //update the legend
     var legendSVG = d3.select("#colour_range svg");
