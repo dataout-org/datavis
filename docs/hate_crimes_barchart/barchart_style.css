@@ -9,3 +9,23 @@
   padding-bottom: 20px !important;
 	margin: 0px !important;
 }
+
+.legend_text {
+  color: white;
+  font-size: 12px;
+}
+
+.year_label {
+  font-size: 10px;
+  color: lightgrey;
+  letter-spacing: 1.2px;
+}
+
+.x_line {
+  stroke-dasharray: 5 3;
+  color: lightgrey;
+}
+
+#barchart {
+  background-color: #1e1e1e;
+}

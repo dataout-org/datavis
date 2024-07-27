@@ -14,7 +14,7 @@ Released under the CC-BY-SA 4.0 license
 <link rel="stylesheet" href="barchart_style.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+<script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body>
@@ -28,12 +28,96 @@ Released under the CC-BY-SA 4.0 license
 <!--  The content below is fetched by hatecrimes.dataout.org -->
 
 <div id="content_to_fetch">
+  <div class="container-fluid" id="barchart">
+    <div class="row legend">
+      <div class="col-md-auto legend_col" id="legend_col">
+       <p class="legend_text"> Legend goes here </p>
+      </div>
+    </div>
 
-
-<script src="https://d3js.org/d3.v7.min.js"></script>
+    <div class="row chart">
+        <div class="col-md-auto chart_col" id="chart_col">
+          <!-- bar chart goes here -->
+        </div>
+      </div>
+  
+  </div>
 
   <script id="d3vis_barchart">
-    
+
+    // chart dimensions and margins
+    const margin = {top: 0, right: 10, bottom: 20, left: 10},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+    // appending SVG
+    const svg = d3.select("#chart_col")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // fetching the data
+    d3.csv("hatecrimes_overall_2010_2023.csv").then(function(data) {
+        // data subgroups
+        const subgroups = data.columns.slice(1);
+
+        // all years
+        const years = data.map(d => d.year);
+
+        // x axis for years
+        const x0 = d3.scaleBand()
+            .domain(years)
+            .range([0, width])
+            .padding(0.2);
+
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x0).tickSize(0))
+            .attr("class", "year_label")
+            .selectAll("text")
+                .attr("transform", "translate(0,4)rotate(0)")
+                .style("text-anchor", "middle");
+
+        // class for the bottom line (path for x axis)
+        svg.selectAll(".domain")
+        .attr("class", "x_line");
+
+        // y axis (only calculating values, not showing the axis itself)
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => Math.max(d.n_crimes, d.n_victims, d.n_fatalities))])
+            .nice()
+            .range([height, 0]);
+
+        // subgroup position within the group
+        const x1 = d3.scaleBand()
+            .domain(subgroups)
+            .range([0, x0.bandwidth()])
+            .padding(0);
+
+        // colours
+        const color = d3.scaleOrdinal()
+            .domain(subgroups)
+            .range(['rgb(112, 0, 0)','#ae7272','rgb(244, 244, 244)']);
+
+        // the bars
+        svg.append("g")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+                .attr("transform", d => `translate(${x0(d.year)},0)`)
+            .selectAll("rect")
+            .data(function(d) { return subgroups.map(key => ({key: key, value: d[key]})); })
+            .enter()
+            .append("rect")
+                .attr("x", d => x1(d.key))
+                .attr("y", d => y(d.value))
+                .attr("width", x1.bandwidth())
+                .attr("height", d => height - y(d.value))
+                .attr("fill", d => color(d.key));
+    });
   </script>
 
 </div>
