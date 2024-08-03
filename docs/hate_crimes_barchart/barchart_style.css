@@ -22,10 +22,45 @@
 }
 
 .x_line {
-  stroke-dasharray: 5 3;
-  color: lightgrey;
+  stroke: gray;
+  stroke-width: 1px;
 }
 
 #barchart {
   background-color: #1e1e1e;
+}
+
+.n_crimes {
+	fill: none;
+	stroke: gray;
+	stroke-dasharray: 5 5;
+	stroke-width: 1px;
+}
+
+.label {
+  font-size: 10px;
+}
+
+.n_crimes_label {
+  fill: gray;
+  text-anchor: middle;
+}
+
+.n_fatalities_label {
+  fill: black;
+  text-anchor: middle;
+}
+
+.n_victims_label {
+  fill: #310000;
+  text-anchor: middle;
+}
+
+.n_victims {
+  fill:rgb(132, 100, 100);
+}
+
+.n_fatalities {
+  fill:rgb(112, 0, 0);
+
 }

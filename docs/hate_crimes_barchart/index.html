@@ -46,7 +46,7 @@ Released under the CC-BY-SA 4.0 license
   <script id="d3vis_barchart">
 
     // chart dimensions and margins
-    const margin = {top: 0, right: 10, bottom: 20, left: 10},
+    const margin = {top: 40, right: 30, bottom: 50, left: 60},
     width = 800 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -60,63 +60,103 @@ Released under the CC-BY-SA 4.0 license
 
     // fetching the data
     d3.csv("hatecrimes_overall_2010_2023.csv").then(function(data) {
-        // data subgroups
-        const subgroups = data.columns.slice(1);
+        data.forEach(d => {
+                d.n_crimes = +d.n_crimes; // N crimes
+                d.n_victims = +d.n_victims; // N victims
+                d.n_fatalities = +d.n_fatalities; // N fatalities
+            });
 
         // all years
         const years = data.map(d => d.year);
 
         // x axis for years
-        const x0 = d3.scaleBand()
+        const x = d3.scaleBand()
             .domain(years)
             .range([0, width])
-            .padding(0.2);
+            .padding(0.12);
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x0).tickSize(0))
+            .call(d3.axisBottom(x).tickSize(0))
             .attr("class", "year_label")
             .selectAll("text")
                 .attr("transform", "translate(0,4)rotate(0)")
                 .style("text-anchor", "middle");
 
-        // class for the bottom line (path for x axis)
-        svg.selectAll(".domain")
-        .attr("class", "x_line");
-
-        // y axis (only calculating values, not showing the axis itself)
+        // add y axis
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => Math.max(d.n_crimes, d.n_victims, d.n_fatalities))])
+            .domain([0, d3.max(data, d => d.n_crimes)])
             .nice()
             .range([height, 0]);
 
-        // subgroup position within the group
-        const x1 = d3.scaleBand()
-            .domain(subgroups)
-            .range([0, x0.bandwidth()])
-            .padding(0);
+        // tick line
+        svg.selectAll(".domain")
+            .attr("class", "x_line");
 
-        // colours
-        const color = d3.scaleOrdinal()
-            .domain(subgroups)
-            .range(['rgb(112, 0, 0)','#ae7272','rgb(244, 244, 244)']);
-
-        // the bars
-        svg.append("g")
-            .selectAll("g")
+        // N crimes bars
+        svg.selectAll(".n_crimes")
             .data(data)
             .enter()
-            .append("g")
-                .attr("transform", d => `translate(${x0(d.year)},0)`)
-            .selectAll("rect")
-            .data(function(d) { return subgroups.map(key => ({key: key, value: d[key]})); })
+            .append("rect")
+                .attr("class", "n_crimes")
+                .attr("x", d => x(d.year))
+                .attr("y", d => y(d.n_crimes))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.n_crimes));
+
+        // N crimes labels
+        svg.selectAll(".n_crimes-label")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("class", "label n_crimes_label")
+                .attr("x", d => x(d.year) + 22)
+                .attr("y", d => y(d.n_crimes) - 6)
+                .text(d => d.n_crimes);
+
+        // N fatalities bars (y = 0)
+        svg.selectAll(".n_fatalities")
+        .data(data)
+        .enter()
+        .append("rect")
+            .attr("class", "n_fatalities")
+            .attr("x", d => x(d.year))
+            .attr("y", d => y(d.n_fatalities))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height - y(d.n_fatalities));
+
+        // N fatalities labels
+        svg.selectAll(".n_fatalities_label")
+                .data(data)
+                .enter()
+                .append("text")
+                    .attr("class", "label n_fatalities_label")
+                    .attr("x", d => x(d.year) + 22)
+                    .attr("y", d => y(d.n_fatalities) + 14)
+                    .text(d => d.n_fatalities);
+
+        // N victims bars (incl. N fatalities)
+        svg.selectAll(".n_victims")
+            .data(data)
             .enter()
             .append("rect")
-                .attr("x", d => x1(d.key))
-                .attr("y", d => y(d.value))
-                .attr("width", x1.bandwidth())
-                .attr("height", d => height - y(d.value))
-                .attr("fill", d => color(d.key));
+                .attr("class", "n_victims")
+                .attr("x", d => x(d.year))
+                .attr("y", d => y(d.n_victims))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.n_victims - d.n_fatalities));
+
+        // N victims labels
+        svg.selectAll(".n_victims_label")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("class", "label n_victims_label")
+                .attr("x", d => x(d.year) + 22)
+                .attr("y", d => y(d.n_victims) + 14)
+                .text(d => d.n_victims);
+
+           
     });
   </script>
 
