@@ -15,6 +15,57 @@
   font-size: 12px;
 }
 
+#barchart {
+  background-color: #1e1e1e;
+}
+
+.chart_title_h1 {
+	color: #f4f4f4;
+	font-size: 32px;
+	margin-left: 20px !important;
+}
+
+.info_box {
+  margin: 0px 0px 20px 20px !important;
+  background-color: rgb(244, 244, 244);
+  color: black;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  max-width: 840px;
+}
+
+.info_box_text {
+  margin-bottom: 0px !important;
+}
+
+.legend_bar {
+  max-width: fit-content !important;
+  margin-left: 20px !important;
+  border: 1px solid #777;
+  font-size: 10px;
+  color: gray;
+}
+
+.n_crimes_legend {
+  padding: 0px 3px 0px 3px !important;
+}
+
+.n_victims_legend {
+  padding: 0px 3px 0px 3px !important;
+  color: #310000;
+  background-color: rgb(132, 100, 100);
+}
+
+.n_fatalities_legend {
+  padding: 0px 3px 0px 3px !important;
+  background-color: rgb(112, 0, 0);
+}
+
+.chart {
+  margin-top: 40px;
+}
+
 .year_label {
   font-size: 10px;
   color: lightgrey;
@@ -26,15 +77,10 @@
   stroke-width: 1px;
 }
 
-#barchart {
-  background-color: #1e1e1e;
-}
-
 .n_crimes {
 	fill: none;
-	stroke: gray;
-	stroke-dasharray: 5 5;
-	stroke-width: 1px;
+	stroke: #777;
+	stroke-width: 0.6px;
 }
 
 .label {
@@ -47,7 +93,7 @@
 }
 
 .n_fatalities_label {
-  fill: black;
+  fill: gray;
   text-anchor: middle;
 }
 

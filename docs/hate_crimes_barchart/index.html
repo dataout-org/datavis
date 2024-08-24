@@ -21,7 +21,7 @@ Released under the CC-BY-SA 4.0 license
 
 <div class="container-fluid" id="github_description">
   <p id="text_description">
-    This bar chart displayes the number of hate crimes against LGBTQ+ people in Russia according to the court cases data. This page is developed for the website hatecrimes.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
+    This bar chart displays the number of hate crimes against LGBTQ+ people in Russia according to the court cases data. This page is developed for the website hatecrimes.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
   </p>
 </div>
 
@@ -29,10 +29,17 @@ Released under the CC-BY-SA 4.0 license
 
 <div id="content_to_fetch">
   <div class="container-fluid" id="barchart">
-    <div class="row legend">
-      <div class="col-md-auto legend_col" id="legend_col">
-       <p class="legend_text"> Legend goes here </p>
-      </div>
+    <div class="row chart_title_h1">
+        <p>The number of hate crimes spikes after descriminatory laws are enacted</p>
+    </div>
+    <div class="row info_box">
+        <p class="info_box_text">Yearly number of hate crimes collected from court decisions. The total number of crimes per year includes the number of victims, which includes the number of fatalities. The number of crimes is always higher than the number of victims because usually several crimes are commited against one victims (for example, battery and robbery).</p>
+    </div>
+    <div class="row legend_bar">
+           <div class="col-md-auto n_crimes_legend">N crimes total</div>
+           <div class="col-md-auto n_victims_legend">including N victims</div>
+           <div class="col-md-auto n_fatalities_legend">including N fatalities</div>
+       
     </div>
 
     <div class="row chart">
@@ -46,7 +53,7 @@ Released under the CC-BY-SA 4.0 license
   <script id="d3vis_barchart">
 
     // chart dimensions and margins
-    const margin = {top: 40, right: 30, bottom: 50, left: 60},
+    const margin = {top: 40, right: 30, bottom: 50, left: 20},
     width = 800 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
