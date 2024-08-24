@@ -192,7 +192,7 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
 });
 });
     
-    // updating the map
+// updating the map
 function updateMap(data, selectedYear) {
   // filter by year
   var filteredData;
@@ -204,135 +204,144 @@ function updateMap(data, selectedYear) {
     });
   }
 
-    // grouping by region_code and calculate total victims for each region
-    var regionData = d3.group(filteredData, d => d.region_code);
-    var victimCounts = new Map();
+  // grouping by region_code and calculate total victims for each region
+  var regionData = d3.group(filteredData, d => d.region_code);
+  var victimCounts = new Map();
 
-    regionData.forEach(function(value, key) {
-      var totalVictims = d3.sum(value, d => d.n_victims);
-      victimCounts.set(key, totalVictims);
-    });
+  regionData.forEach(function(value, key) {
+    var totalVictims = d3.sum(value, d => d.n_victims);
+    victimCounts.set(key, totalVictims);
+  });
 
-    // color scale based on the range of victim counts
-    var minVictims = d3.min(Array.from(victimCounts.values()).filter(v => v > 0)); //min victims except 0
-    var maxVictims = d3.max(Array.from(victimCounts.values()));
-    var colorScale = d3.scaleLinear()
-      .domain([minVictims, maxVictims])
-      .interpolate(d3.interpolateRgb)
-      .range(["rgb(244, 244, 244)", "rgb(112, 0, 0)"]);
+  // color scale based on the range of victim counts
+  var minVictims = d3.min(Array.from(victimCounts.values()).filter(v => v > 0)); //min victims except 0
+  var maxVictims = d3.max(Array.from(victimCounts.values()));
+  var colorScale = d3.scaleLinear()
+    .domain([minVictims, maxVictims])
+    .interpolate(d3.interpolateRgb)
+    .range(["rgb(244, 244, 244)", "rgb(112, 0, 0)"]);
 
-    //update the legend
-    var legendSVG = d3.select("#colour_range svg");
-    legendSVG.selectAll("*").remove(); // clearing previous legend
+  //update the legend
+  var legendSVG = d3.select("#colour_range svg");
+  legendSVG.selectAll("*").remove(); // clearing previous legend
 
-      //making legend gradient
-      var defs = legendSVG.append("defs");
-      var linearGradient = defs.append("linearGradient")
-          .attr("id", "linear-gradient");
+  //making legend gradient
+  var defs = legendSVG.append("defs");
+  var linearGradient = defs.append("linearGradient")
+      .attr("id", "linear-gradient");
 
-      linearGradient.selectAll("stop")
-          .data(colorScale.ticks().map((t, i, n) => ({ offset: `${100 * i / n.length}%`, color: colorScale(t) })))
-          .enter().append("stop")
-          .attr("offset", d => d.offset)
-          .attr("stop-color", d => d.color);
+  linearGradient.selectAll("stop")
+      .data(colorScale.ticks().map((t, i, n) => ({ offset: `${100 * i / n.length}%`, color: colorScale(t) })))
+      .enter().append("stop")
+      .attr("offset", d => d.offset)
+      .attr("stop-color", d => d.color);
 
-      // Draw gradient rectangle
-      legendSVG.append("rect")
-          .attr("width", 134)
-          .attr("height", 16)
-          .style("fill", "url(#linear-gradient)");
+  // Draw gradient rectangle
+  legendSVG.append("rect")
+      .attr("width", 134)
+      .attr("height", 16)
+      .style("fill", "url(#linear-gradient)");
 
-      // Add min and max labels
-      legendSVG.append("text")
-          .attr("x", -8)
-          .attr("y", 12)
-          .attr("class", "legend_label")
-          .text(minVictims);
+  // Add min and max labels
+  legendSVG.append("text")
+      .attr("x", -8)
+      .attr("y", 12)
+      .attr("class", "legend_label")
+      .text(minVictims);
 
-      legendSVG.append("text")
-          .attr("x", 146)
-          .attr("y", 12)
-          .attr("class", "legend_label")
-          .attr("text-anchor", "end")
-          .text(maxVictims);
+  legendSVG.append("text")
+      .attr("x", 146)
+      .attr("y", 12)
+      .attr("class", "legend_label")
+      .attr("text-anchor", "end")
+      .text(maxVictims);
 
-    // select the group containing the tiles
-    var tilesContainer = d3.select("#tiles_container");
-    var textContainer = d3.select("#names_container");
+  // select the group containing the tiles
+  var tilesContainer = d3.select("#tiles_container");
+  var textContainer = d3.select("#names_container");
+  
+  // select the tooltip element
+  var tooltip = d3.select("#tooltip");
+
+  // apply colors to the tiles based on the number of victims
+  tilesContainer.selectAll("rect").each(function() {
+    var tile = d3.select(this);
+    var regionCode = tile.attr("id");
+    var regionVictims = victimCounts.get(regionCode);
+    var textElement = d3.select("#name_" + regionCode);
+    var fillColor;
+    var textColor;
+    if (regionVictims !== undefined) {
+      fillColor = colorScale(regionVictims);
+      // dynamic text color based on perceived brightness
+      textColor = getContrastColor(fillColor);
+    } else {
+      fillColor = "url(#diagonalHatch)"; // no data tiles
+      textColor = "rgb(255, 255, 255)";
+    }
+
+    tile.style("fill", fillColor);
+    textElement.style("fill", textColor);
+
+    // Remove existing event listeners
+    tile.on("mouseover", null)
+    .on("mouseout", null)
+    .on("click", null);
     
-    // select the tooltip element
-    var tooltip = d3.select("#tooltip");
+    // hover on tiles with data
+    if (regionVictims !== undefined) {
+      tile.on("mouseover", function(event) {
+        // tile dimensions and position
+        var tileRect = tile.node().getBoundingClientRect();
+        var tileLeft = tileRect.left + window.scrollX;
+        var tileTop = tileRect.top + window.scrollY;
+        // tooltip
+        tooltip.style("visibility", "visible")
+              .html(tile.attr("regionNameEn") + "<br> Victims: " + regionVictims)
+              .style("left", (tileLeft + tileRect.width / 2) + "px")
+              .style("top", (tileTop + (tileRect.height / 2)) + "px");
+      })
+      .on("mouseout", function() {
+        // hide tooltip on mouseout
+        tooltip.style("visibility", "hidden");
+      })
+      .on("click", function() {
+          // reset previously selected tiles
+          textContainer.selectAll("text").style("font-weight", "normal");
 
-          // apply colors to the tiles based on the number of victims
-          tilesContainer.selectAll("rect").each(function() {
-            var tile = d3.select(this);
-            var regionCode = tile.attr("id");
-            var regionVictims = victimCounts.get(regionCode);
-            var textElement = d3.select("#name_" + regionCode);
-            var fillColor;
-            var textColor;
-            if (regionVictims !== undefined) {
-              fillColor = colorScale(regionVictims);
-              // dynamic text color based on perceived brightness
-              textColor = getContrastColor(fillColor);
-            } else {
-              fillColor = "url(#diagonalHatch)"; // no data tiles
-              textColor = "rgb(255, 255, 255)";
-            }
-        
-            tile.style("fill", fillColor);
-            textElement.style("fill", textColor);
+          // clicked-on tile is bold
+          textElement.style("font-weight", "bold");
+          // filter by the selected region
+          var cases = filteredData.filter(function(d) {
+            return d.region_code === regionCode;
+          });
 
-            // Remove existing event listeners
-            tile.on("mouseover", null)
-            .on("mouseout", null)
-            .on("click", null);
-            
-            // hover on tiles with data
-            if (regionVictims !== undefined) {
-              tile.on("mouseover", function(event) {
-                // tile dimensions and position
-                var tileRect = tile.node().getBoundingClientRect();
-                var tileLeft = tileRect.left + window.scrollX;
-                var tileTop = tileRect.top + window.scrollY;
-                // tooltip
-                tooltip.style("visibility", "visible")
-                      .html(tile.attr("regionNameEn") + "<br> Victims: " + regionVictims)
-                      .style("left", (tileLeft + tileRect.width / 2) + "px")
-                      .style("top", (tileTop + (tileRect.height / 2)) + "px");
-              })
-              .on("mouseout", function() {
-                // hide tooltip on mouseout
-                tooltip.style("visibility", "hidden");
-              })
-              .on("click", function() {
-                  // reset previously selected tiles
-                  textContainer.selectAll("text").style("font-weight", "normal");
+          // generate table
+          var tableHTML = "<thead><tr><th>Case Number</th><th>Region (RU)</th><th>Article</th><th>Fatalities</th><th>Victims</th><th>Crimes</th><th>Crime Type</th><th>Source</th><th>Full text (RU)</th></tr></thead><tbody>";
+          cases.forEach(function(d) {
+            let caseURL = '';
+            if(d.case_text_url !== ''){
+              caseURL = `<a href="${d.case_text_url}" class="case_download"><i class="bi bi-download case_download_icon"></i></a>`
+              }
+            tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_fatalities + "</td><td>" + d.n_victims + "</td><td>" + d.n_crimes + "</td><td>" + d.crime_type + "</td><td>" + d.source + "</td><td>" + caseURL + "</td></tr>";
+          });
+          tableHTML += "</tbody>";
 
-                  // clicked-on tile is bold
-                  textElement.style("font-weight", "bold");
-                  // filter by the selected region
-                  var cases = filteredData.filter(function(d) {
-                    return d.region_code === regionCode;
-                  });
-        
-                  // generate table
-                        var tableHTML = "<thead><tr><th>Case Number</th><th>Region (RU)</th><th>Article</th><th>Fatalities</th><th>Victims</th><th>Crimes</th><th>Crime Type</th><th>Source</th></tr></thead><tbody>";
-                        cases.forEach(function(d) {
-                          tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_fatalities + "</td><td>" + d.n_victims + "</td><td>" + d.n_crimes + "</td><td>" + d.crime_type + "</td><td>" + d.source + "</td></tr>";
-                        });
-                        tableHTML += "</tbody>";
-
-                        // filling the table
-                        document.querySelector("#data-table").innerHTML = tableHTML;
-                      });
-                  }
-                });
+          // filling the table
+          document.querySelector("#data-table").innerHTML = tableHTML;
+        });
+          }
+    });
     
     // initial table with all cases
-    var initialTableHTML = "<thead><tr><th>Case Number</th><th>Region (RU)</th><th>Article</th><th>Fatalities</th><th>Victims</th><th>Crimes</th><th>Crime Type</th><th>Source</th></tr></thead><tbody>";
+
+    var initialTableHTML = "<thead><tr><th>Case Number</th><th>Region (RU)</th><th>Article</th><th>Fatalities</th><th>Victims</th><th>Crimes</th><th>Crime Type</th><th>Source</th><th>Full text (RU)</th></tr></thead><tbody>";
     filteredData.forEach(function(d) {
-      initialTableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_fatalities + "</td><td>" + d.n_victims + "</td><td>" + d.n_crimes + "</td><td>" + d.crime_type + "</td><td>" + d.source + "</td></tr>";
+      let caseURL = '';
+      if(d.case_text_url !== ''){
+        caseURL = `<a href="${d.case_text_url}" class="case_download"><i class="bi bi-download case_download_icon"></i></a>`
+        }
+      initialTableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_fatalities + "</td><td>" + d.n_victims + "</td><td>" + d.n_crimes + "</td><td>" + d.crime_type + "</td><td>" + d.source + "</td><td>" + caseURL + "</td></tr>";
     });
     initialTableHTML += "</tbody>";
 

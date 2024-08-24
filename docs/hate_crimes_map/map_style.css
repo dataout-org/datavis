@@ -56,7 +56,7 @@
 }
 
 #table-container {
-  max-width:840px;
+  max-width: 900px;
   max-height: 460px;
   overflow-y: scroll ;
 }
@@ -88,10 +88,23 @@ tbody tr:hover{
 }
 
 .table thead th {
-  vertical-align:top;
+  vertical-align: top !important;
   position: sticky;
-  top:0;
+  top: 0;
   background-color: rgb(204, 204, 204);
+}
+
+.case_download_icon {
+  font-size: 0.8rem;
+}
+
+.case_download {
+  color:rgb(29, 29, 29) !important;
+}
+
+.case_download:hover {
+  color:black !important;
+  text-decoration: none !important;
 }
 
 #names_container .name {
