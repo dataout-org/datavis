@@ -108,5 +108,19 @@
 
 .n_fatalities {
   fill:rgb(112, 0, 0);
+}
 
+.background_law_info {
+  position: absolute;
+  font-size: 10px;
+  color: rgb(177, 177, 177);
+  padding-top: 12px;
+}
+
+.law_tooltip {
+  font-size: 10px !important;
+}
+
+.law_tooltip > .tooltip-inner {
+  background-color: rgba(0, 0, 0, 0.8);
 }

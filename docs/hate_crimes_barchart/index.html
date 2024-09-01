@@ -14,6 +14,8 @@ Released under the CC-BY-SA 4.0 license
 <link rel="stylesheet" href="barchart_style.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
@@ -30,10 +32,10 @@ Released under the CC-BY-SA 4.0 license
 <div id="content_to_fetch">
   <div class="container-fluid" id="barchart">
     <div class="row chart_title_h1">
-        <p>The number of hate crimes spikes after descriminatory laws are enacted</p>
+        <p>The number of hate crimes spikes after descriminatory laws are introduced</p>
     </div>
     <div class="row info_box">
-        <p class="info_box_text">Yearly number of hate crimes collected from court decisions. The total number of crimes per year includes the number of victims, which includes the number of fatalities. The number of crimes is always higher than the number of victims because usually several crimes are commited against one victims (for example, battery and robbery).</p>
+        <p class="info_box_text">The total number of hate crimes by year collected from court decisions includes the number of victims, which in its turn includes the number of fatalities. The number of crimes is always higher than the number of victims because several crimes could be commited against one victims (for example, battery and robbery).</p>
     </div>
     <div class="row legend_bar">
            <div class="col-md-auto n_crimes_legend">N crimes total</div>
@@ -45,6 +47,16 @@ Released under the CC-BY-SA 4.0 license
     <div class="row chart">
         <div class="col-md-auto chart_col" id="chart_col">
           <!-- bar chart goes here -->
+            <div class="background_law_info" id="law_12_13">
+                <span class="law_info_text">Introduction of the "gay propaganda" law</span>
+                <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="law_tooltip" data-bs-title="Additional info about the law"></i>
+            </div>
+
+            <div class="background_law_info" id="law_22_23">
+                    <span class="law_info_text">Amendments to the "gay propaganda" law and the Supreme Court decision</span>
+                    <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="law_tooltip" data-bs-title="Additional info about the law"></i>
+            </div>
+
         </div>
       </div>
   
@@ -68,6 +80,7 @@ Released under the CC-BY-SA 4.0 license
     // fetching the data
     d3.csv("hatecrimes_overall_2010_2023.csv").then(function(data) {
         data.forEach(d => {
+                d.year = d.year.toString().trim(); // convert years to str, trim whitespace
                 d.n_crimes = +d.n_crimes; // N crimes
                 d.n_victims = +d.n_victims; // N victims
                 d.n_fatalities = +d.n_fatalities; // N fatalities
@@ -99,6 +112,50 @@ Released under the CC-BY-SA 4.0 license
         // tick line
         svg.selectAll(".domain")
             .attr("class", "x_line");
+
+        const backgroundLawMargin = 2;
+
+        // law 2012–2013 background
+        const x0_12_13 = x("2012") - backgroundLawMargin; // start position
+        const x1_12_13  = x("2013") + x.bandwidth() + backgroundLawMargin; // end position
+        const backgroundLawWidthTotal = x1_12_13 - x0_12_13; // total width
+
+        svg.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_12_13)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal)
+            .attr("height", height + 36)
+            .style("fill", "none")
+            .style("stroke", "rgb(151, 151, 151)")
+            .style("stroke-dasharray", "6, 6")
+            .style("stroke-width", .6);
+
+        // positioning of the info
+        const info_12_13 = document.getElementById("law_12_13");
+        info_12_13.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_12_13.style.left = `${(x0_12_13 + backgroundLawWidthTotal / 2) - 10}px`;
+
+
+        // law 2022–2023 background
+        const x0_22_23 = x("2022") - backgroundLawMargin; // start position
+        const x1_22_23  = x("2023") + x.bandwidth() + backgroundLawMargin; // end position
+
+        svg.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_22_23)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal) // width stays the same for 2 bars
+            .attr("height", height + 36)
+            .style("fill", "none")
+            .style("stroke", "rgb(151, 151, 151)")
+            .style("stroke-dasharray", "6, 6")
+            .style("stroke-width", .6);
+
+        // positioning of the info
+        const info_22_23 = document.getElementById("law_22_23");
+        info_22_23.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_22_23.style.left = `${(x0_22_23 + backgroundLawWidthTotal / 2) - 10}px`;
 
         // N crimes bars
         svg.selectAll(".n_crimes")
@@ -165,6 +222,9 @@ Released under the CC-BY-SA 4.0 license
 
            
     });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
   </script>
 
 </div>
