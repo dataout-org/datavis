@@ -1,0 +1,93 @@
+[
+    {"type":"year_events",
+        "year": 1993,
+        "events": [
+        {
+            "description": "Sexual contact between men is decriminalised",
+            "info": "The changes in the article 121 'Sodomy' of RSFSR's Criminal Code that decriminalised consensual sexual act between men",
+            "progressive": "True"
+        }
+    ]
+    },
+
+    {"type":"year_events",
+        "year": 1999,
+        "events": [
+        {
+            "description": "Depathologising homosexuality",
+            "info": "Extra info",
+            "progressive": "True"
+        }
+    ]
+    },
+
+    {"type":"year_span",
+        "start_year": 2000,
+        "end_year": 2005,
+        "span_description":"No necessary policies",
+        "span_info":"Description",
+        "progressive": "False"},
+
+    {"type":"year_events",
+        "year": 2006,
+        "events": [
+        {
+            "description": "The first regional law agains 'gay propaganda'",
+            "info": "Extra info",
+            "progressive": "False"
+        }
+    ]},
+
+    {"type":"year_span",
+        "start_year": 2011,
+        "end_year": 2013,
+        "span_description":"11 regions adopted the 'gay propaganda' law",
+        "span_info":"Description",
+        "progressive": "False"},
+
+    {"type":"year_events",
+        "year": 2013,
+        "events": [
+        {
+            "description": "The 'gay propaganda' law is expanded to the whole country",
+            "info": "Extra info",
+            "progressive": "False"
+        }
+    ]},
+
+    {"type":"year_events",
+        "year": 2020,
+        "events": [
+        {
+            "description": "Constitutional Amendments",
+            "info": "Extra info",
+            "progressive": "False"
+        }
+    ]},
+
+    {"type":"year_events",
+        "year": 2022,
+        "events": [
+        {
+            "description": "Amendments to the 'gay propaganda' law",
+            "info": "Extra info",
+            "progressive": "False"
+        }
+    ]},
+
+    {"type":"year_events",
+        "year": 2022,
+        "events": [
+        {
+            "description": "Transgender transition ban",
+            "info": "Extra info",
+            "progressive": "False"
+        },
+        {
+            "description": "Supreme Court: 'International LGBT movement' is an extremist organisation",
+            "info": "Extra info",
+            "progressive": "False"
+        }
+    ]}
+
+]
