@@ -1,0 +1,87 @@
+body {
+  background-color: #1e1e1e !important;
+}
+
+#github_description {
+  background-color: #1e1e1e;
+}
+
+#text_description {
+	color: rgb(206, 206, 206);
+	font-size: 12px;
+  padding: 10px !important;
+  padding-bottom: 20px !important;
+	margin: 0px !important;
+}
+
+.timeline-container {
+  max-width: 900px;
+  margin-left: 12px !important;
+  height: fit-content;
+  position: relative;
+}
+
+.tick_label {
+  font-size: 12px;
+}
+
+.event {
+  display: flex;
+  align-items: start;
+  padding: 0px 4px 0px 4px !important;
+}
+
+.event_circle_progressive {
+  color: grey;
+  font-size: 0.8rem;
+  margin-right: 4px;
+}
+
+.event_circle_not_progressive {
+  color: darkred;
+  font-size: 0.8rem;
+  margin-right: 4px;
+}
+
+.event_text {
+  font-size: 12px;
+  font-weight: 200;
+  color: white;
+}
+
+.info_icon {
+  color: #979797;
+  font-size: 0.8rem;
+}
+
+.tooltip-inner {
+  background-color: #979797 !important;
+  color: #000000 !important;
+  font-size: 12px !important;
+  padding: 4px !important;
+  text-align: start !important;
+}
+
+.event_pulse {
+  animation: pulse 2s infinite;
+  color: red !important;
+  font-size: 0.8rem;
+  margin-right: 4px;
+}
+
+/* keyframes for the pulse effect */
+@keyframes pulse {
+  0% {
+      transform: scale(0.8);
+      opacity: 0.5;
+  }
+  50% {
+      transform: scale(1);
+      opacity: 0.8;
+  }
+  100% {
+      transform: scale(0.8);
+      opacity: 1;
+  }
+}
+
