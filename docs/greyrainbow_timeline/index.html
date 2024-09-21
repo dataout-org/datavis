@@ -156,16 +156,18 @@ Released under the CC-BY-SA 4.0 license
 
     function drawYearEvents(year, events) {
 
+
         // this is a common row container for all events per year
         let eventsDiv = container.append('div')
                 .attr('id',`events_container_${year}`)
                 .attr('class', 'row')
                 .style('position', 'absolute')
                 .style('top', `${yPositions[year]}px`)
-                .style('left', `${margin.left + 72}px`);
+                .style('left', `${margin.left + 56.8}px`);
 
             events.forEach((event, index) => {
                 if (timelineYears.includes(year)) {
+
                     let eventDiv = eventsDiv.append('div')
                         .attr('id', `event_${year}_${index}`)
                         .attr('class', `col-md-${12/events.length} event`); // N columns depend on N events
