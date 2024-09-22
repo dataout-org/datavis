@@ -15,17 +15,15 @@ body {
 }
 
 .above_timeline {
-  margin: 0px 0px 20px 0px !important;
-	background-color: #979797;
-	color: black;
-	padding: 12px;
+	color: white;
+	padding-left: 8px;
 	border-radius: 4px;
-	font-size: 12px;
+	font-size: 14px;
 	max-width: 840px;
 }
 
 .text_above_timeline {
-  margin-bottom: 0px !important;
+  margin: 10px 0px 10px 0px !important;
 }
 
 .timeline-container {
@@ -38,6 +36,10 @@ body {
 
 .tick_label {
   font-size: 12px;
+}
+
+.event_div {
+  max-width: 340px;
 }
 
 .event {
@@ -55,6 +57,7 @@ body {
 .badge_progr {
   padding: 2px;
   background-color: white;
+  color: #3f3f3f;
   border-radius: 4px;
   font-weight: 600;
 }

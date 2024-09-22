@@ -184,7 +184,7 @@ Released under the CC-BY-SA 4.0 license
         // this is a common row container for all events per year
         let eventsDiv = container.append('div')
                 .attr('id',`events_container_${year}`)
-                .attr('class', 'row')
+                .attr('class', 'row event_div')
                 .style('position', 'absolute')
                 .style('top', `${yPositions[year]}px`)
                 .style('left', `${margin.left + 56.8}px`);
@@ -208,11 +208,11 @@ Released under the CC-BY-SA 4.0 license
                             .attr('class','bi bi-circle-fill event_circle_not_progressive');
                     }
 
-                    eventDiv.append('span')
+                    let spanDiv = eventDiv.append('span')
                         .attr('class', 'event_text')
                         .text(event.description);
 
-                    eventDiv.append('i')
+                    spanDiv.append('i')
                         .attr('class', 'bi bi-info-circle-fill info_icon')
                         .attr('data-bs-toggle', 'tooltip')
                         .attr('data-bs-placement', 'bottom')
@@ -243,17 +243,17 @@ Released under the CC-BY-SA 4.0 license
         
         container.append('div')
             .attr('id',`span_container_${startYear}_${endYear}`)
-            .attr('class', 'row')
+            .attr('class', 'row event_div')
             .style('position', 'absolute')
             // text in the middle of the span
             .style('top', `${yPositions[startYear] + (yPositions[endYear]-yPositions[startYear])/2}px`) 
             .style('left', `${margin.left + 90}px`);
 
-        d3.select(`#span_container_${startYear}_${endYear}`).append('span')
+        let spanDiv = d3.select(`#span_container_${startYear}_${endYear}`).append('span')
             .attr('class', 'event_text')
             .text(spanDescription);
 
-        d3.select(`#span_container_${startYear}_${endYear}`).append('i')
+        spanDiv.append('i')
             .attr('class', 'bi bi-info-circle-fill info_icon')
             .attr('data-bs-toggle', 'tooltip')
             .attr('data-bs-placement', 'bottom')

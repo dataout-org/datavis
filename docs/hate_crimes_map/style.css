@@ -37,11 +37,11 @@
   font-size: 12px;
   color: white;
   fill: white;
+  margin: 0px !important;
 }
 
 #n_victims_text {
   padding-right: 0px;
-  margin-top: 4px !important;
 }
 
 #no_data {
@@ -65,6 +65,12 @@
   margin-left: 0 !important;
 }
 
+.table_explainer {
+  color: white;
+  padding-left: 8px;
+  font-size: 14px;
+  max-width: 840px;
+}
 
 #data-table tbody{
   background-color: rgb(244, 244, 244);
@@ -92,6 +98,19 @@ tbody tr:hover{
   position: sticky;
   top: 0;
   background-color: rgb(204, 204, 204);
+}
+
+.badge_premeditated_yes {
+  padding: 2px;
+  border-radius: 4px;
+  background-color: darkred;
+  color: white;
+}
+
+.badge_premeditated_no {
+  padding: 2px;
+  border-radius: 4px;
+  background-color: grey;
 }
 
 .case_download_icon {

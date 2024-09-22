@@ -51,13 +51,7 @@ Released under the CC-BY-SA 4.0 license
 
       <div class="col-md-auto" id="no_data">
           <svg width="80" height="16">
-              <defs>
-                  <pattern id="diagonalHatch_legend" width="16" height="16">
-                      <path d="M 0 16 L 16 0 M 6 16 L 16 6 M 12 16 L 16 12 M 10 0 L 0 10 M 4 0 L 0 4"
-                      style="stroke:#777; stroke-width:1" />
-                  </pattern>
-              </defs>
-          <rect width="16" height="16" style='fill: url("#diagonalHatch_legend");'></rect>
+          <rect width="16" height="16" style='fill: #333;'></rect>
           <text x="20" y="12" class="legend_label">No data</text>
           </svg>
       </div>
@@ -66,11 +60,6 @@ Released under the CC-BY-SA 4.0 license
   </div>
 
     <svg id="rf_map">
-        <defs>
-            <pattern id="diagonalHatch" width="44.2166" height="44.2166">
-                <path d="M 0 14 L 14 0 M 0 44 L 44 0 M 0 24 L 24 0 M 0 34 L 34 0 M 44 10 L 10 44 M 43 30 L 30 44 M 44 20 L 20 44" style="stroke:#8c8c8c; stroke-width:0.7"/>
-            </pattern>
-        </defs>
     </svg>
       
     
@@ -80,12 +69,15 @@ Released under the CC-BY-SA 4.0 license
 
   <div class="container-fluid" id="controls">
     <div class="row" id="year_selectors">
-        <div class="col-md-auto" id="col_pad"><p class="all_years">Filter by year</p></div>
         <div class="col-md-auto" id="col_pad"><select class="form-select" id="yearDropdown"></select></div>
         <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allYearsButton">Reset years</button></div>
         <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allRegionsButton">Reset regions</button></div>
         <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="playButton"> <i class="bi bi-play-circle"></i> Dynamic by years</button></div>
   </div>
+  </div>
+
+  <div class="container-fluid table_explainer">
+    <p>Text explaining the table below</p>
   </div>
     
   <div class="container-fluid" id="table-container">
@@ -276,14 +268,14 @@ function updateMap(data, selectedYear) {
       // dynamic text color based on perceived brightness
       textColor = getContrastColor(fillColor);
     } else {
-      fillColor = "grey"; //"url(#diagonalHatch)"; // no data tiles
-      textColor = "rgb(255, 255, 255)";
+      fillColor = "#333"; // no data tiles fill
+      textColor = "#828282"; // no data tiles text
     }
 
     tile.style("fill", fillColor);
     textElement.style("fill", textColor);
 
-    // Remove existing event listeners
+    // remove existing event listeners
     tile.on("mouseover", null)
     .on("mouseout", null)
     .on("click", null);
@@ -317,40 +309,45 @@ function updateMap(data, selectedYear) {
           });
 
           // generate table
-          var tableHTML = "<thead><tr><th>Case Number</th><th>Region (RU)</th><th>Article</th><th>Fatalities</th><th>Victims</th><th>Crimes</th><th>Crime Type</th><th>Source</th><th>Full text (RU)</th></tr></thead><tbody>";
-          cases.forEach(function(d) {
-            let caseURL = '';
-            if(d.case_text_url !== ''){
-              caseURL = `<a href="${d.case_text_url}" class="case_download"><i class="bi bi-download case_download_icon"></i></a>`
-              }
-            tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_fatalities + "</td><td>" + d.n_victims + "</td><td>" + d.n_crimes + "</td><td>" + d.crime_type + "</td><td>" + d.source + "</td><td>" + caseURL + "</td></tr>";
-          });
-          tableHTML += "</tbody>";
-
-          // filling the table
-          document.querySelector("#data-table").innerHTML = tableHTML;
+          generateTable(cases);
         });
           }
     });
     
     // initial table with all cases
-
-    var initialTableHTML = "<thead><tr><th>Case Number</th><th>Region (RU)</th><th>Article</th><th>Fatalities</th><th>Victims</th><th>Crimes</th><th>Crime Type</th><th>Source</th><th>Full text (RU)</th></tr></thead><tbody>";
-    filteredData.forEach(function(d) {
-      let caseURL = '';
-      if(d.case_text_url !== ''){
-        caseURL = `<a href="${d.case_text_url}" class="case_download"><i class="bi bi-download case_download_icon"></i></a>`
-        }
-      initialTableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_fatalities + "</td><td>" + d.n_victims + "</td><td>" + d.n_crimes + "</td><td>" + d.crime_type + "</td><td>" + d.source + "</td><td>" + caseURL + "</td></tr>";
-    });
-    initialTableHTML += "</tbody>";
-
-    document.querySelector("#data-table").innerHTML = initialTableHTML;
+    generateTable(filteredData);
   
 }
 
-//resetting region selection when "all years" is clicked
+// generate table: used for the full table and filtered
+function generateTable(data) {
+  // header
+  let tableHTML = "<thead><tr><th>Case number</th> <th>Region</th> <th>Article</th> <th>Crimes</th> <th>Victims</th> <th>Fatalities</th> <th>Premeditated</th> <th>Bias motive</th> <th>Full text (RU)</th> </tr> </thead> <tbody>";
 
+    data.forEach(function(d) {
+      // formatting cell values 
+       // download case
+       let caseURL = '';
+      if(d.case_text_url !== ''){
+        caseURL = `<a href="${d.case_text_url}" class="case_download"><i class="bi bi-download case_download_icon"></i></a>`
+        }
+        // premeditated badge
+      let premeditatedValue = d.premeditated_en
+      if (premeditatedValue === 'yes') {
+        premeditatedValue = `<span class="badge_premeditated_yes">${premeditatedValue}</span>`;
+      }
+      if (premeditatedValue === 'no') {
+        premeditatedValue = `<span class="badge_premeditated_no">${premeditatedValue}</span>`;
+      }
+      tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + d.bias_motive_en + "</td><td>" + caseURL + "</td></tr>";
+  });
+
+  tableHTML += "</tbody>";
+
+  document.querySelector("#data-table").innerHTML = tableHTML;
+}
+
+//resetting region selection when "all years" is clicked
 function resetRegionSelection() {
   // Reset the font-weight of all region names
   d3.select("#names_container").selectAll("text").style("font-weight", "normal");
