@@ -3,8 +3,8 @@
         "year": 1993,
         "events": [
         {
-            "description": "Sexual contact between men is decriminalised",
-            "info": "The changes in the article 121 'Sodomy' of RSFSR's Criminal Code decriminalised consensual sexual act between men",
+            "description": "Decriminalisation of men's homosexuality",
+            "info": "Consensual sexual acts between men were decriminalized with the changes introduced into the article 121 'Sodomy' of RSFSR's Criminal Code. Women's homosexuality was not initially mentioned in this article.",
             "progressive": "True"
         }
     ]
@@ -15,7 +15,7 @@
         "events": [
         {
             "description": "Depathologising homosexuality",
-            "info": "Extra info",
+            "info": "Russia adopted a new classification of diseases (ICD-10), which excluded the diagnosis of \"homosexuality\".",
             "progressive": "True"
         }
     ]
@@ -24,16 +24,16 @@
     {"type":"year_span",
         "start_year": 2000,
         "end_year": 2005,
-        "span_description":"No necessary policies",
-        "span_info":"Description",
+        "span_description":"No meaningful changes: necessary laws prohibiting discrimination based on sexual orientation and gender identity were not adopted.",
+        "span_info":"Those convicted of sodomy were not included as victims of political repression and were not subject to rehabilitation.",
         "progressive": "False"},
 
     {"type":"year_events",
         "year": 2006,
         "events": [
         {
-            "description": "The first regional law agains 'gay propaganda'",
-            "info": "Extra info",
+            "description": "The first regional \"gay propaganda\" law",
+            "info": "Start of institutional discrimination. The \"gay propaganda\" law in the Ryazan region banned the so-called \"propaganda of homosexuality among minors\".",
             "progressive": "False"
         }
     ]},
@@ -41,7 +41,7 @@
     {"type":"year_span",
         "start_year": 2011,
         "end_year": 2013,
-        "span_description":"11 regions adopted the 'gay propaganda' law",
+        "span_description":"11 more regions adopted the \"gay propaganda\" law",
         "span_info":"Description",
         "progressive": "False"},
 
@@ -49,8 +49,8 @@
         "year": 2013,
         "events": [
         {
-            "description": "The 'gay propaganda' law is expanded to the whole country",
-            "info": "Extra info",
+            "description": "The \"gay propaganda\" law is extended nationwide",
+            "info": "The first version of the Federal law on \"gay propaganda\". Law No. 135-FZ introduced \"propaganda of non-traditional sexual relations among minors\" as an administrative offense.",
             "progressive": "False"
         }
     ]},
@@ -60,7 +60,7 @@
         "events": [
         {
             "description": "Constitutional Amendments",
-            "info": "Extra info",
+            "info": "Article 72 of the Constitution defined marriage as the union of a man and a woman. The further adoption of laws on same-sex unions would be impossible without constitutional reform.",
             "progressive": "False"
         }
     ]},
@@ -69,8 +69,8 @@
         "year": 2022,
         "events": [
         {
-            "description": "Amendments to the 'gay propaganda' law",
-            "info": "Extra info",
+            "description": "The second version of the \"gay propaganda\" law",
+            "info": "Federal Law No. 479-FZ established administrative responsibility for \"propaganda of non-traditional sexual relations\" in general (not only among minors). In addition, this law banned the so-called \"propaganda of pedophilia\" and \"propaganda of gender change\"",
             "progressive": "False"
         }
     ]},
@@ -80,12 +80,12 @@
         "events": [
         {
             "description": "Transgender transition ban",
-            "info": "Extra info",
+            "info": "Federal Law No. 386-FZ abolished the existing system of medical and legal procedures for transgender transition since Soviet times. Trans people effectively no longer have the opportunity to receive necessary assistance.",
             "progressive": "False"
         },
         {
             "description": "Supreme Court: 'International LGBT movement' is an extremist organisation",
-            "info": "Extra info",
+            "info": "Hybrid recriminalization of homosexuality. By its Decision of November 30, the Supreme Court of Russia labeled the so-called \"International LGBT Movement\" as an extremist organization. This effectively means that open identification as LGBTQ+ can lead to criminal liability for participation in an extremist organization.",
             "progressive": "False"
         }
     ]}

@@ -30,7 +30,13 @@ Released under the CC-BY-SA 4.0 license
 <!--  The content below is fetched by greyrainbow.dataout.org -->
 
 <div id="content_to_fetch">
+    <div class="container-fluid timeline_legend">
+        <div class="row above_timeline">
+            <p class="text_above_timeline">In post-Soviet Russia, there were <i class="bi bi-circle-fill event_circle_progressive"></i><span class="badge_progr">progressive</span> policies decriminalising (1993) and depathologising (1999) homosexuality. However, these policies did not lead to furhter laws prohibiting discrimination based on sexual orientation and gender identity. In 2006, institutional discrimination started shaping with the "gay propaganda" law. See the timeline of Russian <i class="bi bi-circle-fill event_circle_not_progressive"></i><span class="badge_discr">discriminatory</span> policies below.</p>
+        </div>
+     </div>
   <div class="container-fluid timeline-container">
+
     <svg id="timeline"></svg>
   </div>
 
@@ -128,6 +134,22 @@ Released under the CC-BY-SA 4.0 license
         return yPositions;
     }
 
+    const barChartData = [
+    { year: 2010, value: 46 },
+    { year: 2011, value: 68 },
+    { year: 2012, value: 57 },
+    { year: 2013, value: 100 },
+    { year: 2014, value: 138 },
+    { year: 2015, value: 117 },
+    { year: 2016, value: 127 },
+    { year: 2017, value: 117 },
+    { year: 2018, value: 98 },
+    { year: 2019, value: 101 },
+    { year: 2020, value: 87 },
+    { year: 2021, value: 72 },
+    { year: 2022, value: 56 },
+    { year: 2023, value: 97 }];
+
     function drawEvents(dataToDraw) {
 
         dataToDraw.forEach(timelineInstance => {
@@ -148,14 +170,16 @@ Released under the CC-BY-SA 4.0 license
             d3.select('#event_circle_2023_1')
                 .attr('class', 'bi bi-record-circle event_pulse');
 
+
             // activating tooltips
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         });
+
+        //drawBarChart();
     }
 
     function drawYearEvents(year, events) {
-
 
         // this is a common row container for all events per year
         let eventsDiv = container.append('div')
@@ -202,6 +226,7 @@ Released under the CC-BY-SA 4.0 license
 
         // draw the span line
         svg.append('line')
+            .attr('id',`span_line_${startYear}_${endYear}`)
             .attr('x1', 52)
             .attr('x2', 52)
             .attr('y1', yPositions[startYear])
@@ -235,7 +260,92 @@ Released under the CC-BY-SA 4.0 license
             .attr('title', spanInfo)
             .style('margin-left', '4px');
 
+        d3.select('#span_line_2000_2005').style('stroke','grey');
+
     }
+
+    function drawBarChart() {
+
+        hideSelectedTimelineEvents();
+
+        const maxBarLength = 280;
+
+        // Find the maximum value in the data for scaling
+        const maxValue = d3.max(barChartData, d => d.value);
+
+        // Create a scale for bar lengths
+        const xScale = d3.scaleLinear()
+            .domain([0, maxValue])
+            .range([0, maxBarLength]);
+
+
+        barChartData.forEach(d => {
+            // Append a container div for each bar and its label
+            const barContainer = container.append('div')
+                .attr('class', 'hc_bar')
+                .attr('id',`hc_bar_${d.year}`)
+                .style('position', 'absolute')
+                .style('top', `${yPositions[d.year]}px`) // Center the bar vertically
+                .style('left', `${margin.left + 48}px`) // Position next to the timeline
+                .style('display', 'flex')
+                .style('align-items', 'center'); // Vertically center the label
+
+            // Append the bar div
+            const bar = barContainer.append('div')
+                .attr('class', 'single_bar')
+                .style('width', '0px') // Start width at 0 for animation
+                .style('height', '8px')
+                .style('background-color', 'lightgrey')
+                .style('border-radius', '8px')
+                .style('transition', 'width 0.5s ease-out'); // Smooth transition for width
+
+            // Animate the bar width to represent the value
+            bar.transition()
+                .duration(900)
+                .style('width', `${xScale(d.value)}px`);
+
+            // Append the label span
+            barContainer.append('span')
+                .attr('class', 'bar_label')
+                .text(d.value) // Display the value as the label
+                .style('margin-left', '8px') // Space between bar and label
+                .style('font-size', '10px')
+                .style('color', '#fff')
+                .style('opacity', 0) // Start hidden for fade-in effect
+                .transition()
+                .duration(5200)
+                .style('opacity', 1); // Fade-in the label
+        });
+
+        container.append('div')
+            .attr('class','bi bi-info-circle-fill event_circle_not_progressive')
+            .attr('id','hc_bar_event_explainer_2012')
+            .attr('data-bs-toggle','tooltip')
+            .attr('data-bs-placement','bottom')
+            .attr('data-bs-original-title','Extra info');
+
+
+    }
+
+    function hideSelectedTimelineEvents() {
+
+        // hiding events for 2010–2023
+        d3.select('#span_container_2011_2013')
+            .style('opacity', 0)
+            .style('transition', 'opacity 0.5s ease-out');
+
+        d3.select('#span_line_2011_2013')
+            .style('opacity', 0)
+            .style('transition', 'opacity 0.5s ease-out');
+
+        for (let year = 2010; year <= 2023; year++) {
+            d3.select(`#events_container_${year}`)
+                .style('opacity', 0)
+                .style('transition', 'opacity 0.5s ease-out');
+        }
+    }
+
+    
 
     </script>
 
