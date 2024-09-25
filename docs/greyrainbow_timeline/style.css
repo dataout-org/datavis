@@ -140,3 +140,8 @@ body {
   }
 }
 
+@media (max-width: 576px) {
+  .event_div {
+    max-width: 286px;
+  }
+}
