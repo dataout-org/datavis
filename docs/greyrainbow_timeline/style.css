@@ -55,7 +55,6 @@ body {
 }
 
 .event_hidden {
-  display: none;
   opacity: 0;
   transform: translateY(-12px);
   transition: opacity 1s ease-out, transform 0.4s ease-out;

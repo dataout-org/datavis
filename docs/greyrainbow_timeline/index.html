@@ -110,7 +110,6 @@ Released under the CC-BY-SA 4.0 license
         .then(function(data) {
             const timelineData = data; 
             drawEvents(timelineData);
-            revealAnimation();
             });
 
     function calculateYPositions(containerHeight,gap93_99,normalGap) {
@@ -171,6 +170,8 @@ Released under the CC-BY-SA 4.0 license
             d3.select('#event_circle_2023_1')
                 .attr('class', 'bi bi-record-circle event_pulse');
         });
+
+        revealAnimation();
 
         // drawBarChart();
 
@@ -374,7 +375,7 @@ Released under the CC-BY-SA 4.0 license
         eventDivs.forEach(el => {
             observer.observe(el);
         });
-}
+    }
 
     </script>
 
