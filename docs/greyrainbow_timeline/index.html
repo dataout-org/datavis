@@ -77,7 +77,7 @@ Released under the CC-BY-SA 4.0 license
         .attr('x2', 0)
         .attr('y1', yPositions[1993])
         .attr('y2', yPositions[1999])
-        .attr('stroke', '#ffffff')
+        .attr('stroke', '#bdbdbd')
         .attr('stroke-width', 1)
         .attr('stroke-dasharray', '6,5');
 
@@ -87,19 +87,19 @@ Released under the CC-BY-SA 4.0 license
         .attr('x2', 0)
         .attr('y1', yPositions[1999])
         .attr('y2', yPositions[2023] + 8)
-        .attr('stroke', '#ffffff')
+        .attr('stroke', '#bdbdbd')
         .attr('stroke-width', 1);
 
     // year labels
     svg.selectAll('.tick text')
         .attr('class','tick_label')
         .attr('x', 36) // labels to the left    
-        .attr('fill', '#ffffff');
+        .attr('fill', '#bdbdbd');
 
     // ticks
     svg.selectAll('.tick line')
         .attr('x2', 6)
-        .attr('stroke', '#ffffff')
+        .attr('stroke', '#bdbdbd')
         .attr('stroke-width', 1);
 
     // adding events
@@ -110,6 +110,7 @@ Released under the CC-BY-SA 4.0 license
         .then(function(data) {
             const timelineData = data; 
             drawEvents(timelineData);
+            revealAnimation();
             });
 
     function calculateYPositions(containerHeight,gap93_99,normalGap) {
@@ -169,14 +170,13 @@ Released under the CC-BY-SA 4.0 license
 
             d3.select('#event_circle_2023_1')
                 .attr('class', 'bi bi-record-circle event_pulse');
-
-
-            // activating tooltips
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         });
 
-        //drawBarChart();
+        // drawBarChart();
+
+        // activating tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }
 
     function drawYearEvents(year, events) {
@@ -184,7 +184,7 @@ Released under the CC-BY-SA 4.0 license
         // this is a common row container for all events per year
         let eventsDiv = container.append('div')
                 .attr('id',`events_container_${year}`)
-                .attr('class', 'row event_div')
+                .attr('class', 'row event_div event_hidden')
                 .style('position', 'absolute')
                 .style('top', `${yPositions[year]}px`)
                 .style('left', `${margin.left + 56.8}px`);
@@ -223,74 +223,75 @@ Released under the CC-BY-SA 4.0 license
     }
 
     function drawYearSpan(startYear,endYear,spanDescription,spanInfo,ifProgressive) {
-
-        // draw the span line
-        svg.append('line')
-            .attr('id',`span_line_${startYear}_${endYear}`)
-            .attr('x1', 52)
-            .attr('x2', 52)
-            .attr('y1', yPositions[startYear])
-            .attr('y2', yPositions[endYear])
-            .attr('stroke', function(d) {
-            if (ifProgressive === "True") {
-                return 'grey';
-            } else {
-                return 'darkred';
-            }
-        })
-            .attr('stroke-width', 6)
-            .attr('stroke-linecap','round');
         
-        container.append('div')
+        let spanDiv = container.append('div')
             .attr('id',`span_container_${startYear}_${endYear}`)
-            .attr('class', 'row event_div')
+            .attr('class', 'row event_div event_hidden')
             .style('position', 'absolute')
             // text in the middle of the span
-            .style('top', `${yPositions[startYear] + (yPositions[endYear]-yPositions[startYear])/2}px`) 
-            .style('left', `${margin.left + 90}px`);
+            .style('top', `${yPositions[startYear] + 6}px`)
+            .style('left', `${margin.left + 64.46}px`);
 
-        let spanDiv = d3.select(`#span_container_${startYear}_${endYear}`).append('span')
-            .attr('class', 'event_text')
-            .text(spanDescription);
+        let spanHeight = yPositions[endYear]-yPositions[startYear];
 
-        spanDiv.append('i')
+        // line
+        spanDiv.append('div')
+            .attr('id',`span_line_${startYear}_${endYear}`)
+            .attr('class','line_div')
+            .style('height', `${spanHeight + 8}px`)
+            .style('background-color',function() {
+                if (ifProgressive === "True") {
+                    return "white";
+                } else {
+                    return "darkred";
+                }
+            });
+
+        let spanText = spanDiv.append('span')
+            .attr('class', 'event_text span_text')
+            .text(spanDescription)
+            // text top padiing (3rd of the span height)
+            .style('padding-top',`${spanHeight / 3}px`);
+
+        spanText.append('i')
             .attr('class', 'bi bi-info-circle-fill info_icon')
             .attr('data-bs-toggle', 'tooltip')
             .attr('data-bs-placement', 'bottom')
             .attr('title', spanInfo)
             .style('margin-left', '4px');
 
-        d3.select('#span_line_2000_2005').style('stroke','grey');
+        // rewrite style for the span 2000–2005
+        d3.select('#span_line_2000_2005').style('background-color','grey');
 
     }
 
     function drawBarChart() {
 
+        // hide events that overlap with the bar chart
         hideSelectedTimelineEvents();
 
         const maxBarLength = 280;
 
-        // Find the maximum value in the data for scaling
+        // max value for scaling
         const maxValue = d3.max(barChartData, d => d.value);
 
-        // Create a scale for bar lengths
+        // scale for bar lengths
         const xScale = d3.scaleLinear()
             .domain([0, maxValue])
             .range([0, maxBarLength]);
 
-
         barChartData.forEach(d => {
-            // Append a container div for each bar and its label
+            // div for each bar and its label
             const barContainer = container.append('div')
                 .attr('class', 'hc_bar')
                 .attr('id',`hc_bar_${d.year}`)
                 .style('position', 'absolute')
-                .style('top', `${yPositions[d.year]}px`) // Center the bar vertically
-                .style('left', `${margin.left + 48}px`) // Position next to the timeline
+                .style('top', `${yPositions[d.year] + 2}px`)
+                .style('left', `${margin.left + 48}px`)
                 .style('display', 'flex')
-                .style('align-items', 'center'); // Vertically center the label
+                .style('align-items', 'center');
 
-            // Append the bar div
+            // bars
             const bar = barContainer.append('div')
                 .attr('class', 'single_bar')
                 .style('width', '0px') // Start width at 0 for animation
@@ -299,22 +300,22 @@ Released under the CC-BY-SA 4.0 license
                 .style('border-radius', '8px')
                 .style('transition', 'width 0.5s ease-out'); // Smooth transition for width
 
-            // Animate the bar width to represent the value
+            // setting bar widths and animating
             bar.transition()
                 .duration(900)
                 .style('width', `${xScale(d.value)}px`);
 
-            // Append the label span
+            // labels
             barContainer.append('span')
                 .attr('class', 'bar_label')
-                .text(d.value) // Display the value as the label
-                .style('margin-left', '8px') // Space between bar and label
+                .text(d.value)
+                .style('margin-left', '8px')
                 .style('font-size', '10px')
                 .style('color', '#fff')
-                .style('opacity', 0) // Start hidden for fade-in effect
+                .style('opacity', 0)
                 .transition()
                 .duration(5200)
-                .style('opacity', 1); // Fade-in the label
+                .style('opacity', 1);
         });
 
         container.append('div')
@@ -345,7 +346,35 @@ Released under the CC-BY-SA 4.0 license
         }
     }
 
-    
+    function revealAnimation() {
+        // selecting all events div (includes event circles and lines)
+        let eventDivs = document.querySelectorAll('.event_div');
+
+        // observer options
+        let observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        let observerCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('event_hidden');
+                    entry.target.classList.add('event_revealed');
+                    // stop observing after revealed
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        let observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        // observe each element
+        eventDivs.forEach(el => {
+            observer.observe(el);
+        });
+}
 
     </script>
 
