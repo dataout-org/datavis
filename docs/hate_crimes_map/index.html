@@ -33,20 +33,22 @@ Released under the CC-BY-SA 4.0 license
     
   <div id="rf_map_container">
     
-    <div id="info_box">
-      <p>This tiled map of Russia shows the number of hate crime victims by regions: darker regions have more victims. Hover on the tiles to see more info. See the full table under the map. Click on a region to filter the table. <br>
-      <div class="disclaimer">* Sevastopol and Crimea are the territories occupied by Russia. We presented them on this map, because data for these regions was availbale on the Russian court websites.</div></p>
+    <div class="container-fluid above_map" id="info_box">
+      <div class="info_text">
+        <p>This tiled map of Russia shows the number of hate crime victims by regions: darker regions have more victims. Hover on the tiles to see more info. See the full table under the map. Click on a region to filter the table.</p>
+        <p class="disclaimer">* Sevastopol and Crimea are the territories occupied by Russia. We presented them on this map, because data for these regions was availbale on the Russian court websites.</p>
       </div>
+    </div>
 
-  <div class="container-fluid" id="legend">
-    <div class="row">
+
+    <div class="row align-items-center" id="legend">
 
         <div class="col-md-auto" id="n_victims_text">
             <p class="legend_label">N victims: </p>
         </div>
 
       <div class="col-md-auto" id="colour_range">
-          <svg width="160" height="16" viewBox="-10 0 160 16"></svg>
+          <svg width="160" height="16" viewBox="-12 0 160 16"></svg>
       </div>
 
       <div class="col-md-auto" id="no_data">
@@ -55,8 +57,14 @@ Released under the CC-BY-SA 4.0 license
           <text x="20" y="12" class="legend_label">No data</text>
           </svg>
       </div>
+    
+      <div class="col-md-auto ml-auto lang_switch" id="lang_switch_div">
+          <div class="btn-group btn-group-sm" role="group" aria-label="Language switch">
+            <button id="lang_en" type="button" class="btn btn-outline-primary lang_btn">EN</button>
+            <button id="lang_ru" type="button" class="btn btn-outline-primary lang_btn">RU</button>
+          </div>         
+      </div>
 
-    </div>
   </div>
 
     <svg id="rf_map">
@@ -100,6 +108,17 @@ Released under the CC-BY-SA 4.0 license
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
 <script id="d3vis">
+
+// determine the language depending on the url
+const pathname = window.location.pathname;
+// check for 'ru'
+let lang;
+if (pathname.includes('/ru')) {
+  lang = "ru";
+} else {
+  lang = "en";
+}
+
   // Load the SVG map dynamically from GitHub
 d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map/tilemaprf_xy.svg")
 .then(function(svgString) {
@@ -145,7 +164,31 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
       yearDropdown.add(option);
   });
 
+    // set active lang
+    setActiveLangButton = document.getElementById(`lang_${lang}`);
+    setActiveLangButton.classList.add('active');
 
+    // first time loading the map; by default, showing all years
+    updateMap(data, null, lang);
+
+    // button listeners for lang switch
+    enBtn = document.getElementById('lang_en');
+    ruBtn = document.getElementById('lang_ru');
+
+    ruBtn.addEventListener('click', () => {
+      lang = "ru";
+      updateMap(data, null, lang);
+      ruBtn.classList.add('active');
+      enBtn.classList.remove('active');
+    });
+
+    enBtn.addEventListener('click', () => {
+      lang = "en";
+      updateMap(data, null, lang);
+      enBtn.classList.add('active');
+      ruBtn.classList.remove('active');
+
+    });
 
     // listen to the dropdown
     yearDropdown.addEventListener("change", function() {
@@ -153,10 +196,10 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
     var selectedYear = yearDropdown.value;
     if (selectedYear == "All years"){
       resetRegionSelection(); //resetting previosly selected region
-      updateMap(data, null);
+      updateMap(data, null, lang);
     } else {
       resetRegionSelection(); //resetting previosly selected region
-      updateMap(data, selectedYear);}
+      updateMap(data, selectedYear, lang);}
   });
 
   // listen to the "All Years"
@@ -164,7 +207,7 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
   allYearsButton.addEventListener("click", function() {
     yearDropdown.value = "All years";
     resetRegionSelection(); //resetting previosly selected region
-    updateMap(data, null); // null indicates all years
+    updateMap(data, null, lang); // null indicates all years
   });
 
   //listen to the allRegionsButton
@@ -173,19 +216,17 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
     var selectedYear = yearDropdown.value;
     if (selectedYear == "All years"){
       resetRegionSelection(); //resetting previosly selected region
-      updateMap(data, null);
+      updateMap(data, null, lang);
     } else {
       resetRegionSelection(); //resetting previosly selected region
-      updateMap(data, selectedYear);}
+      updateMap(data, selectedYear, lang);}
   });
 
-  // by default, showing all years
-  updateMap(data, null);
 });
 });
     
 // updating the map
-function updateMap(data, selectedYear) {
+function updateMap(data, selectedYear, lang) {
   // filter by year
   var filteredData;
   if (selectedYear === null) {
@@ -230,22 +271,23 @@ function updateMap(data, selectedYear) {
 
   // Draw gradient rectangle
   legendSVG.append("rect")
-      .attr("width", 134)
+      .attr("width", 120)
       .attr("height", 16)
       .style("fill", "url(#linear-gradient)");
 
   // Add min and max labels
   legendSVG.append("text")
-      .attr("x", -8)
-      .attr("y", 12)
-      .attr("class", "legend_label")
-      .text(minVictims);
-
-  legendSVG.append("text")
-      .attr("x", 146)
+      .attr("x", -4)
       .attr("y", 12)
       .attr("class", "legend_label")
       .attr("text-anchor", "end")
+      .text(minVictims);
+
+  legendSVG.append("text")
+      .attr("x", 124)
+      .attr("y", 12)
+      .attr("class", "legend_label")
+      .attr("text-anchor", "start")
       .text(maxVictims);
 
   // select the group containing the tiles
@@ -258,9 +300,11 @@ function updateMap(data, selectedYear) {
   // apply colors to the tiles based on the number of victims
   tilesContainer.selectAll("rect").each(function() {
     var tile = d3.select(this);
-    var regionCode = tile.attr("id");
+    var regionAbbr = tile.attr(`regNameAbbr${lang.charAt(0).toUpperCase() + lang.slice(1)}`);
+    var regionCode = tile.attr("id").replace('tile_','');
     var regionVictims = victimCounts.get(regionCode);
     var textElement = d3.select("#name_" + regionCode);
+    textElement.text(regionAbbr); // tile text depending on lang
     var fillColor;
     var textColor;
     if (regionVictims !== undefined) {
@@ -287,9 +331,14 @@ function updateMap(data, selectedYear) {
         var tileRect = tile.node().getBoundingClientRect();
         var tileLeft = tileRect.left + window.scrollX;
         var tileTop = tileRect.top + window.scrollY;
-        // tooltip
+        // tooltip value depending on lang
+        if (lang === "en") {
+          tooltip.html(tile.attr("regionNameEn") + "<br> Victims: " + regionVictims)
+        }
+        if (lang === "ru") {
+          tooltip.html(tile.attr("regionNameRu") + "<br> Пострадавших: " + regionVictims)
+        }
         tooltip.style("visibility", "visible")
-              .html(tile.attr("regionNameEn") + "<br> Victims: " + regionVictims)
               .style("left", (tileLeft + tileRect.width / 2) + "px")
               .style("top", (tileTop + (tileRect.height / 2)) + "px");
       })
@@ -311,7 +360,7 @@ function updateMap(data, selectedYear) {
           // generate table
           generateTable(cases);
         });
-          }
+      }
     });
     
     // initial table with all cases

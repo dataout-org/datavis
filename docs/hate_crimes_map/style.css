@@ -14,13 +14,21 @@
 	background-color: #1e1e1e;
 }
 
-#info_box {
-  background-color: rgb(244, 244, 244);;
-  color: black;
-  padding: 12px;
-  border-radius: 4px;
-  font-size: 14px;
+.above_map{
+  position: relative;
   max-width: 840px;
+  background-color: rgb(244, 244, 244);
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.info_text {
+  overflow: hidden;
+}
+
+#info_box {
+  color: black;
+  font-size: 14px;
 }
 
 #info_box .disclaimer {
@@ -31,6 +39,8 @@
 #legend {
   margin-top: 10px;
   padding-left: 0px !important;
+  max-width: 840px;
+  flex-wrap: nowrap !important;
 }
 
 .legend_label {
@@ -41,11 +51,45 @@
 }
 
 #n_victims_text {
-  padding-right: 0px;
+  padding: 0px 0px 2px 16px;
 }
 
 #no_data {
   padding-left: 0px;
+}
+
+.lang_switch {
+  padding: 0px !important;
+}
+
+.lang_btn {
+	height: 22px;
+	padding: 0px 4px 0px 4px !important;
+	color: #aaa !important;
+	font-size: 12px !important;
+	border-color: #f4f4f4 !important;
+}
+
+.lang_btn:hover {
+	color: black !important;
+  background-color: #f4f4f4 !important;
+	border-color: #f4f4f4 !important;
+}
+
+.lang_btn:focus {
+	box-shadow: none !important;
+}
+
+.lang_btn:active {
+	color: black !important;
+  background-color: #f4f4f4 !important;
+	border-color: #f4f4f4 !important;
+}
+
+.lang_btn.active {
+	color: black !important;
+  background-color: #f4f4f4 !important;
+	border-color: #f4f4f4 !important;
 }
 
 #rf_map {
