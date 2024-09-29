@@ -35,8 +35,8 @@ Released under the CC-BY-SA 4.0 license
     
     <div class="container-fluid above_map" id="info_box">
       <div class="info_text">
-        <p>This tiled map of Russia shows the number of hate crime victims by regions: darker regions have more victims. Hover on the tiles to see more info. See the full table under the map. Click on a region to filter the table.</p>
-        <p class="disclaimer">* Sevastopol and Crimea are the territories occupied by Russia. We presented them on this map, because data for these regions was availbale on the Russian court websites.</p>
+        <p id="info_text_p1"></p>
+        <p id="info_text_p2" class="disclaimer"></p>
       </div>
     </div>
 
@@ -44,17 +44,17 @@ Released under the CC-BY-SA 4.0 license
     <div class="row align-items-center" id="legend">
 
         <div class="col-md-auto" id="n_victims_text">
-            <p class="legend_label">N victims: </p>
+            <p id="legend_victims" class="legend_label"></p>
         </div>
 
       <div class="col-md-auto" id="colour_range">
-          <svg width="160" height="16" viewBox="-12 0 160 16"></svg>
+          <svg width="140" height="16" viewBox="-12 0 160 16"></svg>
       </div>
 
       <div class="col-md-auto" id="no_data">
-          <svg width="80" height="16">
+          <svg width="90" height="16">
           <rect width="16" height="16" style='fill: #333;'></rect>
-          <text x="20" y="12" class="legend_label">No data</text>
+          <text id="legend_no_data" x="20" y="12" class="legend_label"></text>
           </svg>
       </div>
     
@@ -78,14 +78,14 @@ Released under the CC-BY-SA 4.0 license
   <div class="container-fluid" id="controls">
     <div class="row" id="year_selectors">
         <div class="col-md-auto" id="col_pad"><select class="form-select" id="yearDropdown"></select></div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allYearsButton">Reset years</button></div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allRegionsButton">Reset regions</button></div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="playButton"> <i class="bi bi-play-circle"></i> Dynamic by years</button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allYearsButton"></button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allRegionsButton"></button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="playButton"></button></div>
   </div>
   </div>
 
   <div class="container-fluid table_explainer">
-    <p>Text explaining the table below</p>
+    <p id="table_explainer_p1"></p>
   </div>
     
   <div class="container-fluid" id="table-container">
@@ -119,6 +119,22 @@ if (pathname.includes('/ru')) {
   lang = "en";
 }
 
+// storing translations
+const langData = {"info_text_p1": {"en":"This tiled map of Russia shows the number of hate crime victims by regions: darker regions have more victims. Hover on the tiles to see more info. See the full table under the map. Click on a region to filter the table.","ru":"Эта плиточная карта России отображает количество посрадавших от преступлений ненависти по регионам: пострадавших больше в более тёмных регионах. Наведите на регион, чтобы увидеть точную цифру. Полные данные доступны в таблице ниже. Таблицу можно фильтровать, кликая на регион или выбирая год."},
+	"info_text_p2": {"en":"* Sevastopol and Crimea are Ukranian territories occupied by Russia. We presented them on this map, because data for these regions was availbale on the Russian court websites.","ru":"* Севастополь и Крым – это Украинские территории, окуппированные Россией. Мы отобразили их на этой карте, потому что данные по этим регионам были доступны на сайтах российских судов."},
+	"legend_victims": {"en":"Victims:","ru":"Пострадавших:"},
+	"legend_no_data": {"en":"No data","ru":"Нет данных"},
+	"btn_years": {"en":"All years","ru":"Все годы"},
+	"allYearsButton": {"en":"Reset years","ru":"Сбросить годы"},
+	"allRegionsButton": {"en":"Reset regions","ru":"Сбросить регионы"},
+	"playButton": {"en":"<i class='bi bi-play-circle'></i> Dynamic by years","ru":"<i class='bi bi-play-circle'></i> Динамика по годам"},
+	"table_explainer_p1": {"en":"Text explaining the table below","ru":"Текст к таблице"},
+  "table_header":{"en":"<thead><tr><th>Case number</th> <th>Region</th> <th>Article</th> <th>Crimes</th> <th>Victims</th> <th>Fatalities</th> <th>Premeditated</th> <th>Bias motive</th> <th>Full text (RU)</th> </tr> </thead> <tbody>","ru":"<thead><tr><th>Номер дела</th> <th>Регион</th> <th>Статья</th> <th>Преступлений</th> <th>Пострадавших</th> <th>Погибших</th> <th>Группа ненависти</th> <th>Мотив предубеждения</th> <th>Полный текст</th> </tr> </thead> <tbody>"}
+}
+
+// loading the lang content first time
+loadLangContent(langData,lang);
+
   // Load the SVG map dynamically from GitHub
 d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map/tilemaprf_xy.svg")
 .then(function(svgString) {
@@ -147,13 +163,18 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
       d.n_crimes = +d.n_crimes;
     });
 
+    // set active lang
+    setActiveLangButton = document.getElementById(`lang_${lang}`);
+    setActiveLangButton.classList.add('active');
+
     // getting the year dropdown
     var yearDropdown = document.getElementById("yearDropdown");
 
     // populating the dropdown
-      // first, adding the "all years" option
+      // first, adding the "all years" option depending on lang
     var optionAllYears = document.createElement("option");
-    optionAllYears.text = "All years";
+    optionAllYears.id = "btn_years";
+    optionAllYears.text = langData["btn_years"][lang];
     yearDropdown.add(optionAllYears);
       // second, adding all years
     var uniqueYears = [...new Set(data.map(d => d.year))];
@@ -164,10 +185,6 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
       yearDropdown.add(option);
   });
 
-    // set active lang
-    setActiveLangButton = document.getElementById(`lang_${lang}`);
-    setActiveLangButton.classList.add('active');
-
     // first time loading the map; by default, showing all years
     updateMap(data, null, lang);
 
@@ -177,6 +194,9 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
 
     ruBtn.addEventListener('click', () => {
       lang = "ru";
+      loadLangContent(langData,lang);
+      resetRegionSelection(); // reset region
+      yearDropdown.value = langData["btn_years"][lang]; // reset year selection
       updateMap(data, null, lang);
       ruBtn.classList.add('active');
       enBtn.classList.remove('active');
@@ -184,6 +204,9 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
 
     enBtn.addEventListener('click', () => {
       lang = "en";
+      loadLangContent(langData,lang);
+      resetRegionSelection(); // reset region
+      yearDropdown.value = langData["btn_years"][lang]; // reset year selection
       updateMap(data, null, lang);
       enBtn.classList.add('active');
       ruBtn.classList.remove('active');
@@ -193,19 +216,23 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
     // listen to the dropdown
     yearDropdown.addEventListener("change", function() {
     // selected year
-    var selectedYear = yearDropdown.value;
-    if (selectedYear == "All years"){
+    var selectedYearValue = yearDropdown.value;
+    // getting the ID of "all years"
+    var selectedYearId = yearDropdown.options[yearDropdown.selectedIndex].id;
+    console.log(selectedYearId);
+    // if all years, fill in the full table and map
+    if (selectedYearId == "btn_years"){
       resetRegionSelection(); //resetting previosly selected region
       updateMap(data, null, lang);
     } else {
-      resetRegionSelection(); //resetting previosly selected region
-      updateMap(data, selectedYear, lang);}
+      resetRegionSelection();
+      updateMap(data, selectedYearValue, lang);}
   });
 
   // listen to the "All Years"
   var allYearsButton = document.getElementById("allYearsButton");
   allYearsButton.addEventListener("click", function() {
-    yearDropdown.value = "All years";
+    yearDropdown.value = langData["btn_years"][lang];
     resetRegionSelection(); //resetting previosly selected region
     updateMap(data, null, lang); // null indicates all years
   });
@@ -213,17 +240,28 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
   //listen to the allRegionsButton
   var allRegionsButton = document.getElementById("allRegionsButton");
   allRegionsButton.addEventListener("click", function() {
-    var selectedYear = yearDropdown.value;
-    if (selectedYear == "All years"){
+    var selectedYearValue = yearDropdown.value;
+    var selectedYearId = yearDropdown.options[yearDropdown.selectedIndex].id;
+    if (selectedYearId == "btn_years"){
       resetRegionSelection(); //resetting previosly selected region
       updateMap(data, null, lang);
     } else {
       resetRegionSelection(); //resetting previosly selected region
-      updateMap(data, selectedYear, lang);}
+      updateMap(data, selectedYearValue, lang);}
   });
 
 });
 });
+
+// load lang content
+function loadLangContent(langData, lang) {
+  for (let elementId in langData) {
+    let el = document.getElementById(elementId);
+    if (el) {
+      el.innerHTML = langData[elementId][lang];
+    }
+  }
+}
     
 // updating the map
 function updateMap(data, selectedYear, lang) {
@@ -358,20 +396,20 @@ function updateMap(data, selectedYear, lang) {
           });
 
           // generate table
-          generateTable(cases);
+          generateTable(cases,lang);
         });
       }
     });
     
     // initial table with all cases
-    generateTable(filteredData);
+    generateTable(filteredData,lang);
   
 }
 
 // generate table: used for the full table and filtered
-function generateTable(data) {
+function generateTable(data,lang) {
   // header
-  let tableHTML = "<thead><tr><th>Case number</th> <th>Region</th> <th>Article</th> <th>Crimes</th> <th>Victims</th> <th>Fatalities</th> <th>Premeditated</th> <th>Bias motive</th> <th>Full text (RU)</th> </tr> </thead> <tbody>";
+  let tableHTML = langData["table_header"][lang];
 
     data.forEach(function(d) {
       // formatting cell values 
@@ -380,19 +418,35 @@ function generateTable(data) {
       if(d.case_text_url !== ''){
         caseURL = `<a href="${d.case_text_url}" class="case_download"><i class="bi bi-download case_download_icon"></i></a>`
         }
+        
+      if (lang === "ru") {
         // premeditated badge
-      let premeditatedValue = d.premeditated_en
-      if (premeditatedValue === 'yes') {
-        premeditatedValue = `<span class="badge_premeditated_yes">${premeditatedValue}</span>`;
+        let premeditatedValue = d.premeditated_ru
+        if (premeditatedValue === 'да') {
+          premeditatedValue = `<span class="badge_premeditated_yes">${premeditatedValue}</span>`;
+        }
+        if (premeditatedValue === 'нет') {
+          premeditatedValue = `<span class="badge_premeditated_no">${premeditatedValue}</span>`;
+        }
+        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + d.bias_motive_ru + "</td><td>" + caseURL + "</td></tr>";
+
       }
-      if (premeditatedValue === 'no') {
-        premeditatedValue = `<span class="badge_premeditated_no">${premeditatedValue}</span>`;
+
+      if (lang === "en") {
+          // premeditated badge
+        let premeditatedValue = d.premeditated_en
+        if (premeditatedValue === 'yes') {
+          premeditatedValue = `<span class="badge_premeditated_yes">${premeditatedValue}</span>`;
+        }
+        if (premeditatedValue === 'no') {
+          premeditatedValue = `<span class="badge_premeditated_no">${premeditatedValue}</span>`;
+        }
+        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_en + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + d.bias_motive_en + "</td><td>" + caseURL + "</td></tr>";
       }
-      tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + d.bias_motive_en + "</td><td>" + caseURL + "</td></tr>";
+      
   });
 
   tableHTML += "</tbody>";
-
   document.querySelector("#data-table").innerHTML = tableHTML;
 }
 
