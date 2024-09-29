@@ -32,8 +32,16 @@ Released under the CC-BY-SA 4.0 license
   <div class="container-fluid" id="map_table">
     
   <div id="rf_map_container">
-    
+
+    <div class="container-fluid lang_switch" id="lang_switch_div">
+      <div class="btn-group btn-group-sm" role="group" aria-label="Language switch">
+        <button id="lang_en" type="button" class="btn btn-outline-primary lang_btn">EN</button>
+        <button id="lang_ru" type="button" class="btn btn-outline-primary lang_btn">RU</button>
+      </div>         
+    </div>
+
     <div class="container-fluid above_map" id="info_box">
+      
       <div class="info_text">
         <p id="info_text_p1"></p>
         <p id="info_text_p2" class="disclaimer"></p>
@@ -56,13 +64,6 @@ Released under the CC-BY-SA 4.0 license
           <rect width="16" height="16" style='fill: #333;'></rect>
           <text id="legend_no_data" x="20" y="12" class="legend_label"></text>
           </svg>
-      </div>
-    
-      <div class="col-md-auto ml-auto lang_switch" id="lang_switch_div">
-          <div class="btn-group btn-group-sm" role="group" aria-label="Language switch">
-            <button id="lang_en" type="button" class="btn btn-outline-primary lang_btn">EN</button>
-            <button id="lang_ru" type="button" class="btn btn-outline-primary lang_btn">RU</button>
-          </div>         
       </div>
 
   </div>
