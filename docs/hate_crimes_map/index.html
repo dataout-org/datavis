@@ -484,14 +484,17 @@ function getContrastColor(bgColor) {
 // check device orientation
 function checkOrientation() {
     // check if smartphone
-    const smallScreen = window.innerWidth <= 767;
+    const smallScreen = window.innerWidth <= 576;
     // the message block
     const rotateMessage = document.getElementById("landscape_on");
 
     if (smallScreen) {
-      if(window.innerHeight > window.innerWidth) {
+      if (window.innerHeight > window.innerWidth) {
       rotateMessage.style.display = "flex";
       console.log("message!")
+      }
+      else {
+        rotateMessage.style.display = "none";
       }
     } else {
       rotateMessage.style.display = "none";
