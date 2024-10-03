@@ -70,6 +70,23 @@ border-color: #f4f4f4 !important;
   color: #575757;
 }
 
+.landscape_msg {
+  color: #f4f4f4;
+  font-size: 12px;
+  align-items: center;
+  display: flex !important;
+  padding-left: 0px !important;
+}
+
+.bi-phone-landscape {
+  font-size: 1.4rem !important;
+  padding-right: 10px !important;
+}
+
+.landscape_message {
+  margin: 0px !important;
+}
+
 #legend {
   margin-top: 10px;
   padding-left: 0px !important;
@@ -245,4 +262,28 @@ background-color: #b0b0b0;
 
 #table_bottom {
   height: 60px;
+}
+
+/* Extra Small Devices (Portrait Phones) */
+@media (max-width: 575.98px) {
+  #rf_map {
+    width: 354px;
+    height: 224px;
+  }
+}
+
+/* Small Devices (Landscape Phones) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  #rf_map {
+    width: 644px;
+    height: 424px;
+  }
+}
+
+/* Medium Devices (Tablets) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  #rf_map {
+    width: 736px;
+    height: 524px;
+  }
 }
