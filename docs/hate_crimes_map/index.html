@@ -54,15 +54,15 @@ Released under the CC-BY-SA 4.0 license
 
     <div class="row align-items-center" id="legend">
 
-        <div class="col-md-auto" id="n_victims_text">
-            <p id="legend_victims" class="legend_label"></p>
-        </div>
+      <div class="col-md-auto legend_item" id="n_victims_text">
+          <p id="legend_victims" class="legend_label"></p>
+      </div>
 
-      <div class="col-md-auto" id="colour_range">
+      <div class="col-md-auto legend_item" id="colour_range">
           <svg width="140" height="16" viewBox="-12 0 160 16"></svg>
       </div>
 
-      <div class="col-md-auto" id="no_data">
+      <div class="col-md-auto legend_item" id="no_data">
           <svg width="90" height="16">
           <rect width="16" height="16" style='fill: #333;'></rect>
           <text id="legend_no_data" x="20" y="12" class="legend_label"></text>
@@ -143,7 +143,7 @@ loadLangContent(langData,lang);
 checkOrientation();
 // listeners for orientation changes
 window.addEventListener("resize", checkOrientation);
-window.addEventListener("orientationchange", checkOrientation);
+screen.orientation.addEventListener("change", checkOrientation);
 
   // Load the SVG map dynamically from GitHub
 d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map/tilemaprf_xy.svg")

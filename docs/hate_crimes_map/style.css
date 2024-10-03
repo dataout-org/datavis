@@ -88,10 +88,13 @@ border-color: #f4f4f4 !important;
 }
 
 #legend {
-  margin-top: 10px;
   padding-left: 0px !important;
   max-width: 840px;
   flex-wrap: nowrap !important;
+}
+
+.legend_item {
+  max-width: fit-content !important;
 }
 
 .legend_label {
@@ -119,6 +122,7 @@ border-color: #f4f4f4 !important;
 #table-container {
   max-width: 900px;
   max-height: 460px;
+  padding-left: 0px;
   overflow-y: scroll ;
 }
 
@@ -128,7 +132,7 @@ border-color: #f4f4f4 !important;
 
 .table_explainer {
   color: white;
-  padding-left: 8px;
+  padding-left: 0px !important;
   font-size: 14px;
   max-width: 840px;
 }
@@ -217,16 +221,15 @@ tbody tr:hover{
 
 #controls {
 margin-bottom: 10px;
-margin-left: 12px;
 }
 
 #col_pad {
-  padding:4px;
+  max-width: fit-content;
+  padding: 10px 6px 0px 0px !important;
 }
 
 #year_selectors {
   flex-wrap: nowrap !important;
-  padding-left: 12px;
 }
 
 p.all_years {
