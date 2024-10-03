@@ -75,7 +75,7 @@ border-color: #f4f4f4 !important;
   font-size: 12px;
   align-items: center;
   display: flex !important;
-  padding-left: 0px !important;
+  padding: 6px 0px 6px 0px !important;
 }
 
 .bi-phone-landscape {
