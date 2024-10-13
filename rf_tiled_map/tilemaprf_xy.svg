@@ -176,15 +176,15 @@
     </rect>
 </g>
 <g id="names_container">
-    <text class="name" id="name_1" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="334">Adyg</text>
-    <text class="name" id="name_2" style="fill: rgb(255, 255, 255); font-size: 13px;" x="362" y="214">Bash</text>
-    <text class="name" id="name_3" style="fill: rgb(255, 255, 255); font-size: 13px;" x="562" y="174">Bur</text>
-    <text class="name" id="name_4" style="fill: rgb(255, 255, 255); font-size: 13px;" x="482" y="254">Alt</text>
-    <text class="name" id="name_5" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="374">DAG</text>
-    <text class="name" id="name_6" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="414">Ing</text>
-    <text class="name" id="name_7" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="414">KB</text>
-    <text class="name" id="name_8" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="334">Kalm</text>
-    <text class="name" id="name_9" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="374">KCH</text>
+    <text class="name" id="name_01" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="334">Adyg</text>
+    <text class="name" id="name_02" style="fill: rgb(255, 255, 255); font-size: 13px;" x="362" y="214">Bash</text>
+    <text class="name" id="name_03" style="fill: rgb(255, 255, 255); font-size: 13px;" x="562" y="174">Bur</text>
+    <text class="name" id="name_04" style="fill: rgb(255, 255, 255); font-size: 13px;" x="482" y="254">Alt</text>
+    <text class="name" id="name_05" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="374">DAG</text>
+    <text class="name" id="name_06" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="414">Ing</text>
+    <text class="name" id="name_07" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="414">KB</text>
+    <text class="name" id="name_08" style="fill: rgb(255, 255, 255); font-size: 13px;" x="242" y="334">Kalm</text>
+    <text class="name" id="name_09" style="fill: rgb(255, 255, 255); font-size: 13px;" x="162" y="374">KCH</text>
     <text class="name" id="name_10" style="fill: rgb(255, 255, 255); font-size: 13px;" x="122" y="54">Kar</text>
     <text class="name" id="name_11" style="fill: rgb(255, 255, 255); font-size: 13px;" x="362" y="94">Komi</text>
     <text class="name" id="name_12" style="fill: rgb(255, 255, 255); font-size: 13px;" x="282" y="134">Mari</text>
