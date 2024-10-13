@@ -74,21 +74,17 @@ Released under the CC-BY-SA 4.0 license
 
   </div>
 
-    <svg id="rf_map">
-    </svg>
+    <svg id="rf_map"></svg>
       
-    
   </div>
-
 
   <div class="container-fluid" id="controls">
     <div class="row" id="year_selectors">
         <div class="col-md-auto" id="col_pad">
           <select id="yearDropdown"></select>
         </div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allYearsButton"></button></div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allRegionsButton"></button></div>
         <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="playButton"></button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allRegionsButton"></button></div>
   </div>
   </div>
 
@@ -131,9 +127,8 @@ const langData = {"info_text_p1": {"en":"This tiled map of Russia shows the numb
 	"legend_victims": {"en":"Victims:","ru":"Пострадавших:"},
 	"legend_no_data": {"en":"No data","ru":"Нет данных"},
 	"btn_years": {"en":"All years","ru":"Все годы"},
-	"allYearsButton": {"en":"Reset years","ru":"Сбросить годы"},
 	"allRegionsButton": {"en":"Reset regions","ru":"Сбросить регионы"},
-	"playButton": {"en":"<i class='bi bi-play-circle'></i> Dynamic","ru":"<i class='bi bi-play-circle'></i> Динамика"},
+	"playButton": {"en":"<i class='bi bi-play-circle'></i> Dynamic by years","ru":"<i class='bi bi-play-circle'></i> Динамика по годам"},
 	"table_explainer_p1": {"en":"Text explaining the table below","ru":"Текст к таблице"},
   "table_header":{"en":"<thead><tr><th>Case number</th> <th>Region</th> <th>Article</th> <th>Crimes</th> <th>Victims</th> <th>Fatalities</th> <th>Premeditated</th> <th>Bias motive</th> <th>Full text (RU)</th> </tr> </thead> <tbody>","ru":"<thead><tr><th>Номер дела</th> <th>Регион</th> <th>Статья</th> <th>Преступлений</th> <th>Пострадавших</th> <th>Погибших</th> <th>Группа ненависти</th> <th>Мотив предубеждения</th> <th>Полный текст</th> </tr> </thead> <tbody>"},
 	"landscape_on":{"en":"<i class='bi bi-phone-landscape'></i> Rotate to landscape for a better view","ru":"<i class='bi bi-phone-landscape'></i> Поверните горизонтально для лучшего просмотра"}
@@ -238,14 +233,6 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
     } else {
       resetRegionSelection();
       updateMap(data, selectedYearValue, lang);}
-  });
-
-  // listen to the "All Years"
-  var allYearsButton = document.getElementById("allYearsButton");
-  allYearsButton.addEventListener("click", function() {
-    yearDropdown.value = langData["btn_years"][lang];
-    resetRegionSelection(); //resetting previosly selected region
-    updateMap(data, null, lang); // null indicates all years
   });
 
   //listen to the allRegionsButton
@@ -420,7 +407,6 @@ function updateMap(data, selectedYear, lang, updateTable=true) {
       // initial table with all cases
       generateTable(filteredData,lang);
     }
-  
 }
 
 // generate table: used for the full table and filtered
@@ -543,5 +529,4 @@ function animateByYear(data, years, minVictims, maxVictims) {
 <!--  The content above is fetched by greyrainbow.dataout.org -->
 
 </body>
-
 </html>
