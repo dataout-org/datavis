@@ -136,10 +136,12 @@ border-color: #f4f4f4 !important;
   max-width: 840px;
 }
 
+.table-dark {
+  --bs-table-bg: #1e1e1e !important;
+}
+
 #data-table tbody{
-  background-color: rgb(244, 244, 244);
-  font-size:12px;
-  color: black;
+  font-size: 12px;
 }
 
 .table {
@@ -150,19 +152,14 @@ border-color: #f4f4f4 !important;
 thead {
   font-size:12px;
   text-align: left;
-  background-color: rgb(244, 244, 244);
-  color: black;
-}
-
-tbody tr:hover{
-  background-color: rgb(204, 204, 204) !important;
 }
 
 .table thead th {
   vertical-align: top !important;
   position: sticky;
   top: 0;
-  background-color: rgb(204, 204, 204);
+  background-color: rgb(204, 204, 204) !important;
+  color: black !important;
 }
 
 .badge_premeditated_yes {
@@ -201,21 +198,17 @@ tbody tr:hover{
 #dashed_border {
   stroke: white !important;
   stroke-dasharray: 3 2;
-  fill: none !important; /* to overwrite auto colour or #diagonalHatch fill */
+  fill: none !important; /* to overwrite auto colour */
 }
 
 /* occupied regions -- */
 
-#tooltip {
-  position: absolute;
-  min-width:80px;
-  font-size:10px;
-  background-color: rgba(0, 0, 0);
-  color: white;
-  padding: 4px;
-  border-radius: 4px;
-  pointer-events: none; /* the tooltip shouldn't interfere with mouse events */
-  visibility: hidden; /* the tooltip is hidden by default */
+.tooltip {
+  font-size: 10px !important;
+}
+
+.tooltip-inner {
+  text-align: left !important;
 }
 
 #controls {
