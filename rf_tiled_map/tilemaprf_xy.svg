@@ -2,23 +2,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" data-name="map" id="map" viewBox="0 0 710 550">
 <g id="tiles_container">
 
-    <rect class="tile" height="40px" id="tile_1" regNameAbbrEn="Adyg" regNameAbbrRu="Адыг" regionNameEn="Adygea" regionNameRu="Адыгея" style="fill: rgb(0, 0, 0);" width="40px" x="120" y="320">
+    <rect class="tile" height="40px" id="tile_01" regNameAbbrEn="Adyg" regNameAbbrRu="Адыг" regionNameEn="Adygea" regionNameRu="Адыгея" style="fill: rgb(0, 0, 0);" width="40px" x="120" y="320">
     </rect>
-    <rect class="tile" height="40px" id="tile_2" regNameAbbrEn="Bash" regNameAbbrRu="Башк" regionNameEn="Bashkortostan" regionNameRu="Башкортостан" style="fill: rgb(0, 0, 0);" width="40px" x="360" y="200">
+    <rect class="tile" height="40px" id="tile_02" regNameAbbrEn="Bash" regNameAbbrRu="Башк" regionNameEn="Bashkortostan" regionNameRu="Башкортостан" style="fill: rgb(0, 0, 0);" width="40px" x="360" y="200">
     </rect>
-    <rect class="tile" height="40px" id="tile_3" regNameAbbrEn="Bur" regNameAbbrRu="Бур" regionNameEn="Buryatia" regionNameRu="Бурятия" style="fill: rgb(0, 0, 0);" width="40px" x="560" y="160">
+    <rect class="tile" height="40px" id="tile_03" regNameAbbrEn="Bur" regNameAbbrRu="Бур" regionNameEn="Buryatia" regionNameRu="Бурятия" style="fill: rgb(0, 0, 0);" width="40px" x="560" y="160">
     </rect>
-    <rect class="tile" height="40px" id="tile_4" regNameAbbrEn="Alt" regNameAbbrRu="Алт" regionNameEn="Altai" regionNameRu="Алтай" style="fill: rgb(0, 0, 0);" width="40px" x="480" y="240">
+    <rect class="tile" height="40px" id="tile_04" regNameAbbrEn="Alt" regNameAbbrRu="Алт" regionNameEn="Altai" regionNameRu="Алтай" style="fill: rgb(0, 0, 0);" width="40px" x="480" y="240">
     </rect>
-    <rect class="tile" height="40px" id="tile_5" regNameAbbrEn="DAG" regNameAbbrRu="Даг" regionNameEn="Dagestan" regionNameRu="Дагестан" style="fill: rgb(0, 0, 0);" width="40px" x="280" y="360">
+    <rect class="tile" height="40px" id="tile_05" regNameAbbrEn="DAG" regNameAbbrRu="Даг" regionNameEn="Dagestan" regionNameRu="Дагестан" style="fill: rgb(0, 0, 0);" width="40px" x="280" y="360">
     </rect>
-    <rect class="tile" height="40px" id="tile_6" regNameAbbrEn="Ing" regNameAbbrRu="Инг" regionNameEn="Ingushetia" regionNameRu="Ингушетия" style="fill: rgb(0, 0, 0);" width="40px" x="240" y="400">
+    <rect class="tile" height="40px" id="tile_06" regNameAbbrEn="Ing" regNameAbbrRu="Инг" regionNameEn="Ingushetia" regionNameRu="Ингушетия" style="fill: rgb(0, 0, 0);" width="40px" x="240" y="400">
     </rect>
-    <rect class="tile" height="40px" id="tile_7" regNameAbbrEn="KB" regNameAbbrRu="КБР" regionNameEn="Kabardino-Balkaria" regionNameRu="Кабардино-Балкария" style="fill: rgb(0, 0, 0);" width="40px" x="160" y="400">
+    <rect class="tile" height="40px" id="tile_07" regNameAbbrEn="KB" regNameAbbrRu="КБР" regionNameEn="Kabardino-Balkaria" regionNameRu="Кабардино-Балкария" style="fill: rgb(0, 0, 0);" width="40px" x="160" y="400">
     </rect>
-    <rect class="tile" height="40px" id="tile_8" regNameAbbrEn="Kalm" regNameAbbrRu="Калм" regionNameEn="Kalmykia" regionNameRu="Калмыкия" style="fill: rgb(0, 0, 0);" width="40px" x="240" y="320">
+    <rect class="tile" height="40px" id="tile_08" regNameAbbrEn="Kalm" regNameAbbrRu="Калм" regionNameEn="Kalmykia" regionNameRu="Калмыкия" style="fill: rgb(0, 0, 0);" width="40px" x="240" y="320">
     </rect>
-    <rect class="tile" height="40px" id="tile_9" regNameAbbrEn="KCH" regNameAbbrRu="КЧР" regionNameEn="Karachay-Cherkessia" regionNameRu="Карачаево-Черкесия" style="fill: rgb(0, 0, 0);" width="40px" x="160" y="360">
+    <rect class="tile" height="40px" id="tile_09" regNameAbbrEn="KCH" regNameAbbrRu="КЧР" regionNameEn="Karachay-Cherkessia" regionNameRu="Карачаево-Черкесия" style="fill: rgb(0, 0, 0);" width="40px" x="160" y="360">
     </rect>
     <rect class="tile" height="40px" id="tile_10" regNameAbbrEn="Kar" regNameAbbrRu="Кар" regionNameEn="Kareliya" regionNameRu="Карелия" style="fill: rgb(0, 0, 0);" width="40px" x="120" y="40">
     </rect>
