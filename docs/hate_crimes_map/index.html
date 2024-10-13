@@ -231,7 +231,6 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
     var selectedYearValue = yearDropdown.value;
     // getting the ID of "all years"
     var selectedYearId = yearDropdown.options[yearDropdown.selectedIndex].id;
-    console.log(selectedYearId);
     // if all years, fill in the full table and map
     if (selectedYearId == "btn_years"){
       resetRegionSelection(); //resetting previosly selected region
@@ -262,6 +261,14 @@ d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map
       updateMap(data, selectedYearValue, lang);}
   });
 
+  // dynamic by years
+  document.getElementById("playButton").addEventListener("click", function() {
+    // all unique years from the data
+    var years = [...new Set(data.map(d => d.year))];
+    years.sort();  // Sort the years in ascending order
+    animateByYear(data, years);
+    });
+
 });
 });
 
@@ -276,7 +283,7 @@ function loadLangContent(langData, lang) {
 }
     
 // updating the map
-function updateMap(data, selectedYear, lang) {
+function updateMap(data, selectedYear, lang, updateTable=true) {
   // filter by year
   var filteredData;
   if (selectedYear === null) {
@@ -363,8 +370,8 @@ function updateMap(data, selectedYear, lang) {
       textColor = "#828282"; // no data tiles text
     }
 
-    tile.style("fill", fillColor);
-    textElement.style("fill", textColor);
+    tile.transition().duration(1500).style("fill", fillColor);
+    textElement.transition().duration(1500).style("fill", textColor);
 
     // remove existing event listeners for tiles
     tile.on("click", null);
@@ -400,10 +407,19 @@ function updateMap(data, selectedYear, lang) {
           generateTable(cases,lang);
         });
       }
+    else { // if a tile has no data, remove previous tooltip
+      var tooltipInstance = bootstrap.Tooltip.getInstance(tile.node());
+      if (tooltipInstance) {
+        tooltipInstance.dispose();
+      }
+    }
     });
     
-    // initial table with all cases
-    generateTable(filteredData,lang);
+    // the table will be updated only if a year was selected by a user, and not during the animation
+    if (updateTable) {
+      // initial table with all cases
+      generateTable(filteredData,lang);
+    }
   
 }
 
@@ -489,6 +505,35 @@ function checkOrientation() {
     } else {
       rotateMessage.style.display = "none";
     }
+  }
+
+// tiles animation
+function animateByYear(data, years, minVictims, maxVictims) {
+
+  let currentYearIndex = 0;
+  // the year dropdown
+  var yearDropdown = document.getElementById("yearDropdown");
+
+  function updateYear() {
+      if (currentYearIndex < years.length) {
+
+          let year = years[currentYearIndex];
+          let filteredData = data.filter(d => d.year === year);
+
+          yearDropdown.value = year;
+          updateMap(filteredData, null, lang, false); // false – do not update table
+
+          // the next year after the transition ends
+          currentYearIndex++;
+          setTimeout(updateYear, 1200);
+      } else {
+          // show all years when animation ends
+          yearDropdown.value = langData["btn_years"][lang];
+          updateMap(data, null, lang, false); // false – do not update table
+      }
+  }
+  // start the first year update
+  updateYear();
   }
 
 </script>
