@@ -105,12 +105,17 @@ body {
 
 .line_div {
   position: absolute;
-  width: 6px;
+  width: 6px !important;
   border-radius: 6px;
+  padding: 0px !important;
+}
+
+.tooltip {
+  --bs-tooltip-arrow-color: #979797 !important; /* Customize arrow color */
+  --bs-tooltip-bg: #979797 !important;
 }
 
 .tooltip-inner {
-  background-color: #979797 !important;
   color: #000000 !important;
   font-size: 12px !important;
   padding: 4px !important;
