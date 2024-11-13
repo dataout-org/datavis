@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<!--
+Developed by dataout.org
+
+Released under the CC-BY-SA 4.0 license
+-->
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Hate crimes map / Developed for greyrainbow.dataout.org</title>
+
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<body>
+
+<div class="container-fluid" id="github_description">
+  <p id="text_description">
+    Mapping hate crimes against LGBTQ+ people in Russia. This page is developed for the website greyrainbow.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
+  </p>
+</div>
+
+<!--  The content below is fetched by greyrainbow.dataout.org -->
+
+<div id="content_to_fetch">
+
+  <div class="container-fluid" id="map_table">
+    
+  <div id="rf_map_container">
+
+    <div class="container-fluid lang_switch" id="lang_switch_div">
+      <div class="btn-group btn-group-sm" role="group" aria-label="Language switch">
+        <button id="lang_en" type="button" class="btn btn-outline-primary lang_btn">EN</button>
+        <button id="lang_ru" type="button" class="btn btn-outline-primary lang_btn">RU</button>
+      </div>         
+    </div>
+
+    <div class="container-fluid above_map" id="info_box">
+      
+      <div class="info_text">
+        <p id="info_text_p1"></p>
+        <p id="info_text_p2" class="disclaimer"></p>
+      </div>
+    </div>
+
+    <div class="container-fluid landscape_msg" id="landscape_on">
+    </div>
+
+    <div class="row" id="legend">
+
+      <div class="col-md-auto legend_item" id="n_victims_text">
+          <p id="legend_victims" class="legend_label"></p>
+      </div>
+
+      <div class="col-md-auto legend_item" id="colour_range">
+          <svg width="140" height="16" viewBox="-12 0 160 16"></svg>
+      </div>
+
+      <div class="col-md-auto legend_item" id="no_data">
+          <svg width="90" height="16">
+          <rect width="16" height="16" style='fill: #333;'></rect>
+          <text id="legend_no_data" x="20" y="12" class="legend_label"></text>
+          </svg>
+      </div>
+
+  </div>
+
+    <svg id="rf_map"></svg>
+      
+  </div>
+
+  <div class="container-fluid" id="controls">
+    <div class="row" id="selectors">
+        <div class="col-md-auto display_options" id="col_pad">
+          <p id="display_what"></p>
+        </div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="crimes_btn"></button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="victims_btn"></button></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="fatalities_btn"></button></div>
+  </div>
+  </div>
+
+</div>
+
+<script id="d3vis">
+
+// determine the language depending on the url
+const pathname = window.location.pathname;
+// check for 'ru'
+let lang;
+if (pathname.includes('/ru')) {
+  lang = "ru";
+} else {
+  lang = "en";
+}
+
+// storing translations
+const langData = {"info_text_p1": {"en":"On this tiled map of Russia, you see the number of hate crime victims by regions: darker regions have more victims. Hover on the tiles to see more info. Click on the buttons under the map to display the number of crimes or fatalities.","ru":"Эта плиточная карта России отображает количество пострадавших от преступлений ненависти по регионам: пострадавших больше в более тёмных регионах. Наведите на регион, чтобы увидеть точную цифру. Вы можете отобразить другие показатели на карте, выбрав их ниже: количество преступлений и погибших."},
+	"info_text_p2": {"en":"* Sevastopol and Crimea are Ukranian territories occupied by Russia. We presented them on this map, because data for these regions was availbale on the Russian court websites.","ru":"* Севастополь и Крым – это украинские территории, оккупированные Россией. Мы отобразили их на этой карте, потому что данные по этим регионам были доступны на сайтах российских судов."},
+	"legend_parameter_victims": {"en":"Victims:","ru":"Пострадавших:"},
+  "legend_parameter_crimes": {"en":"Crimes:","ru":"Преступлений:"},
+  "legend_parameter_fatalities": {"en":"Fatalities:","ru":"Погибших:"},
+	"legend_no_data": {"en":"No data","ru":"Нет данных"},
+	"display_what": {"en":"Display the number of:","ru":"Отобразить количество:"},
+	"crimes_btn": {"en":"crimes","ru":"преступлений"},
+	"victims_btn": {"en":"victims","ru":"пострадавших"},
+	"fatalities_btn": {"en":"fatalities","ru":"погибших"},
+	"landscape_on":{"en":"<i class='bi bi-phone-landscape'></i> Rotate to landscape for a better view","ru":"<i class='bi bi-phone-landscape'></i> Поверните горизонтально для лучшего просмотра"}
+}
+
+// loading the lang content first time
+loadLangContent(langData,lang);
+// check orienation
+checkOrientation();
+// listeners for orientation changes
+window.addEventListener("resize", checkOrientation);
+screen.orientation.addEventListener("change", checkOrientation);
+
+  // Load the SVG map dynamically from GitHub
+d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map/tilemaprf_xy.svg")
+.then(function(svgString) {
+  var parser = new DOMParser();
+  var xml = parser.parseFromString(svgString, "image/svg+xml");
+  var importedNode = document.importNode(xml.documentElement, true);
+  // setting the viewBox
+  importedNode.setAttribute("viewBox", "-4 0 724 456");
+  document.getElementById("rf_map").appendChild(importedNode);
+
+  var spreadsheetUrl = "https://docs.google.com/spreadsheets/d/18NSZd6RgeSjEW1RzbYY4lQbFYHWaGKIMb8KLGQuZfDc/export?format=csv";
+
+  // loading csv from the spreadsheet
+  d3.text(spreadsheetUrl)
+    .then(function(csvData) {
+      // Parse the CSV data
+      var data = d3.csvParse(csvData);
+    
+    // converting string numbers to integers
+    data.forEach(function(d) {
+      d.n_victims = +d.n_victims;
+      d.n_fatalities = +d.n_fatalities;
+      d.n_crimes = +d.n_crimes;
+    });
+
+    // set active lang
+    setActiveLangButton = document.getElementById(`lang_${lang}`);
+    setActiveLangButton.classList.add('active');
+
+    // first time loading the map; by default, showing N crimes
+    let selectedParameter = 'crimes';
+    let legendParameter = document.getElementById('legend_victims');
+    legendParameter.innerText = langData[`legend_parameter_${selectedParameter}`][lang];
+    updateMap(data, null, selectedParameter, lang);
+
+    // button listeners for parameters
+    crimes_btn = document.getElementById('crimes_btn');
+    crimes_btn.classList.add('selected');
+    victims_btn = document.getElementById('victims_btn');
+    fatalities_btn = document.getElementById('fatalities_btn');
+
+    crimes_btn.addEventListener('click', () => {
+      selectedParameter = 'crimes';
+      legendParameter.innerText = langData[`legend_parameter_${selectedParameter}`][lang];
+      updateMap(data, null, selectedParameter, lang);
+      crimes_btn.classList.add('selected');
+      victims_btn.classList.remove('selected');
+      fatalities_btn.classList.remove('selected');
+    });
+
+    victims_btn.addEventListener('click', () => {
+      selectedParameter = 'victims';
+      legendParameter.innerText = langData[`legend_parameter_${selectedParameter}`][lang];
+      updateMap(data, null, selectedParameter, lang);
+      crimes_btn.classList.remove('selected');
+      victims_btn.classList.add('selected');
+      fatalities_btn.classList.remove('selected');
+    });
+
+    fatalities_btn.addEventListener('click', () => {
+      selectedParameter = 'fatalities';
+      legendParameter.innerText = langData[`legend_parameter_${selectedParameter}`][lang];
+      updateMap(data, null, selectedParameter, lang);
+      crimes_btn.classList.remove('selected');
+      victims_btn.classList.remove('selected');
+      fatalities_btn.classList.add('selected');
+    });
+
+    // button listeners for lang switch
+    enBtn = document.getElementById('lang_en');
+    ruBtn = document.getElementById('lang_ru');
+
+    ruBtn.addEventListener('click', () => {
+      lang = "ru";
+      loadLangContent(langData,lang);
+      legendParameter.innerText = langData[`legend_parameter_${selectedParameter}`][lang];
+      updateMap(data, null, selectedParameter, lang);
+      ruBtn.classList.add('active');
+      enBtn.classList.remove('active');
+    });
+
+    enBtn.addEventListener('click', () => {
+      lang = "en";
+      loadLangContent(langData,lang);
+      legendParameter.innerText = langData[`legend_parameter_${selectedParameter}`][lang];
+      updateMap(data, null, selectedParameter, lang);
+      enBtn.classList.add('active');
+      ruBtn.classList.remove('active');
+
+    });
+});
+});
+
+// load lang content
+function loadLangContent(langData, lang) {
+  for (let elementId in langData) {
+    let el = document.getElementById(elementId);
+    if (el) {
+      el.innerHTML = langData[elementId][lang];
+    }
+  }
+}
+    
+// updating the map
+function updateMap(data, selectedYear, toDisplay, lang, updateTable=true) {
+  // toDisplay: str, 'crimes', 'victims', 'fatalities'
+  // filter by year
+  var filteredData;
+  if (selectedYear === null) {
+    filteredData = data; // all data if no year
+  } else {
+    filteredData = data.filter(function(d) {
+      return d.year === selectedYear;
+    });
+  }
+
+  // grouping by region_code and calculate total crimes/victims/fatalities for each region
+  var regionData = d3.group(filteredData, d => d.region_code);
+  var victimCounts = new Map();
+
+    let tooltipParameterEn;
+    let tooltipParameterRu;
+    //toDisplay: str, 'crimes', 'victims', 'fatalities'
+    if (toDisplay === 'crimes') {
+      tooltipParameterRu = 'Преступлений';
+      tooltipParameterEn = 'Crimes';
+      regionData.forEach(function(value, key) {
+        var totalN = d3.sum(value, d => d.n_crimes);
+        victimCounts.set(key, totalN);
+      });
+    }
+    if (toDisplay === 'victims') {
+      tooltipParameterRu = 'Пострадавших';
+      tooltipParameterEn = 'Victims';
+      regionData.forEach(function(value, key) {
+        var totalN = d3.sum(value, d => d.n_victims);
+        victimCounts.set(key, totalN);
+      });
+    }
+    if (toDisplay === 'fatalities') {
+      tooltipParameterRu = 'Погибших';
+      tooltipParameterEn = 'Fatalities';
+      regionData.forEach(function(value, key) {
+        var totalN = d3.sum(value, d => d.n_fatalities);
+        victimCounts.set(key, totalN);
+      });
+    }
+
+  // color scale based on the range of victim counts
+  var minVictims = d3.min(Array.from(victimCounts.values()));
+  var maxVictims = d3.max(Array.from(victimCounts.values()));
+  var colorScale = d3.scaleLinear()
+    .domain([minVictims, maxVictims])
+    .interpolate(d3.interpolateRgb)
+    .range(["rgb(244, 244, 244)", "rgb(112, 0, 0)"]);
+
+  //update the legend
+  var legendSVG = d3.select("#colour_range svg");
+  legendSVG.selectAll("*").remove(); // clearing previous legend
+
+  //making legend gradient
+  var defs = legendSVG.append("defs");
+  var linearGradient = defs.append("linearGradient")
+      .attr("id", "linear-gradient");
+
+  linearGradient.selectAll("stop")
+      .data(colorScale.ticks().map((t, i, n) => ({ offset: `${(100 * i / n.length)}%`, color: colorScale(t) })))
+      .enter().append("stop")
+      .attr("offset", d => d.offset)
+      .attr("stop-color", d => d.color);
+
+  // Draw gradient rectangle
+  legendSVG.append("rect")
+      .attr("width", 120)
+      .attr("height", 16)
+      .style("fill", "url(#linear-gradient)");
+
+  // Add min and max labels
+  legendSVG.append("text")
+      .attr("x", -4)
+      .attr("y", 12)
+      .attr("class", "legend_label")
+      .attr("text-anchor", "end")
+      .text(minVictims);
+
+  legendSVG.append("text")
+      .attr("x", 124)
+      .attr("y", 12)
+      .attr("class", "legend_label")
+      .attr("text-anchor", "start")
+      .text(maxVictims);
+
+  // select the group containing the tiles
+  var tilesContainer = d3.select("#tiles_container");
+  var textContainer = d3.select("#names_container");
+
+  // apply colors to the tiles based on the number of victims
+  tilesContainer.selectAll("rect").each(function() {
+    var tile = d3.select(this);
+    var regionAbbr = tile.attr(`regNameAbbr${lang.charAt(0).toUpperCase() + lang.slice(1)}`);
+    var regionCode = tile.attr("id").replace('tile_','');
+    var regionVictims = victimCounts.get(regionCode);
+    var textElement = d3.select("#name_" + regionCode);
+    textElement.text(regionAbbr); // tile text depending on lang
+    var fillColor;
+    var textColor;
+    if (regionVictims !== undefined) {
+      fillColor = colorScale(regionVictims);
+      // dynamic text color based on perceived brightness
+      textColor = getContrastColor(fillColor);
+    } else {
+      fillColor = "#333"; // no data tiles fill
+      textColor = "#828282"; // no data tiles text
+    }
+
+    tile.transition().duration(1500).style("fill", fillColor);
+    textElement.transition().duration(1500).style("fill", textColor);
+    
+    // hover on tiles with data
+    if (regionVictims !== undefined) {
+      // Bootstrap tooltip on tiles
+      var bootstrapTooltip = new bootstrap.Tooltip(tile.node(), {
+        html: true, // HTML inside tooltips
+        placement: 'auto',
+        title: function() {
+          // tooltip content based on lang
+          if (lang === "en") {
+            return tile.attr("regionNameEn") + `<br> ${tooltipParameterEn}: ${regionVictims}`;
+          } else if (lang === "ru") {
+            return tile.attr("regionNameRu") + `<br> ${tooltipParameterRu}: ${regionVictims}`;
+          }
+        }
+      });
+      }
+    else { // if a tile has no data, remove previous tooltip
+      var tooltipInstance = bootstrap.Tooltip.getInstance(tile.node());
+      if (tooltipInstance) {
+        tooltipInstance.dispose();
+      }
+    }
+    });
+    
+}
+
+// function to calculate perceived brightness based on HSL color space
+function getPerceivedBrightness(color) {
+  var rgb = d3.rgb(color);
+  var hsl = d3.hsl(rgb);
+  return hsl.l;
+}
+
+// function to dynamically determine text color based on perceived brightness
+function getContrastColor(bgColor) {
+  var brightness = getPerceivedBrightness(bgColor);
+  return brightness > 0.5 ? "black" : "white"; // black text for light backgrounds, white text for dark
+}
+
+// check device orientation
+function checkOrientation() {
+    // check if smartphone
+    const smallScreen = window.innerWidth <= 576;
+    // the message block
+    const rotateMessage = document.getElementById("landscape_on");
+
+    if (smallScreen) {
+      if (window.innerHeight > window.innerWidth) {
+      rotateMessage.style.display = "flex";
+      }
+      else {
+        rotateMessage.style.display = "none";
+      }
+    } else {
+      rotateMessage.style.display = "none";
+    }
+  }
+
+</script>
+
+</div>
+
+<!--  The content above is fetched by greyrainbow.dataout.org -->
+
+</body>
+</html>

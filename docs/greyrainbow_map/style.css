@@ -1,0 +1,212 @@
+#github_description {
+  background-color: #1e1e1e;
+}
+
+#text_description {
+	color: rgb(206, 206, 206);
+	font-size: 12px;
+  padding: 10px !important;
+  padding-bottom: 20px !important;
+	margin: 0px !important;
+}
+
+#map_table {
+	background-color: #1e1e1e;
+}
+
+.lang_switch {
+  padding: 0px 0px 6px 0px !important;
+}
+
+.lang_btn {
+height: 22px;
+padding: 0px 4px 0px 4px !important;
+color: #aaa !important;
+font-size: 12px !important;
+border-color: #f4f4f4 !important;
+}
+
+.lang_btn:hover {
+color: black !important;
+background-color: #f4f4f4 !important;
+border-color: #f4f4f4 !important;
+}
+
+.lang_btn:focus {
+box-shadow: none !important;
+}
+
+.lang_btn:active {
+color: black !important;
+background-color: #f4f4f4 !important;
+border-color: #f4f4f4 !important;
+}
+
+.lang_btn.active {
+color: black !important;
+background-color: #f4f4f4 !important;
+border-color: #f4f4f4 !important;
+}
+
+.above_map{
+  position: relative;
+  max-width: 840px;
+  background-color: rgb(244, 244, 244);
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.info_text {
+  overflow: hidden;
+}
+
+#info_box {
+  color: black;
+  font-size: 14px;
+}
+
+#info_box .disclaimer {
+  font-style: italic;
+  color: #575757;
+}
+
+.landscape_msg {
+  color: #f4f4f4;
+  font-size: 12px;
+  align-items: center;
+  padding: 6px 0px 0px 0px !important;
+}
+
+.bi-phone-landscape {
+  font-size: 1.4rem !important;
+  padding-right: 10px !important;
+}
+
+.landscape_message {
+  margin: 0px !important;
+}
+
+#legend {
+  padding: 6px 0px 0px 0px !important;
+  max-width: 840px;
+  flex-wrap: nowrap !important;
+  align-items: baseline !important;
+}
+
+.legend_item {
+  max-width: fit-content !important;
+}
+
+.legend_label {
+  font-size: 12px;
+  color: white;
+  fill: white;
+  margin: 0px !important;
+}
+
+#n_victims_text {
+  padding: 0px 0px 2px 16px;
+}
+
+#no_data {
+  padding-left: 0px;
+}
+
+#rf_map {
+  width: 800px;
+  height: 512px;
+  margin-top:10px;
+
+}
+
+.container-fluid{
+  margin-left: 0 !important;
+}
+
+#names_container .name {
+  font-size:10px !important;
+  pointer-events:none; /* make sure the tile text is not selected */
+}
+
+/* -- occupied regions */
+
+#dashed_border {
+  stroke: white !important;
+  stroke-dasharray: 3 2;
+  fill: none !important; /* to overwrite auto colour */
+}
+
+/* occupied regions -- */
+
+.tooltip {
+  font-size: 10px !important;
+}
+
+.tooltip-inner {
+  text-align: left !important;
+}
+
+#controls {
+margin-bottom: 10px;
+}
+
+#col_pad {
+  max-width: fit-content;
+  padding: 10px 6px 0px 0px !important;
+}
+
+#selectors {
+  flex-wrap: nowrap !important;
+  align-items: baseline !important; 
+}
+
+.display_options {
+    font-size: 12px;
+    color: white;
+    margin: 0px !important;
+}
+
+.map_controls_btn {
+  width: fit-content !important;
+  padding: 2px !important;
+  font-size: 12px !important;
+  background-color: #f4f4f4 !important;
+  color: black !important;
+  border-color: #f4f4f4 !important;
+}
+
+.map_controls_btn:hover {
+  background-color: #555 !important;
+  border-color: #555 !important;
+  color: rgb(224, 224, 224) !important;
+}
+
+.selected {
+  background-color: #555 !important;
+  border-color: #555  !important;
+  color: rgb(224, 224, 224) !important;
+}
+
+/* Extra Small Devices (Portrait Phones) */
+@media (max-width: 575.98px) {
+  #rf_map {
+    width: 344px;
+    height: 224px;
+  }
+}
+
+/* Small Devices (Landscape Phones) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  #rf_map {
+    width: 634px;
+    height: 424px;
+  }
+}
+
+/* Medium Devices (Tablets) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  #rf_map {
+    width: 726px;
+    height: 524px;
+  }
+}
