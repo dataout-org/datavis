@@ -84,7 +84,7 @@ Released under the CC-BY-SA 4.0 license
         .attr('x1', 0)
         .attr('x2', 0)
         .attr('y1', yPositions[1999])
-        .attr('y2', yPositions[2025] + 8)
+        .attr('y2', yPositions[2025] + 12)
         .attr('stroke', '#bdbdbd')
         .attr('stroke-width', 1);
 
@@ -171,7 +171,7 @@ Released under the CC-BY-SA 4.0 license
                 .attr('id',`events_container_${year}`)
                 .attr('class', 'row event_div event_hidden')
                 .style('position', 'absolute')
-                .style('top', `${yPositions[year]}px`)
+                .style('top', `${yPositions[year] - 2}px`)
                 .style('left', `${margin.left + 56.8}px`);
 
             events.forEach((event, index) => {
@@ -215,7 +215,7 @@ Released under the CC-BY-SA 4.0 license
             .style('position', 'absolute')
             // text in the middle of the span
             .style('top', `${yPositions[startYear] + 6}px`)
-            .style('left', `${margin.left + 64.46}px`);
+            .style('left', `${margin.left + 63.5}px`);
 
         let spanHeight = yPositions[endYear]-yPositions[startYear];
 
@@ -255,15 +255,21 @@ Released under the CC-BY-SA 4.0 license
                 .attr('id',`note_container_${year}`)
                 .attr('class', 'row event_div event_hidden')
                 .style('position', 'absolute')
-                .style('top', `${yPositions[year]}px`)
+                .style('top', `${yPositions[year] - 2}px`)
                 .style('left', `${margin.left + 56.8}px`);
 
-         let noteText = noteDiv.append('span')
+        let singleNote = noteDiv.append('div')
+                        .attr('id', `note_${year}`)
+                        .attr('class', 'col-md-12 event');
+
+         let noteIcon = singleNote.append('i')
+            .attr('class', 'event_text span_text')
+            .attr('class', 'bi bi-exclamation-circle-fill note_icon');
+
+         let noteText = singleNote.append('span')
             .attr('class', 'event_text span_text')
             .text(note);
             // text top padiing (5th of the span height)
-            
-
     }
 
     function revealAnimation() {

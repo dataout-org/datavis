@@ -57,7 +57,12 @@
 
     {"type":"year_note",
         "year": 2014,
-        "note":"The data we collected from court decisions shows an increse in the number of hate crimes against LGBTQ+ people"
+        "note":"The data we collected shows an increse in the number of hate crimes"
+    },
+
+    {"type":"year_note",
+        "year": 2017,
+        "note":"According to our research, the number of crimes commited by organised groups increased"
     },
 
     {"type":"year_events",

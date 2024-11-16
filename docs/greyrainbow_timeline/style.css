@@ -72,30 +72,37 @@ body {
 
 .event {
   display: flex;
-  align-items: start;
-  padding: 0px 4px 0px 4px !important;
+  align-items: flex-start;
+  padding: 0px 0px 0px 2px !important
 }
 
 .event_circle_progressive {
   color: white;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-right: 4px;
 }
 
 .event_circle_not_progressive {
   color: darkred;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-right: 4px;
 }
 
 .event_text {
   font-size: 12px;
   font-weight: 200;
+  margin-top: 2px;
   color: white;
 }
 
 .span_text {
 	padding-left: 12px;
+}
+
+.note_icon {
+  color: darkred;
+  font-size: 1rem;
+  margin-right: 4px;
 }
 
 .info_icon {
@@ -125,22 +132,18 @@ body {
 .event_pulse {
   animation: pulse 2s infinite;
   color: red !important;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-right: 4px;
 }
 
 /* keyframes for the pulse effect */
 @keyframes pulse {
   0% {
-      transform: scale(0.8);
-      opacity: 0.5;
-  }
-  50% {
-      transform: scale(1);
+      transform: scale(0.6);
       opacity: 0.8;
   }
   100% {
-      transform: scale(0.8);
+      transform: scale(1);
       opacity: 1;
   }
 }
