@@ -105,6 +105,20 @@ body {
   margin-right: 4px;
 }
 
+.read_more {
+	background-color: #979797;
+	border-radius: 4px;
+	padding: 2px;
+	margin-left: 4px;
+}
+
+.read_more a {
+  text-decoration: none;
+  color: #1e1e1e;
+  font-size: 12px;
+  font-weight: 400;
+}
+
 .info_icon {
   color: #979797;
   font-size: 0.8rem;
