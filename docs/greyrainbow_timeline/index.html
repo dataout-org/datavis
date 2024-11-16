@@ -33,11 +33,6 @@ Released under the CC-BY-SA 4.0 license
 <!--  The content below is fetched by greyrainbow.dataout.org -->
 
 <div id="content_to_fetch">
-    <div class="container-fluid timeline_legend">
-        <div class="row above_timeline">
-            <p class="text_above_timeline">In post-Soviet Russia, there were <i class="bi bi-circle-fill event_circle_progressive"></i><span class="badge_progr">progressive</span> policies decriminalising (1993) and depathologising (1999) homosexuality. However, these policies did not lead to furhter laws prohibiting discrimination based on sexual orientation and gender identity. In 2006, institutional discrimination started shaping with the "gay propaganda" law. See the timeline of Russian <i class="bi bi-circle-fill event_circle_not_progressive"></i><span class="badge_discr">discriminatory</span> policies below.</p>
-        </div>
-     </div>
   <div class="container-fluid timeline-container">
 
     <svg id="timeline"></svg>
@@ -54,7 +49,7 @@ Released under the CC-BY-SA 4.0 license
         .append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-    const timelineYears = [1993, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+    const timelineYears = [1993, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 
     let yPositions = calculateYPositions(containerHeight,30,36);
 
@@ -89,7 +84,7 @@ Released under the CC-BY-SA 4.0 license
         .attr('x1', 0)
         .attr('x2', 0)
         .attr('y1', yPositions[1999])
-        .attr('y2', yPositions[2023] + 8)
+        .attr('y2', yPositions[2025] + 8)
         .attr('stroke', '#bdbdbd')
         .attr('stroke-width', 1);
 
@@ -137,22 +132,6 @@ Released under the CC-BY-SA 4.0 license
         return yPositions;
     }
 
-    const barChartData = [
-    { year: 2010, value: 46 },
-    { year: 2011, value: 68 },
-    { year: 2012, value: 57 },
-    { year: 2013, value: 100 },
-    { year: 2014, value: 138 },
-    { year: 2015, value: 117 },
-    { year: 2016, value: 127 },
-    { year: 2017, value: 117 },
-    { year: 2018, value: 98 },
-    { year: 2019, value: 101 },
-    { year: 2020, value: 87 },
-    { year: 2021, value: 72 },
-    { year: 2022, value: 56 },
-    { year: 2023, value: 97 }];
-
     function drawEvents(dataToDraw) {
 
         dataToDraw.forEach(timelineInstance => {
@@ -165,6 +144,10 @@ Released under the CC-BY-SA 4.0 license
                 drawYearSpan(timelineInstance.start_year,timelineInstance.end_year,timelineInstance.span_description,timelineInstance.span_info,timelineInstance.progressive)
             }
 
+            if (timelineInstance.type === 'year_note') {
+                drawYearNote(timelineInstance.year,timelineInstance.note)
+            }
+
             // manually setting special conditions for the last event
             
             d3.select('#events_container_2023')
@@ -175,8 +158,6 @@ Released under the CC-BY-SA 4.0 license
         });
 
         revealAnimation();
-
-        //drawBarChart();
 
         // activating tooltips
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -269,85 +250,20 @@ Released under the CC-BY-SA 4.0 license
 
     }
 
-    function drawBarChart() {
-
-        // hide events that overlap with the bar chart
-        hideSelectedTimelineEvents();
-
-        const maxBarLength = 280;
-
-        // max value for scaling
-        const maxValue = d3.max(barChartData, d => d.value);
-
-        // scale for bar lengths
-        const xScale = d3.scaleLinear()
-            .domain([0, maxValue])
-            .range([0, maxBarLength]);
-
-        barChartData.forEach(d => {
-            // div for each bar and its label
-            const barContainer = container.append('div')
-                .attr('class', 'hc_bar')
-                .attr('id',`hc_bar_${d.year}`)
+    function drawYearNote(year,note) {
+        let noteDiv = container.append('div')
+                .attr('id',`note_container_${year}`)
+                .attr('class', 'row event_div event_hidden')
                 .style('position', 'absolute')
-                .style('top', `${yPositions[d.year] + 2}px`)
-                .style('left', `${margin.left + 48}px`)
-                .style('display', 'flex')
-                .style('align-items', 'center');
+                .style('top', `${yPositions[year]}px`)
+                .style('left', `${margin.left + 56.8}px`);
 
-            // bars
-            const bar = barContainer.append('div')
-                .attr('class', 'single_bar')
-                .style('width', '0px') // Start width at 0 for animation
-                .style('height', '8px')
-                .style('background-color', 'lightgrey')
-                .style('border-radius', '8px')
-                .style('transition', 'width 0.5s ease-out'); // Smooth transition for width
+         let noteText = noteDiv.append('span')
+            .attr('class', 'event_text span_text')
+            .text(note);
+            // text top padiing (5th of the span height)
+            
 
-            // setting bar widths and animating
-            bar.transition()
-                .duration(900)
-                .style('width', `${xScale(d.value)}px`);
-
-            // labels
-            barContainer.append('span')
-                .attr('class', 'bar_label')
-                .text(d.value)
-                .style('margin-left', '8px')
-                .style('font-size', '10px')
-                .style('color', '#fff')
-                .style('opacity', 0)
-                .transition()
-                .duration(5200)
-                .style('opacity', 1);
-        });
-
-        container.append('div')
-            .attr('class','bi bi-info-circle-fill event_circle_not_progressive')
-            .attr('id','hc_bar_event_explainer_2012')
-            .attr('data-bs-toggle','tooltip')
-            .attr('data-bs-placement','bottom')
-            .attr('data-bs-original-title','Extra info');
-
-
-    }
-
-    function hideSelectedTimelineEvents() {
-
-        // hiding events for 2010–2023
-        d3.select('#span_container_2011_2013')
-            .style('opacity', 0)
-            .style('transition', 'opacity 0.5s ease-out');
-
-        d3.select('#span_line_2011_2013')
-            .style('opacity', 0)
-            .style('transition', 'opacity 0.5s ease-out');
-
-        for (let year = 2010; year <= 2023; year++) {
-            d3.select(`#events_container_${year}`)
-                .style('opacity', 0)
-                .style('transition', 'opacity 0.5s ease-out');
-        }
     }
 
     function revealAnimation() {

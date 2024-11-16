@@ -55,6 +55,11 @@
         }
     ]},
 
+    {"type":"year_note",
+        "year": 2014,
+        "note":"The data we collected from court decisions shows an increse in the number of hate crimes against LGBTQ+ people"
+    },
+
     {"type":"year_events",
         "year": 2020,
         "events": [
