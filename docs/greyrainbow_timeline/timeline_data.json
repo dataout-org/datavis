@@ -57,12 +57,14 @@
 
     {"type":"year_note",
         "year": 2014,
-        "note":"The data we collected shows an increse in the number of hate crimes"
+        "note":"The data we collected shows an increse in the number of hate crimes",
+        "note_link":"https://greyrainbow.dataout.org/hate-crimes/"
     },
 
     {"type":"year_note",
         "year": 2017,
-        "note":"According to our research, the number of crimes commited by organised groups increased"
+        "note":"According to our research, the number of crimes commited by organised groups increased",
+        "note_link":"https://greyrainbow.dataout.org/hate-crimes/"
     },
 
     {"type":"year_events",
