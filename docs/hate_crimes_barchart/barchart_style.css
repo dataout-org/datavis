@@ -110,6 +110,11 @@
   fill:rgb(112, 0, 0);
 }
 
+.smooth_avg_line {
+	box-shadow: black;
+	filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.9));
+}
+
 .background_law_info {
   position: absolute;
   font-size: 10px;

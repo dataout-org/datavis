@@ -53,7 +53,7 @@ Released under the CC-BY-SA 4.0 license
             </div>
 
             <div class="background_law_info" id="law_22_23">
-                    <span class="law_info_text">Amendments to the "gay propaganda" law and the Supreme Court decision</span>
+                    <span class="law_info_text">Amendments to the "gay propaganda" law</span>
                     <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="law_tooltip" data-bs-title="Additional info about the law"></i>
             </div>
 
@@ -76,6 +76,20 @@ Released under the CC-BY-SA 4.0 license
             .attr("height", height + margin.top + margin.bottom)
         .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    
+    // to calculate smooth average over 2 years
+    function getSmoothAverage(data, key) {
+        const smoothed = [];
+        for (let i = 0; i < data.length; i++) {
+            if (i < data.length - 1) { // Check if there's a next year (pair)
+                const curr = data[i][key];    // Current year's value
+                const next = data[i + 1][key]; // Next year's value
+                smoothed.push((curr + next) / 2); // Average of current and next year
+            }
+        }
+        return smoothed;
+    }
 
     // fetching the data
     d3.csv("hatecrimes_overall_2010_2023.csv").then(function(data) {
@@ -113,6 +127,27 @@ Released under the CC-BY-SA 4.0 license
         svg.selectAll(".domain")
             .attr("class", "x_line");
 
+        // smooth averages for each key
+        const smoothCrimes = getSmoothAverage(data, 'n_crimes');
+        const smoothVictims = getSmoothAverage(data, 'n_victims');
+        const smoothFatalities = getSmoothAverage(data, 'n_fatalities');
+
+        function drawSmoothAverage(data, smoothData, color) {
+            const line = d3.line()
+                .x((d, i) => x(data[i].year) + x.bandwidth()/ 2)
+                .y((d, i) => y(smoothData[i]))
+                .curve(d3.curveMonotoneX);
+
+            svg.append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("class", "smooth_avg_line")
+                .attr("stroke", color)
+                .attr("stroke-width", 2)
+                .style("stroke-linecap", "round")
+                .attr("d", line);
+        }
+        
         const backgroundLawMargin = 2;
 
         // law 2012–2013 background
@@ -135,7 +170,6 @@ Released under the CC-BY-SA 4.0 license
         const info_12_13 = document.getElementById("law_12_13");
         info_12_13.style.width = `${backgroundLawWidthTotal - 12}px`;
         info_12_13.style.left = `${(x0_12_13 + backgroundLawWidthTotal / 2) - 10}px`;
-
 
         // law 2022–2023 background
         const x0_22_23 = x("2022") - backgroundLawMargin; // start position
@@ -173,9 +207,10 @@ Released under the CC-BY-SA 4.0 license
             .data(data)
             .enter()
             .append("text")
+                .attr("id", d => `n_crimes_label_${d.year}`)
                 .attr("class", "label n_crimes_label")
                 .attr("x", d => x(d.year) + 22)
-                .attr("y", d => y(d.n_crimes) - 6)
+                .attr("y", d => y(d.n_crimes) - 4)
                 .text(d => d.n_crimes);
 
         // N fatalities bars (y = 0)
@@ -194,9 +229,10 @@ Released under the CC-BY-SA 4.0 license
                 .data(data)
                 .enter()
                 .append("text")
+                    .attr("id", d => `n_fatalities_label_${d.year}`)
                     .attr("class", "label n_fatalities_label")
                     .attr("x", d => x(d.year) + 22)
-                    .attr("y", d => y(d.n_fatalities) + 14)
+                    .attr("y", d => y(d.n_fatalities) + 16)
                     .text(d => d.n_fatalities);
 
         // N victims bars (incl. N fatalities)
@@ -215,10 +251,37 @@ Released under the CC-BY-SA 4.0 license
             .data(data)
             .enter()
             .append("text")
+                .attr("id", d => `n_victims_label_${d.year}`)
                 .attr("class", "label n_victims_label")
                 .attr("x", d => x(d.year) + 22)
                 .attr("y", d => y(d.n_victims) + 14)
                 .text(d => d.n_victims);
+
+        // drawing smooth averages lines
+        drawSmoothAverage(data, smoothCrimes, "rgb(151, 151, 151)");
+        drawSmoothAverage(data, smoothVictims, "rgb(132, 100, 100)");
+        drawSmoothAverage(data, smoothFatalities, "rgb(112, 0, 0)");
+
+        // correcting the label positioning, so they're visible
+        d3.select("#n_crimes_label_2018").attr("y", 114);
+        d3.select("#n_crimes_label_2022").attr("y", 188);
+
+        d3.select("#n_victims_label_2010").attr("y", 324);
+        d3.select("#n_victims_label_2011").attr("y", 262);
+        d3.select("#n_victims_label_2014").attr("y", 146);
+        d3.select("#n_victims_label_2016").attr("y", 156);
+        d3.select("#n_victims_label_2018").attr("y", 162);
+        d3.select("#n_victims_label_2019").attr("y", 192);
+        d3.select("#n_victims_label_2020").attr("y", 214);
+
+        // append explainers
+        d3.select("#chart_col").append("div")
+            .attr("class", "info-icon")
+            .style("position", "absolute")
+            .style("left", "264px") // X position
+            .style("top", "62px") // Y position, adjust for icon size
+            .html(`<i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-title="explanation"></i>`);
+
 
            
     });
