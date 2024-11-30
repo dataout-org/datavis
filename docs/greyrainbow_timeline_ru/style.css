@@ -1,0 +1,170 @@
+body {
+  background-color: #1e1e1e !important;
+}
+
+#github_description {
+  background-color: #1e1e1e;
+}
+
+#text_description {
+	color: rgb(206, 206, 206);
+	font-size: 12px;
+  padding: 10px !important;
+  padding-bottom: 20px !important;
+	margin: 0px !important;
+}
+
+.above_timeline {
+	color: white;
+	padding-left: 8px;
+	border-radius: 4px;
+	font-size: 14px;
+	max-width: 840px;
+}
+
+.text_above_timeline {
+  margin: 10px 0px 24px 0px !important;
+}
+
+.badge_progr {
+  padding: 2px;
+  background-color: white;
+  color: #3f3f3f;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.badge_discr {
+  padding: 2px;
+  background-color: darkred;
+  color: #b7b7b7;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.timeline-container {
+  max-width: 900px;
+  padding: 0px !important;
+  margin: 0px !important;
+  height: fit-content;
+  position: relative;
+}
+
+.tick_label {
+  font-size: 12px;
+}
+
+.event_hidden {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 1s ease-out, transform 0.4s ease-out;
+}
+
+.event_revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s ease-in, transform 0.4s ease-in;
+}
+
+.event_div {
+  max-width: 340px;
+}
+
+.event {
+  display: flex;
+  align-items: flex-start;
+  padding: 0px 0px 0px 2px !important
+}
+
+.event_circle_progressive {
+  color: white;
+  font-size: 1rem;
+  margin-right: 4px;
+}
+
+.event_circle_not_progressive {
+  color: darkred;
+  font-size: 1rem;
+  margin-right: 4px;
+}
+
+.event_text {
+  font-size: 12px;
+  font-weight: 200;
+  margin-top: 2px;
+  color: white;
+}
+
+.span_text {
+	padding-left: 12px;
+}
+
+.note_icon {
+  color: darkred;
+  font-size: 1rem;
+  margin-right: 4px;
+}
+
+.read_more {
+	background-color: #979797;
+	border-radius: 4px;
+	padding: 2px;
+	margin-left: 4px;
+}
+
+.read_more a {
+  text-decoration: none;
+  color: #1e1e1e;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.info_icon {
+  color: #979797;
+  font-size: 0.8rem;
+}
+
+.line_div {
+  position: absolute;
+  width: 6px !important;
+  border-radius: 6px;
+  padding: 0px !important;
+}
+
+.tooltip {
+  --bs-tooltip-arrow-color: #979797 !important; /* Customize arrow color */
+  --bs-tooltip-bg: #979797 !important;
+}
+
+.tooltip-inner {
+  color: #000000 !important;
+  font-size: 12px !important;
+  padding: 4px !important;
+  text-align: start !important;
+}
+
+.event_pulse {
+  animation: pulse 2s infinite;
+  color: red !important;
+  font-size: 1rem;
+  margin-right: 4px;
+}
+
+/* keyframes for the pulse effect */
+@keyframes pulse {
+  0% {
+      transform: scale(0.6);
+      opacity: 0.8;
+  }
+  100% {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+@media (max-width: 576px) {
+  .event_div {
+    max-width: 286px;
+  }
+}

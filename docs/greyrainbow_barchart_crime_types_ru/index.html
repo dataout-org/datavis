@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--
+Developed by dataout.org
+
+Released under the CC-BY-SA 4.0 license
+-->
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Hate crimes barchart – types of crimes / Developed for greyrainbow.dataout.org</title>
+
+<link rel="stylesheet" href="barchart_style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+<div class="container-fluid" id="github_description">
+  <p id="text_description">
+    This bar chart displays the number of hate crimes against LGBTQ+ people in Russia according to the court cases data. This page is developed for the website greyrainbow.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
+  </p>
+</div>
+
+<!--  The content below is fetched by hatecrimes.dataout.org -->
+
+<div id="content_to_fetch">
+  <div class="container-fluid" id="barchart">
+
+    <div class="row legend_bar">
+           <div class="col-md-auto targeting_legend">Таргентинг и группы ненависти</div>
+           <div class="col-md-auto domestic_legend">Бытовые преступления</div>
+           <div class="col-md-auto other_legend">Другие</div>
+       
+    </div>
+
+    <div class="row chart">
+        <div class="col-md-auto chart_col" id="chart_col">
+          <!-- bar chart goes here -->
+            <div class="background_law_info" id="law_12_13">
+                <span class="law_info_text">Принятие закона о "гей-пропаганде"</span>
+            </div>
+
+            <div class="background_law_info" id="law_22_23">
+                    <span class="law_info_text">Расширение закона о "гей-пропаганде"</span>
+            </div>
+
+        </div>
+      </div>
+  
+  </div>
+
+  <script id="d3vis_barchart">
+
+    // chart dimensions and margins
+    const margin = {top: 40, right: 30, bottom: 50, left: 20},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+    // appending SVG
+    const svg = d3.select("#chart_col")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+    // fetching the data
+    d3.csv("crime_types_10_23.csv").then(function(data) {
+        data.forEach(d => {
+                d.year = d.year.toString().trim(); // convert years to str, trim whitespace
+                d.targeting = +d.targeting; // N 
+                d.domestic = +d.domestic; // N 
+                d.other = +d.other; // N 
+            });
+
+        // all years
+        const years = data.map(d => d.year);
+        const categories = ["targeting", "domestic", "other"];
+
+        // x axis for years
+        const x0 = d3.scaleBand()
+        .domain(years) // Main scale for years
+        .range([0, width])
+        .padding(0.2);
+
+        const x1 = d3.scaleBand()
+            .domain(categories) // Inner scale for categories
+            .range([0, x0.bandwidth()])
+            .padding(0);
+
+        // add y axis
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => Math.max(d.targeting, d.domestic, d.other))])
+            .nice()
+            .range([height, 0]);
+
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x0).tickSize(0))
+            .attr("class", "year_label")
+            .selectAll("text")
+                .attr("transform", "translate(0,4)rotate(0)")
+                .style("text-anchor", "middle");
+
+        // tick line
+        svg.selectAll(".domain")
+            .attr("class", "x_line");
+        
+        const backgroundLawMargin = 2;
+
+        // law 2012–2013 background
+        const x0_12_13 = x0("2012") - backgroundLawMargin; // start position
+        const x1_12_13  = x0("2013") + x0.bandwidth() + backgroundLawMargin; // end position
+        const backgroundLawWidthTotal = x1_12_13 - x0_12_13; // total width
+
+        svg.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_12_13)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal)
+            .attr("height", height + 36)
+            .style("fill", "none")
+            .style("stroke", "rgb(151, 151, 151)")
+            .style("stroke-dasharray", "6, 6")
+            .style("stroke-width", .6);
+
+        // positioning of the info
+        const info_12_13 = document.getElementById("law_12_13");
+        info_12_13.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_12_13.style.left = `${(x0_12_13 + backgroundLawWidthTotal / 2) - 10}px`;
+
+        // law 2022–2023 background
+        const x0_22_23 = x0("2022") - backgroundLawMargin; // start position
+        const x1_22_23  = x0("2023") + x0.bandwidth() + backgroundLawMargin; // end position
+
+        svg.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_22_23)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal) // width stays the same for 2 bars
+            .attr("height", height + 36)
+            .style("fill", "none")
+            .style("stroke", "rgb(151, 151, 151)")
+            .style("stroke-dasharray", "6, 6")
+            .style("stroke-width", .6);
+
+        // positioning of the info
+        const info_22_23 = document.getElementById("law_22_23");
+        info_22_23.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_22_23.style.left = `${(x0_22_23 + backgroundLawWidthTotal / 2) - 10}px`;
+
+  // Add groups for each year
+  const yearGroups = svg.selectAll(".year-group")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("class", "year-group")
+        .attr("transform", d => `translate(${x0(d.year)},0)`);
+        // Add bars
+    yearGroups.selectAll(".bar")
+        .data(d => categories.map(cat => ({ category: cat, value: d[cat] })))
+        .enter()
+        .append("rect")
+        .attr("class", d => `bar bar-${d.category}`)
+        .attr("x", d => x1(d.category))
+        .attr("y", d => y(d.value))
+        .attr("width", x1.bandwidth())
+        .attr("height", d => height - y(d.value))
+        .attr("fill", d => {
+            if (d.category === "targeting") return "rgb(112, 0, 0)";
+            if (d.category === "domestic") return "rgb(132, 100, 100)";
+            if (d.category === "other") return "gray";
+        });
+
+    // Add labels
+    yearGroups.selectAll(".label")
+        .data(d => categories.map(cat => ({ category: cat, value: d[cat] })))
+        .enter()
+        .append("text")
+        .attr("class", "label")
+        .attr("x", d => x1(d.category) + x1.bandwidth() / 2)
+        .attr("y", d => y(d.value) - 5)
+        .attr("text-anchor", "middle")
+        .attr("fill", d => {
+            if (d.category === "targeting") return "rgb(112, 0, 0)";    // Match bar color
+            if (d.category === "domestic") return "rgb(132, 100, 100)";     // Match bar color
+            if (d.category === "other") return "gray";      // Match bar color
+        })
+        .text(d => d.value);  
+    });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  </script>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!--
+Developed by dataout.org
+
+Released under the CC-BY-SA 4.0 license
+-->
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Hate crimes barchart / Developed for greyrainbow.dataout.org</title>
+
+<link rel="stylesheet" href="barchart_style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+<div class="container-fluid" id="github_description">
+  <p id="text_description">
+    This bar chart displays the number of hate crimes against LGBTQ+ people in Russia according to the court cases data. This page is developed for the website greyrainbow.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
+  </p>
+</div>
+
+<!--  The content below is fetched by hatecrimes.dataout.org -->
+
+<div id="content_to_fetch">
+  <div class="container-fluid" id="barchart">
+    <div class="row legend_bar">
+           <div class="col-md-auto n_crimes_legend">Кол-во преступлений</div>
+           <div class="col-md-auto n_victims_legend">включая пострадавших</div>
+           <div class="col-md-auto n_fatalities_legend">включая погибших</div>
+       
+    </div>
+
+    <div class="row chart">
+        <div class="col-md-auto chart_col" id="chart_col">
+          <!-- bar chart goes here -->
+            <div class="background_law_info" id="law_12_13">
+                <span class="law_info_text">Принятие закона о "гей-пропаганде"</span>
+            </div>
+
+            <div class="background_law_info" id="law_22_23">
+                    <span class="law_info_text">Расширение закона о "гей-пропаганде"</span>
+            </div>
+
+            <div class="info_icon" id="explainer_2013">
+                <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-title="Эта кривая показывает среднее значение количества преступлений за соседние 2 года. Мы смотрим на среднее значение, потому что год опубликования судебных приговоров не всегда совпадает с годом совершения преступения."></i>
+            </div>
+
+        </div>
+      </div>
+  
+  </div>
+
+  <script id="d3vis_barchart">
+
+    // chart dimensions and margins
+    const margin = {top: 40, right: 30, bottom: 50, left: 20};
+    
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+    // appending SVG
+    const svg = d3.select("#chart_col")
+        .append("svg")
+            .attr("id","svg_chart")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    
+    // to calculate smooth average over 2 years
+    function getSmoothAverage(data, key) {
+        const smoothed = [];
+        for (let i = 0; i < data.length; i++) {
+            if (i < data.length - 1) { // Check if there's a next year (pair)
+                const curr = data[i][key];    // Current year's value
+                const next = data[i + 1][key]; // Next year's value
+                smoothed.push((curr + next) / 2); // Average of current and next year
+            }
+        }
+        return smoothed;
+    }
+
+    // fetching the data
+    d3.csv("hatecrimes_overall_2010_2023.csv").then(function(data) {
+        data.forEach(d => {
+                d.year = d.year.toString().trim(); // convert years to str, trim whitespace
+                d.n_crimes = +d.n_crimes; // N crimes
+                d.n_victims = +d.n_victims; // N victims
+                d.n_fatalities = +d.n_fatalities; // N fatalities
+            });
+
+        // all years
+        const years = data.map(d => d.year);
+
+        // x axis for years
+        const x = d3.scaleBand()
+            .domain(years)
+            .range([0, width])
+            .padding(0.12);
+
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).tickSize(0))
+            .attr("class", "year_label")
+            .selectAll("text")
+                .attr("transform", "translate(0,4)rotate(0)")
+                .style("text-anchor", "middle");
+
+        // add y axis
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.n_crimes)])
+            .nice()
+            .range([height, 0]);
+
+        // tick line
+        svg.selectAll(".domain")
+            .attr("class", "x_line");
+
+        // smooth averages for each key
+        const smoothCrimes = getSmoothAverage(data, 'n_crimes');
+        const smoothVictims = getSmoothAverage(data, 'n_victims');
+        const smoothFatalities = getSmoothAverage(data, 'n_fatalities');
+
+        function drawSmoothAverage(data, smoothData, color) {
+            const line = d3.line()
+                .x((d, i) => x(data[i].year) + x.bandwidth()/ 2)
+                .y((d, i) => y(smoothData[i]))
+                .curve(d3.curveMonotoneX);
+
+            svg.append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("class", "smooth_avg_line")
+                .attr("stroke", color)
+                .attr("stroke-width", 1)
+                .style("stroke-linecap", "round")
+                .attr("d", line);
+        }
+        
+        const backgroundLawMargin = 2;
+
+        // law 2012–2013 background
+        const x0_12_13 = x("2012") - backgroundLawMargin; // start position
+        const x1_12_13  = x("2013") + x.bandwidth() + backgroundLawMargin; // end position
+        const backgroundLawWidthTotal = x1_12_13 - x0_12_13; // total width
+
+        svg.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_12_13)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal)
+            .attr("height", height + 36)
+            .style("fill", "none")
+            .style("stroke", "rgb(151, 151, 151)")
+            .style("stroke-dasharray", "6, 6")
+            .style("stroke-width", .6);
+
+        // positioning of the info
+        const info_12_13 = document.getElementById("law_12_13");
+        info_12_13.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_12_13.style.left = `${(x0_12_13 + backgroundLawWidthTotal / 2) - 10}px`;
+
+        // law 2022–2023 background
+        const x0_22_23 = x("2022") - backgroundLawMargin; // start position
+        const x1_22_23  = x("2023") + x.bandwidth() + backgroundLawMargin; // end position
+
+        svg.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_22_23)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal) // width stays the same for 2 bars
+            .attr("height", height + 36)
+            .style("fill", "none")
+            .style("stroke", "rgb(151, 151, 151)")
+            .style("stroke-dasharray", "6, 6")
+            .style("stroke-width", .6);
+
+        // positioning of the info
+        const info_22_23 = document.getElementById("law_22_23");
+        info_22_23.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_22_23.style.left = `${(x0_22_23 + backgroundLawWidthTotal / 2) - 10}px`;
+
+        // N crimes bars
+        svg.selectAll(".n_crimes")
+            .data(data)
+            .enter()
+            .append("rect")
+                .attr("class", "n_crimes")
+                .attr("x", d => x(d.year))
+                .attr("y", d => y(d.n_crimes))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.n_crimes));
+
+        // N crimes labels
+        svg.selectAll(".n_crimes-label")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("id", d => `n_crimes_label_${d.year}`)
+                .attr("class", "label n_crimes_label")
+                .attr("x", d => x(d.year) + 22)
+                .attr("y", d => y(d.n_crimes) - 4)
+                .text(d => d.n_crimes);
+
+        // N fatalities bars (y = 0)
+        svg.selectAll(".n_fatalities")
+        .data(data)
+        .enter()
+        .append("rect")
+            .attr("class", "n_fatalities")
+            .attr("x", d => x(d.year))
+            .attr("y", d => y(d.n_fatalities))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height - y(d.n_fatalities));
+
+        // N fatalities labels
+        svg.selectAll(".n_fatalities_label")
+                .data(data)
+                .enter()
+                .append("text")
+                    .attr("id", d => `n_fatalities_label_${d.year}`)
+                    .attr("class", "label n_fatalities_label")
+                    .attr("x", d => x(d.year) + 22)
+                    .attr("y", d => y(d.n_fatalities) + 16)
+                    .text(d => d.n_fatalities);
+
+        // N victims bars (incl. N fatalities)
+        svg.selectAll(".n_victims")
+            .data(data)
+            .enter()
+            .append("rect")
+                .attr("class", "n_victims")
+                .attr("x", d => x(d.year))
+                .attr("y", d => y(d.n_victims))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.n_victims - d.n_fatalities));
+
+        // N victims labels
+        svg.selectAll(".n_victims_label")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("id", d => `n_victims_label_${d.year}`)
+                .attr("class", "label n_victims_label")
+                .attr("x", d => x(d.year) + 22)
+                .attr("y", d => y(d.n_victims) + 14)
+                .text(d => d.n_victims);
+
+        // drawing smooth averages lines
+        drawSmoothAverage(data, smoothCrimes, "rgb(151, 151, 151)");
+
+        // correcting the label positioning, so they're visible
+        d3.select("#n_crimes_label_2018").attr("y", 114);
+        d3.select("#n_crimes_label_2022").attr("y", 188);
+
+        d3.select("#n_victims_label_2010").attr("y", 324);
+        d3.select("#n_victims_label_2011").attr("y", 262);
+        d3.select("#n_victims_label_2014").attr("y", 146);
+        d3.select("#n_victims_label_2016").attr("y", 156);
+        d3.select("#n_victims_label_2018").attr("y", 162);
+        d3.select("#n_victims_label_2019").attr("y", 192);
+        d3.select("#n_victims_label_2020").attr("y", 214);
+
+        // append explainers
+        d3.select("#explainer_2013")
+            .style("position", "absolute")
+            .style("left", "266px") // X position
+            .style("top", "56px"); // Y position, adjust for icon size
+           
+    });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  </script>
+
+</div>
+
+</body>
+
+</html>
