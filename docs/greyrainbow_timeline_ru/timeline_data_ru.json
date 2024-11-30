@@ -58,13 +58,13 @@
     {"type":"year_note",
         "year": 2014,
         "note":"Наши данные показывают рост преступлений ненависти в отношении ЛГБТК+ людей",
-        "note_link":"https://greyrainbow.dataout.org/hate-crimes/"
+        "note_link":"https://greyrainbow.dataout.org/hate-crimes-ru/"
     },
 
     {"type":"year_note",
         "year": 2017,
         "note":"Наши данные показывают рост преступлений совершенных группой лиц по предварительному сговору",
-        "note_link":"https://greyrainbow.dataout.org/hate-crimes/"
+        "note_link":"https://greyrainbow.dataout.org/hate-crimes-ru/"
     },
 
     {"type":"year_events",

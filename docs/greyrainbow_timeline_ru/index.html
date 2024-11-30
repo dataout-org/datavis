@@ -104,7 +104,7 @@ Released under the CC-BY-SA 4.0 license
     const container = d3.select('.timeline-container'); 
 
     // visualising the timeline data
-    d3.json('https://raw.githubusercontent.com/dataout-org/datavis/main/docs/greyrainbow_timeline/timeline_data_ru.json')
+    d3.json('https://raw.githubusercontent.com/dataout-org/datavis/refs/heads/main/docs/greyrainbow_timeline_ru/timeline_data_ru.json')
         .then(function(data) {
             const timelineData = data; 
             drawEvents(timelineData);
@@ -275,7 +275,7 @@ Released under the CC-BY-SA 4.0 license
 
         let readMoreLink = noteAction.append('a')
             .attr('href', note_link)
-            .text("Read more");
+            .text("Читать исследование");
 
     }
 
