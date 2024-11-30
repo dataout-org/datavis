@@ -1,0 +1,69 @@
+#github_description {
+  background-color: #1e1e1e;
+}
+
+#text_description {
+	color: rgb(206, 206, 206);
+	font-size: 12px;
+  padding: 10px !important;
+  padding-bottom: 20px !important;
+	margin: 0px !important;
+}
+
+#table_6_21 {
+	background-color: #1e1e1e;
+}
+
+#table-container {
+  max-width: 900px;
+  max-height: 460px;
+  padding-left: 0px;
+  overflow-y: scroll ;
+}
+
+.container-fluid{
+  margin-left: 0 !important;
+}
+
+.table-dark {
+  --bs-table-bg: #1e1e1e !important;
+}
+
+#data-table tbody{
+  font-size: 12px;
+}
+
+.table {
+  line-height: 1.2 !important;
+  margin-bottom:0px !important;
+}
+
+thead {
+  font-size:12px;
+  text-align: left;
+}
+
+.table thead th {
+  vertical-align: top !important;
+  position: sticky;
+  top: 0;
+  background-color: rgb(204, 204, 204) !important;
+  color: black !important;
+}
+
+.case_download_icon {
+  font-size: 0.8rem;
+}
+
+.case_download {
+  color: rgb(204, 204, 204) !important
+}
+
+.case_download:hover {
+  color:rgb(173, 173, 173) !important;
+  text-decoration: none !important;
+}
+
+#table_bottom {
+  height: 60px;
+}
