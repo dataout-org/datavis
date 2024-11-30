@@ -193,16 +193,19 @@ Released under the CC-BY-SA 4.0 license
                             .attr('class','bi bi-circle-fill event_circle_not_progressive');
                     }
 
-                    let spanDiv = eventDiv.append('span')
-                        .attr('class', 'event_text')
-                        .text(event.description);
+                    if (event.description !== "") {
+                        let spanDiv = eventDiv.append('span')
+                            .attr('class', 'event_text')
+                            .text(event.description);
 
-                    spanDiv.append('i')
-                        .attr('class', 'bi bi-info-circle-fill info_icon')
-                        .attr('data-bs-toggle', 'tooltip')
-                        .attr('data-bs-placement', 'bottom')
-                        .attr('title', event.info)
-                        .style('margin-left', '4px');
+                        spanDiv.append('i')
+                            .attr('class', 'bi bi-info-circle-fill info_icon')
+                            .attr('data-bs-toggle', 'tooltip')
+                            .attr('data-bs-placement', 'bottom')
+                            .attr('title', event.info)
+                            .style('margin-left', '4px');
+                    }
+
                 }
             });
     }
@@ -238,12 +241,14 @@ Released under the CC-BY-SA 4.0 license
             // text top padiing (5th of the span height)
             .style('padding-top',`${spanHeight / 5}px`);
 
-        spanText.append('i')
-            .attr('class', 'bi bi-info-circle-fill info_icon')
-            .attr('data-bs-toggle', 'tooltip')
-            .attr('data-bs-placement', 'bottom')
-            .attr('title', spanInfo)
-            .style('margin-left', '4px');
+        if (spanInfo !== "") {
+                spanText.append('i')
+                .attr('class', 'bi bi-info-circle-fill info_icon')
+                .attr('data-bs-toggle', 'tooltip')
+                .attr('data-bs-placement', 'bottom')
+                .attr('title', spanInfo)
+                .style('margin-left', '4px');
+            }
 
         // rewrite style for the span 2000–2005
         d3.select('#span_line_2000_2005').style('background-color','grey');
@@ -268,7 +273,7 @@ Released under the CC-BY-SA 4.0 license
 
          let noteText = singleNote.append('span')
             .attr('class', 'event_text')
-            .text(note);
+            .html(`${note}<br>`);
 
         let noteAction = noteText.append('i')
             .attr('class', 'read_more');
