@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!--
+Developed by dataout.org
+
+Released under the CC-BY-SA 4.0 license
+-->
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Hate crimes barchart – types of crimes / Developed for greyrainbow.dataout.org</title>
+
+<link rel="stylesheet" href="barchart_style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+<div class="container-fluid" id="github_description">
+  <p id="text_description">
+    This bar chart displays the number of hate crimes against LGBTQ+ people in Russia according to the court cases data. This page is developed for the website greyrainbow.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
+  </p>
+</div>
+
+<!--  The content below is fetched by hatecrimes.dataout.org -->
+
+<div id="content_to_fetch">
+  <div class="container-fluid" id="barchart">
+    <div class="row chart_title_h1">
+        <p>Types of crimes</p>
+    </div>
+    <div class="row info_box">
+        <p class="info_box_text">Explainer goes here</p>
+    </div>
+    <div class="row legend_bar">
+           <div class="col-md-auto targeting_legend">N targeting</div>
+           <div class="col-md-auto domestic_legend">N domestic</div>
+           <div class="col-md-auto other_legend">N other</div>
+       
+    </div>
+
+    <div class="row chart">
+        <div class="col-md-auto chart_col" id="chart_col">
+          <!-- bar chart goes here -->
+            <div class="background_law_info" id="law_12_13">
+                <span class="law_info_text">Introduction of the "gay propaganda" law</span>
+                <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="law_tooltip" data-bs-title="Additional info about the law"></i>
+            </div>
+
+            <div class="background_law_info" id="law_22_23">
+                    <span class="law_info_text">Amendments to the "gay propaganda" law</span>
+                    <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="law_tooltip" data-bs-title="Additional info about the law"></i>
+            </div>
+
+        </div>
+      </div>
+  
+  </div>
+
+  <script id="d3vis_barchart">
+
+    // chart dimensions and margins
+    const margin = {top: 40, right: 30, bottom: 50, left: 20},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+    // appending SVG
+    const svg = d3.select("#chart_col")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+    // fetching the data
+    d3.csv("crime_types_10_23.csv").then(function(data) {
+        data.forEach(d => {
+                d.year = d.year.toString().trim(); // convert years to str, trim whitespace
+                d.targeting = +d.targeting; // N 
+                d.domestic = +d.domestic; // N 
+                d.other = +d.other; // N 
+            });
+
+        // all years
+        const years = data.map(d => d.year);
+
+        // x axis for years
+        const x = d3.scaleBand()
+            .domain(years)
+            .range([0, width])
+            .padding(0.12);
+
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).tickSize(0))
+            .attr("class", "year_label")
+            .selectAll("text")
+                .attr("transform", "translate(0,4)rotate(0)")
+                .style("text-anchor", "middle");
+
+        // add y axis
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.targeting)])
+            .nice()
+            .range([height, 0]);
+
+        // tick line
+        svg.selectAll(".domain")
+            .attr("class", "x_line");
+        
+        const backgroundLawMargin = 2;
+
+        // law 2012–2013 background
+        const x0_12_13 = x("2012") - backgroundLawMargin; // start position
+        const x1_12_13  = x("2013") + x.bandwidth() + backgroundLawMargin; // end position
+        const backgroundLawWidthTotal = x1_12_13 - x0_12_13; // total width
+
+        svg.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_12_13)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal)
+            .attr("height", height + 36)
+            .style("fill", "none")
+            .style("stroke", "rgb(151, 151, 151)")
+            .style("stroke-dasharray", "6, 6")
+            .style("stroke-width", .6);
+
+        // positioning of the info
+        const info_12_13 = document.getElementById("law_12_13");
+        info_12_13.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_12_13.style.left = `${(x0_12_13 + backgroundLawWidthTotal / 2) - 10}px`;
+
+        // law 2022–2023 background
+        const x0_22_23 = x("2022") - backgroundLawMargin; // start position
+        const x1_22_23  = x("2023") + x.bandwidth() + backgroundLawMargin; // end position
+
+        svg.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_22_23)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal) // width stays the same for 2 bars
+            .attr("height", height + 36)
+            .style("fill", "none")
+            .style("stroke", "rgb(151, 151, 151)")
+            .style("stroke-dasharray", "6, 6")
+            .style("stroke-width", .6);
+
+        // positioning of the info
+        const info_22_23 = document.getElementById("law_22_23");
+        info_22_23.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_22_23.style.left = `${(x0_22_23 + backgroundLawWidthTotal / 2) - 10}px`;
+
+        // N crimes bars
+        svg.selectAll(".targeting")
+            .data(data)
+            .enter()
+            .append("rect")
+                .attr("class", "targeting")
+                .attr("x", d => x(d.year))
+                .attr("y", d => y(d.targeting))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.targeting));
+
+        // N crimes labels
+        svg.selectAll(".targeting-label")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("id", d => `targeting_label_${d.year}`)
+                .attr("class", "label targeting_label")
+                .attr("x", d => x(d.year) + 22)
+                .attr("y", d => y(d.targeting) - 4)
+                .text(d => d.targeting);
+
+        // N fatalities bars (y = 0)
+        svg.selectAll(".other")
+        .data(data)
+        .enter()
+        .append("rect")
+            .attr("class", "other")
+            .attr("x", d => x(d.year))
+            .attr("y", d => y(d.other))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height - y(d.other));
+
+        // N fatalities labels
+        svg.selectAll(".other_label")
+                .data(data)
+                .enter()
+                .append("text")
+                    .attr("id", d => `other_label_${d.year}`)
+                    .attr("class", "label other_label")
+                    .attr("x", d => x(d.year) + 22)
+                    .attr("y", d => y(d.other) + 16)
+                    .text(d => d.other);
+
+        // N victims bars (incl. N fatalities)
+        svg.selectAll(".domestic")
+            .data(data)
+            .enter()
+            .append("rect")
+                .attr("class", "domestic")
+                .attr("x", d => x(d.year))
+                .attr("y", d => y(d.domestic))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.domestic - d.other));
+
+        // N victims labels
+        svg.selectAll(".domestic_label")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("id", d => `domestic_label_${d.year}`)
+                .attr("class", "label domestic_label")
+                .attr("x", d => x(d.year) + 22)
+                .attr("y", d => y(d.domestic) + 14)
+                .text(d => d.domestic);
+
+        // append explainers
+        d3.select("#chart_col").append("div")
+            .attr("class", "info-icon")
+            .style("position", "absolute")
+            .style("left", "264px") // X position
+            .style("top", "62px") // Y position, adjust for icon size
+            .html(`<i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-title="explanation"></i>`);
+
+
+           
+    });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  </script>
+
+</div>
+
+
+</body>
+
+</html>
