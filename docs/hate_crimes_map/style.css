@@ -180,11 +180,11 @@ thead {
 }
 
 .case_download {
-  color:rgb(29, 29, 29) !important;
+  color: rgb(204, 204, 204) !important
 }
 
 .case_download:hover {
-  color:black !important;
+  color:rgb(173, 173, 173) !important;
   text-decoration: none !important;
 }
 

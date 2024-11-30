@@ -87,10 +87,6 @@ Released under the CC-BY-SA 4.0 license
         <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allRegionsButton"></button></div>
   </div>
   </div>
-
-  <div class="container-fluid table_explainer">
-    <p id="table_explainer_p1"></p>
-  </div>
     
   <div class="container-fluid" id="table-container">
     <div class="table-sm">
@@ -115,7 +111,7 @@ Released under the CC-BY-SA 4.0 license
 const pathname = window.location.pathname;
 // check for 'ru'
 let lang;
-if (pathname.includes('/ru')) {
+if (pathname.includes('-ru')) {
   lang = "ru";
 } else {
   lang = "en";
@@ -129,8 +125,7 @@ const langData = {"info_text_p1": {"en":"This tiled map of Russia shows the numb
 	"btn_years": {"en":"All years","ru":"Все годы"},
 	"allRegionsButton": {"en":"Reset regions","ru":"Сбросить регионы"},
 	"playButton": {"en":"<i class='bi bi-play-circle'></i> Dynamic by years","ru":"<i class='bi bi-play-circle'></i> Динамика по годам"},
-	"table_explainer_p1": {"en":"Text explaining the table below","ru":"Текст к таблице"},
-  "table_header":{"en":"<thead><tr><th>Case number</th> <th>Region</th> <th>Article</th> <th>Crimes</th> <th>Victims</th> <th>Fatalities</th> <th>Premeditated</th> <th>Bias motive</th> <th>Full text (RU)</th> </tr> </thead> <tbody>","ru":"<thead><tr><th>Номер дела</th> <th>Регион</th> <th>Статья</th> <th>Преступлений</th> <th>Пострадавших</th> <th>Погибших</th> <th>Группа ненависти</th> <th>Мотив предубеждения</th> <th>Полный текст</th> </tr> </thead> <tbody>"},
+  "table_header":{"en":"<thead><tr><th>Case number</th> <th>Region</th> <th>Article</th> <th>Crimes</th> <th>Victims</th> <th>Fatalities</th> <th>Premeditated</th> <th>Full text (RU)</th> </tr> </thead> <tbody>","ru":"<thead><tr><th>Номер дела</th> <th>Регион</th> <th>Статья</th> <th>Преступлений</th> <th>Пострадавших</th> <th>Погибших</th> <th>Группа ненависти</th> <th>Полный текст</th> </tr> </thead> <tbody>"},
 	"landscape_on":{"en":"<i class='bi bi-phone-landscape'></i> Rotate to landscape for a better view","ru":"<i class='bi bi-phone-landscape'></i> Поверните горизонтально для лучшего просмотра"}
 }
 
@@ -431,7 +426,7 @@ function generateTable(data,lang) {
         if (premeditatedValue === 'нет') {
           premeditatedValue = `<span class="badge_premeditated_no">${premeditatedValue}</span>`;
         }
-        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + d.bias_motive_ru + "</td><td>" + caseURL + "</td></tr>";
+        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + caseURL + "</td></tr>";
 
       }
 
@@ -444,7 +439,7 @@ function generateTable(data,lang) {
         if (premeditatedValue === 'no') {
           premeditatedValue = `<span class="badge_premeditated_no">${premeditatedValue}</span>`;
         }
-        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_en + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + d.bias_motive_en + "</td><td>" + caseURL + "</td></tr>";
+        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_en + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + caseURL + "</td></tr>";
       }
       
   });
