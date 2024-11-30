@@ -15,8 +15,8 @@
 }
 
 #table-container {
-  max-width: 900px;
-  max-height: 460px;
+  max-width: 100%;
+  max-height: 480px;
   padding-left: 0px;
   overflow-y: scroll ;
 }
