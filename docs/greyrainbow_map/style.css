@@ -189,6 +189,9 @@ margin-bottom: 10px;
 
 /* Extra Small Devices (Portrait Phones) */
 @media (max-width: 575.98px) {
+  #map_table {
+    padding-left: 0px !important;
+  }
   #rf_map {
     width: 344px;
     height: 224px;
