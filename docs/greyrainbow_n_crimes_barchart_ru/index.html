@@ -34,15 +34,27 @@ Released under the CC-BY-SA 4.0 license
 
 <div id="content_to_fetch">
   <div class="container-fluid" id="barchart">
+    
+    <div class="row barchart_mobile_header">
+
+        <div class="col-md-auto scroll_explainer">
+                <p class="p_scroll"><i class="bi bi-arrows scroll_arrows"></i>Прокручивайте горизонтально</p>
+        </div>
+
+        <div class="col-md-auto full_width_control">
+            <button type="button" class="btn btn-sm btn-dark full_width_btn" id="width_control_btn" title="Поместить график в экран"><i class="bi bi-arrows-angle-contract"></i></button>
+        </div>
+
+    </div>
+
     <div class="row legend_bar">
-           <div class="col-md-auto n_crimes_legend">Кол-во преступлений</div>
-           <div class="col-md-auto n_victims_legend">включая пострадавших</div>
-           <div class="col-md-auto n_fatalities_legend">включая погибших</div>
-       
+        
+        <div class="col-md-auto n_crimes_legend">Кол-во преступлений</div>
+        <div class="col-md-auto n_victims_legend">включая пострадавших</div>
+        <div class="col-md-auto n_fatalities_legend">включая погибших</div>
+
     </div>
-    <div class="row scroll_explainer">
-        <p class="p_scroll"><i class="bi bi-arrows scroll_arrows"></i>Прокручивайте горизонтально</p>
-    </div>
+
 
     <div class="row chart">
         <div class="col-md-auto chart_col" id="chart_col">
@@ -78,7 +90,7 @@ Released under the CC-BY-SA 4.0 license
             .attr("id","svg_chart")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-            .attr("viewbox", "20 -20 760 480")
+            .attr("viewBox", "0 0 760 480")
         .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -344,9 +356,32 @@ Released under the CC-BY-SA 4.0 license
         autoScroll('chart_col');
     });
 
+    function resizeBarChart() {
+        const viewportWidth = window.innerWidth;
+        const svgBarChart = document.getElementById('svg_chart');
+        let viewBoxWidth = 760;
+        let viewBoxHeight = 480;
+        //viewBoxWidth = viewportWidth; // Scale down by 10%
+        //viewBoxHeight *= 0.6;
+        const aspectRatio = 760 / 480; // SVG aspect ratio 760 480
+        svgBarChart.setAttribute('viewBox',`0 0 ${viewportWidth * 0.9} ${viewBoxHeight}`)
+        svgBarChart.setAttribute('height', viewportWidth / aspectRatio);
+        svgBarChart.setAttribute('width', viewportWidth * 0.9);
+    }
+
+    // width button listener
+    const widthButton = document.getElementById('width_control_btn');
+    widthButton.addEventListener('click', () => {
+        const icon = widthButton.querySelector('i');
+        icon.classList.toggle('bi-arrows-angle-contract');
+        icon.classList.toggle('bi-arrows-angle-expand');
+        //widthButton.title = "title"
+        resizeBarChart();
+    });
+
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    
+
   </script>
 
 </div>
