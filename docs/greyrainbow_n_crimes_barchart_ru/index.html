@@ -116,7 +116,7 @@ Released under the CC-BY-SA 4.0 license
     }
 
     // fetching the data
-    d3.csv("hatecrimes_overall_2010_2023.csv").then(function(data) {
+    d3.csv("https://raw.githubusercontent.com/dataout-org/datavis/refs/heads/main/docs/greyrainbow_n_crimes_barchart_ru/hatecrimes_overall_2010_2023.csv").then(function(data) {
         data.forEach(d => {
                 d.year = d.year.toString().trim(); // convert years to str, trim whitespace
                 d.n_crimes = +d.n_crimes; // N crimes
