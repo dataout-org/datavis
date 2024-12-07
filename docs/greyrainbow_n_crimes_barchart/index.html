@@ -38,20 +38,20 @@ Released under the CC-BY-SA 4.0 license
     <div class="row barchart_mobile_header">
 
         <div class="col-md-auto scroll_explainer">
-                <p class="p_scroll"><i class="bi bi-arrows scroll_arrows"></i>Прокручивайте горизонтально</p>
+                <p class="p_scroll" id="scroll_message"></p>
         </div>
 
         <div class="col-md-auto full_width_control">
-            <button type="button" class="btn btn-sm btn-dark full_width_btn" id="width_control_btn" title="Поместить график в экран"><i class="bi bi-arrows-angle-contract"></i></button>
+            <button type="button" class="btn btn-sm btn-dark full_width_btn" id="width_control_btn" title=""><i class="bi bi-arrows-angle-contract"></i></button>
         </div>
 
     </div>
 
     <div class="row legend_bar">
         
-        <div class="col-md-auto n_crimes_legend">Кол-во преступлений</div>
-        <div class="col-md-auto n_victims_legend">включая пострадавших</div>
-        <div class="col-md-auto n_fatalities_legend">включая погибших</div>
+        <div class="col-md-auto n_crimes_legend" id="crimes_legend"></div>
+        <div class="col-md-auto n_victims_legend" id="victims_legend"></div>
+        <div class="col-md-auto n_fatalities_legend" id="fatalities_legend"></div>
 
     </div>
 
@@ -60,15 +60,11 @@ Released under the CC-BY-SA 4.0 license
         <div class="col-md-auto chart_col" id="chart_col">
           <!-- bar chart goes here -->
             <div class="background_law_info" id="law_12_13">
-                <span class="law_info_text">Принятие закона о "гей-пропаганде"</span>
+                <span class="law_info_text" id="span_law_12_13"></span>
             </div>
 
             <div class="background_law_info" id="law_22_23">
-                    <span class="law_info_text">Расширение закона о "гей-пропаганде"</span>
-            </div>
-
-            <div class="info_icon" id="explainer_2013">
-                <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-title="Эта кривая показывает среднее значение количества преступлений за соседние 2 года. Мы смотрим на среднее значение, потому что год опубликования судебных приговоров не всегда совпадает с годом совершения преступения."></i>
+                    <span class="law_info_text" id="span_law_22_23"></span>
             </div>
 
         </div>
@@ -77,6 +73,31 @@ Released under the CC-BY-SA 4.0 license
   </div>
 
   <script id="d3vis_barchart">
+
+   const langData = {
+        "scroll_message": {"en":"<i class='bi bi-arrows scroll_arrows'></i>Scroll horizontally","ru":"<i class='bi bi-arrows scroll_arrows'></i>Прокручивайте горизонтально"},
+        "btn_chart_contract": {"en":"Fit the chart to screen","ru":"Уместить график в экран"},
+        "btn_chart_expand": {"en":"Expand the chart","ru":"Увеличить график"},
+        "crimes_legend": {"en":"Number of crimes","ru":"Кол-во преступлений"},
+        "victims_legend": {"en":"including victims","ru":"включая пострадавших"},
+        "fatalities_legend": {"en":"of those fatalities","ru":"из них погибших"},
+        "span_law_12_13": {"en":"Introduction of the \"gay-propaganda\" law","ru":"Принятие закона о \"гей-пропаганде\""},
+        "span_law_22_23": {"en":"Expansion of the \"gay-propaganda\" law","ru":"Расширение закона о \"гей-пропаганде\""},
+        "explainer2014": {"en":"In 2014, the number of crimes is the highest. This curved line displays the average number of crimes for 2 adjacent years. We look at the average value, because the year of court rulings publication does not always coincide with the year when crimes are committed.","ru":"На 2014 год приходится пик количества преступлений. Кривая показывает среднее значение кол-ва преступлений за соседние 2 года. Мы смотрим на среднее, потому что год опубликования приговоров не всегда совпадает с годом совершения преступения."}
+    }
+    
+    // determine the language depending on the url
+    const pathname = window.location.pathname;
+    // check for 'ru'
+    let lang;
+    if (pathname.includes('-ru')) {
+    lang = "ru";
+    } else {
+    lang = "en";
+    }
+
+    // loading the lang content first time
+    loadLangContent(langData,lang);
 
     // chart dimensions and margins
     const margin = {top: 10, right: 0, bottom: 20, left: 0};
@@ -197,7 +218,7 @@ Released under the CC-BY-SA 4.0 license
         const info_12_13 = document.getElementById("law_12_13");
         info_12_13.style.width = `${backgroundLawWidthTotal - 12}px`;
         info_12_13.style.left = `${(x0_12_13 + 10)}px`;
-        info_12_13.style.top = "120px";
+        info_12_13.style.top = "100px";
 
         // law 2022–2023 background
         const x0_22_23 = x("2022") - backgroundLawMargin; // start position
@@ -216,7 +237,7 @@ Released under the CC-BY-SA 4.0 license
         const info_22_23 = document.getElementById("law_22_23");
         info_22_23.style.width = `${backgroundLawWidthTotal - 12}px`;
         info_22_23.style.left = `${(x0_22_23 + 10)}px`;
-        info_22_23.style.top = "76px";
+        info_22_23.style.top = "56px";
 
         // N crimes bars
         svg.selectAll(".n_crimes")
@@ -287,17 +308,75 @@ Released under the CC-BY-SA 4.0 license
         // drawing smooth averages lines
         drawSmoothAverage(data, smoothCrimes, "rgb(151, 151, 151)");
 
+        // append explainers
+        const pathInfoIcon = "M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2";
+
+        // explainer about the line
+        const explainer2014 = svg.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("fill", "rgb(177, 177, 177)")
+            .attr("class", "bi bi-info-circle-fill")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x("2014") + 16)
+            .attr("y", 20)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-title", langData['explainer2014'][lang]);
+
+        explainer2014.append("path")
+            .attr("d", pathInfoIcon);
+
+        // mobile explainers about the laws
+        const explainerLaw_12_13 = svg.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("fill", "rgb(177, 177, 177)")
+            .attr("class", "bi bi-info-circle-fill mobile_law_explainer")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x("2013") - 12)
+            .attr("y", 8)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-title", langData['span_law_12_13'][lang]);
+        
+        explainerLaw_12_13.append("path")
+            .attr("d", pathInfoIcon);
+
+        const explainerLaw_22_23 = svg.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("fill", "rgb(177, 177, 177)")
+            .attr("class", "bi bi-info-circle-fill mobile_law_explainer")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x("2023") - 12)
+            .attr("y", 8)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-title", langData['span_law_22_23'][lang]);
+        
+        explainerLaw_22_23.append("path")
+            .attr("d", pathInfoIcon);
+
         // correcting the label positioning, so they're visible
         d3.select("#n_crimes_label_2018").attr("y", 108);
 
-        const x0_14 = x("2014"); // start position
-        // append explainers
-        d3.select("#explainer_2013")
-            .style("position", "relative")
-            .style("left", `${x0_14 + 16}px`)
-            .style("top", "50px");
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
            
     });
+
+    // load lang content
+    function loadLangContent(langData, lang) {
+    for (let elementId in langData) {
+        let el = document.getElementById(elementId);
+        if (el) {
+        el.innerHTML = langData[elementId][lang];}
+        }
+    // changing the button text
+    btn = document.getElementById('width_control_btn');
+    btn.title = langData['btn_chart_contract'][lang];
+    }
 
     // auto scroll on mobile devices
     let scrollInterval;
@@ -346,7 +425,7 @@ Released under the CC-BY-SA 4.0 license
                     observerInstance.unobserve(target);
                 }
             });
-        }, { threshold: 0.5 }); // 50% is visible
+        }, { threshold: 0.8 }); // 80% is visible
 
         observer.observe(target);
     }
@@ -357,26 +436,77 @@ Released under the CC-BY-SA 4.0 license
     });
 
     function resizeBarChart() {
+        userInteracted = true;
         const viewportWidth = window.innerWidth;
         const svgBarChart = document.getElementById('svg_chart');
-        let viewBoxWidth = 760;
-        let viewBoxHeight = 480;
-        //viewBoxWidth = viewportWidth; // Scale down by 10%
-        //viewBoxHeight *= 0.6;
-        const aspectRatio = 760 / 480; // SVG aspect ratio 760 480
-        svgBarChart.setAttribute('viewBox',`0 0 ${viewportWidth * 0.9} ${viewBoxHeight}`)
-        svgBarChart.setAttribute('height', viewportWidth / aspectRatio);
+        const chartCol = document.getElementById('chart_col');
+        chartCol.scrollLeft = 0;
+        chartCol.style.overflowX = 'hidden';
+
+        const aspectRatio = 0.6; // SVG aspect ratio 760 480
         svgBarChart.setAttribute('width', viewportWidth * 0.9);
+        svgBarChart.setAttribute('height', viewportWidth * aspectRatio);
+    }
+
+    function restoreBarChart() {
+        const svgBarChart = document.getElementById('svg_chart');
+        const chartCol = document.getElementById('chart_col');
+        chartCol.style.overflowX = 'auto';
+        svgBarChart.setAttribute('width', 760);
+        svgBarChart.setAttribute('height', 480);
     }
 
     // width button listener
     const widthButton = document.getElementById('width_control_btn');
     widthButton.addEventListener('click', () => {
+
         const icon = widthButton.querySelector('i');
-        icon.classList.toggle('bi-arrows-angle-contract');
-        icon.classList.toggle('bi-arrows-angle-expand');
-        //widthButton.title = "title"
-        resizeBarChart();
+        const infoTexts = document.querySelectorAll('.background_law_info');
+        const chartRow = document.querySelector('.row.chart');
+        const scrollMessage = document.querySelector('.p_scroll');
+        const svgExplainers = document.querySelectorAll('.mobile_law_explainer');
+
+        // resize to fit the screen
+        if (icon.classList.contains('bi-arrows-angle-contract')) {
+            icon.classList.remove('bi-arrows-angle-contract');
+            icon.classList.add('bi-arrows-angle-expand');
+            // change the button title
+            widthButton.title = langData['btn_chart_expand'][lang]
+            // hide law explainers text
+            infoTexts.forEach(el => {
+                el.style.display = 'none';
+            });
+            // instead, show svg info icons
+            svgExplainers.forEach(el => {
+                el.style.display = 'block';
+            })
+            // hide vertical scroll message 
+            scrollMessage.style.display = 'none';
+            // change the chart margin-top
+            chartRow.style.setProperty('margin-top', '24px', 'important');
+
+            resizeBarChart();
+        }
+        // restore initial
+        else {
+            icon.classList.remove('bi-arrows-angle-expand');
+            icon.classList.add('bi-arrows-angle-contract');
+            widthButton.title = langData['btn_chart_contract'][lang]
+            // hide svg info icons in place of text
+            svgExplainers.forEach(el => {
+                el.style.display = 'none';
+            })
+            // show text background_law_info
+            infoTexts.forEach(el => {
+                el.style.display = 'block';
+            });
+            // show vertical scroll message 
+            scrollMessage.style.display = 'flex';
+            // change the chart margin-top
+            chartRow.style.setProperty('margin-top', '-62px', 'important');
+            // restore initial bar chart
+            restoreBarChart();
+        }
     });
 
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
