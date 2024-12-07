@@ -9,7 +9,7 @@ Released under the CC-BY-SA 4.0 license
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Hate crimes barchart / Developed for greyrainbow.dataout.org</title>
+<title>Hate crimes barchart RU / Developed for greyrainbow.dataout.org</title>
 
 <link rel="stylesheet" href="barchart_style.css">
 
@@ -33,38 +33,38 @@ Released under the CC-BY-SA 4.0 license
 <!--  The content below is fetched by hatecrimes.dataout.org -->
 
 <div id="content_to_fetch">
-  <div class="container-fluid" id="barchart">
+  <div class="container-fluid" id="barchart_002">
     
-    <div class="row barchart_mobile_header">
+    <div class="row barchart_mobile_header_002">
 
-        <div class="col-md-auto scroll_explainer">
-                <p class="p_scroll" id="scroll_message"></p>
+        <div class="col-md-auto scroll_explainer_002">
+                <p class="p_scroll_002" id="scroll_message_002"><i class='bi bi-arrows scroll_arrows_002'></i>Прокручивайте горизонтально</p>
         </div>
 
-        <div class="col-md-auto full_width_control">
-            <button type="button" class="btn btn-sm btn-dark full_width_btn" id="width_control_btn" title=""><i class="bi bi-arrows-angle-contract"></i></button>
+        <div class="col-md-auto full_width_control_002">
+            <button type="button" class="btn btn-sm btn-dark full_width_btn_002" id="width_control_btn_002" title="Уместить график в экран"><i class="bi bi-arrows-angle-contract"></i></button>
         </div>
 
     </div>
 
-    <div class="row legend_bar">
+    <div class="row legend_bar_002">
         
-        <div class="col-md-auto n_crimes_legend" id="crimes_legend"></div>
-        <div class="col-md-auto n_victims_legend" id="victims_legend"></div>
-        <div class="col-md-auto n_fatalities_legend" id="fatalities_legend"></div>
+        <div class="col-md-auto n_crimes_legend_002">Кол-во преступлений</div>
+        <div class="col-md-auto n_victims_legend_002">включая пострадавших</div>
+        <div class="col-md-auto n_fatalities_legend_002">из них погибших</div>
 
     </div>
 
 
-    <div class="row chart">
-        <div class="col-md-auto chart_col" id="chart_col">
+    <div class="row chart_002">
+        <div class="col-md-auto chart_col" id="chart_col_002">
           <!-- bar chart goes here -->
-            <div class="background_law_info" id="law_12_13">
-                <span class="law_info_text" id="span_law_12_13"></span>
+            <div class="background_law_info_002" id="law_12_13_002">
+                <span class="law_info_text_002">Принятие закона о "гей-пропаганде"</span>
             </div>
 
-            <div class="background_law_info" id="law_22_23">
-                    <span class="law_info_text" id="span_law_22_23"></span>
+            <div class="background_law_info_002" id="law_22_23_002">
+                    <span class="law_info_text_002">Расширение закона о "гей-пропаганде"></span>
             </div>
 
         </div>
@@ -72,52 +72,27 @@ Released under the CC-BY-SA 4.0 license
   
   </div>
 
-  <script id="d3vis_barchart">
-
-   const langData = {
-        "scroll_message": {"en":"<i class='bi bi-arrows scroll_arrows'></i>Scroll horizontally","ru":"<i class='bi bi-arrows scroll_arrows'></i>Прокручивайте горизонтально"},
-        "btn_chart_contract": {"en":"Fit the chart to screen","ru":"Уместить график в экран"},
-        "btn_chart_expand": {"en":"Expand the chart","ru":"Увеличить график"},
-        "crimes_legend": {"en":"Number of crimes","ru":"Кол-во преступлений"},
-        "victims_legend": {"en":"including victims","ru":"включая пострадавших"},
-        "fatalities_legend": {"en":"of those fatalities","ru":"из них погибших"},
-        "span_law_12_13": {"en":"Introduction of the \"gay-propaganda\" law","ru":"Принятие закона о \"гей-пропаганде\""},
-        "span_law_22_23": {"en":"Expansion of the \"gay-propaganda\" law","ru":"Расширение закона о \"гей-пропаганде\""},
-        "explainer2014": {"en":"In 2014, the number of crimes is the highest. This curved line displays the average number of crimes for 2 adjacent years. We look at the average value, because the year of court rulings publication does not always coincide with the year when crimes are committed.","ru":"На 2014 год приходится пик количества преступлений. Кривая показывает среднее значение кол-ва преступлений за соседние 2 года. Мы смотрим на среднее, потому что год опубликования приговоров не всегда совпадает с годом совершения преступения."}
-    }
-    
-    // determine the language depending on the url
-    const pathname = window.location.pathname;
-    // check for 'ru'
-    let lang;
-    if (pathname.includes('-ru')) {
-    lang = "ru";
-    } else {
-    lang = "en";
-    }
-
-    // loading the lang content first time
-    loadLangContent(langData,lang);
+  <script id="d3vis_barchart_002">
 
     // chart dimensions and margins
-    const margin = {top: 10, right: 0, bottom: 20, left: 0};
+    const margin_chart_002 = {top: 10, right: 0, bottom: 20, left: 0};
     
-    width = 760 - margin.left - margin.right,
-    height = 480 - margin.top - margin.bottom;
+    width_chart_002 = 760 - margin_chart_002.left - margin_chart_002.right,
+    height_chart_002 = 480 - margin_chart_002.top - margin_chart_002.bottom;
 
     // appending SVG
-    const svg = d3.select("#chart_col")
+    const svg_chart_002 = d3.select("#chart_col_002")
         .append("svg")
             .attr("id","svg_chart")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", width_chart_002 + margin_chart_002.left + margin_chart_002.right)
+            .attr("height", height_chart_002 + margin_chart_002.top + margin_chart_002.bottom)
             .attr("viewBox", "0 0 760 480")
         .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+            .attr("transform", `translate(${margin_chart_002.left},${margin_chart_002.top})`);
 
-    const defs = svg.append("defs");
+    const defs_chart_002 = svg_chart_002.append("defs");
 
-    defs.append("pattern")
+    defs_chart_002.append("pattern")
         .attr("id", "lawHash")
         .attr("width", 4)
         .attr("height", 4)
@@ -127,7 +102,6 @@ Released under the CC-BY-SA 4.0 license
             .attr("stroke", "rgb(58, 58, 58)")
             .attr("stroke-width", 0.6);
 
-    
     // to calculate smooth average over 2 years
     function getSmoothAverage(data, key) {
         const smoothed = [];
@@ -151,18 +125,18 @@ Released under the CC-BY-SA 4.0 license
             });
 
         // all years
-        const years = data.map(d => d.year);
+        const years_002 = data.map(d => d.year);
 
         // x axis for years
         const x = d3.scaleBand()
-            .domain(years)
-            .range([0, width])
+            .domain(years_002)
+            .range([0, width_chart_002])
             .padding(0.12);
 
-        svg.append("g")
-            .attr("transform", `translate(0,${height})`)
+        svg_chart_002.append("g")
+            .attr("transform", `translate(0,${height_chart_002})`)
             .call(d3.axisBottom(x).tickSize(0))
-            .attr("class", "year_label")
+            .attr("class", "year_label_002")
             .selectAll("text")
                 .attr("transform", "translate(0,4)rotate(0)")
                 .style("text-anchor", "middle");
@@ -171,11 +145,11 @@ Released under the CC-BY-SA 4.0 license
         const y = d3.scaleLinear()
             .domain([0, d3.max(data, d => d.n_crimes)])
             .nice()
-            .range([height, 0]);
+            .range([height_chart_002, 0]);
 
         // tick line
-        svg.selectAll(".domain")
-            .attr("class", "x_line");
+        svg_chart_002.selectAll(".domain")
+            .attr("class", "x_line_002");
 
         // smooth averages for each key
         const smoothCrimes = getSmoothAverage(data, 'n_crimes');
@@ -188,7 +162,7 @@ Released under the CC-BY-SA 4.0 license
                 .y((d, i) => y(smoothData[i]))
                 .curve(d3.curveMonotoneX);
 
-            svg.append("path")
+            svg_chart_002.append("path")
                 .datum(data)
                 .attr("fill", "none")
                 .attr("class", "smooth_avg_line")
@@ -205,17 +179,17 @@ Released under the CC-BY-SA 4.0 license
         const x1_12_13  = x("2013") + x.bandwidth() + backgroundLawMargin; // end position
         const backgroundLawWidthTotal = x1_12_13 - x0_12_13; // total width
 
-        svg.append("rect")
+        svg_chart_002.append("rect")
             .attr("class", "law_background")
             .attr("x", x0_12_13)
             .attr("y", -36)
             .attr("width", backgroundLawWidthTotal)
-            .attr("height", height + 36)
+            .attr("height", height_chart_002 + 36)
             .style("fill", "url(#lawHash)")
             .style("stroke", "none");
 
         // positioning of the info
-        const info_12_13 = document.getElementById("law_12_13");
+        const info_12_13 = document.getElementById("law_12_13_002");
         info_12_13.style.width = `${backgroundLawWidthTotal - 12}px`;
         info_12_13.style.left = `${(x0_12_13 + 10)}px`;
         info_12_13.style.top = "100px";
@@ -224,83 +198,83 @@ Released under the CC-BY-SA 4.0 license
         const x0_22_23 = x("2022") - backgroundLawMargin; // start position
         const x1_22_23  = x("2023") + x.bandwidth() + backgroundLawMargin; // end position
 
-        svg.append("rect")
+        svg_chart_002.append("rect")
             .attr("class", "law_background")
             .attr("x", x0_22_23)
             .attr("y", -36)
             .attr("width", backgroundLawWidthTotal) // width stays the same for 2 bars
-            .attr("height", height + 36)
+            .attr("height", height_chart_002 + 36)
             .style("fill", "url(#lawHash)")
             .style("stroke", "none");
 
         // positioning of the info
-        const info_22_23 = document.getElementById("law_22_23");
+        const info_22_23 = document.getElementById("law_22_23_002");
         info_22_23.style.width = `${backgroundLawWidthTotal - 12}px`;
         info_22_23.style.left = `${(x0_22_23 + 10)}px`;
         info_22_23.style.top = "56px";
 
         // N crimes bars
-        svg.selectAll(".n_crimes")
+        svg_chart_002.selectAll(".n_crimes")
             .data(data)
             .enter()
             .append("rect")
-                .attr("class", "n_crimes")
+                .attr("class", "n_crimes_002")
                 .attr("x", d => x(d.year))
                 .attr("y", d => y(d.n_crimes))
                 .attr("width", x.bandwidth())
-                .attr("height", d => height - y(d.n_crimes));
+                .attr("height", d => height_chart_002 - y(d.n_crimes));
 
         // N crimes labels
-        svg.selectAll(".n_crimes-label")
+        svg_chart_002.selectAll(".n_crimes_label_002")
             .data(data)
             .enter()
             .append("text")
                 .attr("id", d => `n_crimes_label_${d.year}`)
-                .attr("class", "label n_crimes_label")
+                .attr("class", "label_002 n_crimes_label_002")
                 .attr("x", d => x(d.year) + 22)
                 .attr("y", d => y(d.n_crimes) - 4)
                 .text(d => d.n_crimes);
 
         // N fatalities bars (y = 0)
-        svg.selectAll(".n_fatalities")
+        svg_chart_002.selectAll(".n_fatalities_002")
         .data(data)
         .enter()
         .append("rect")
-            .attr("class", "n_fatalities")
+            .attr("class", "n_fatalities_002")
             .attr("x", d => x(d.year))
             .attr("y", d => y(d.n_fatalities))
             .attr("width", x.bandwidth())
-            .attr("height", d => height - y(d.n_fatalities));
+            .attr("height", d => height_chart_002 - y(d.n_fatalities));
 
         // N fatalities labels
-        svg.selectAll(".n_fatalities_label")
+        svg_chart_002.selectAll(".n_fatalities_label_002")
                 .data(data)
                 .enter()
                 .append("text")
                     .attr("id", d => `n_fatalities_label_${d.year}`)
-                    .attr("class", "label n_fatalities_label")
+                    .attr("class", "label_002 n_fatalities_label_002")
                     .attr("x", d => x(d.year) + 22)
                     .attr("y", d => y(d.n_fatalities) + 16)
                     .text(d => d.n_fatalities);
 
         // N victims bars (incl. N fatalities)
-        svg.selectAll(".n_victims")
+        svg_chart_002.selectAll(".n_victims_002")
             .data(data)
             .enter()
             .append("rect")
-                .attr("class", "n_victims")
+                .attr("class", "n_victims_002")
                 .attr("x", d => x(d.year))
                 .attr("y", d => y(d.n_victims))
                 .attr("width", x.bandwidth())
-                .attr("height", d => height - y(d.n_victims - d.n_fatalities));
+                .attr("height", d => height_chart_002 - y(d.n_victims - d.n_fatalities));
 
         // N victims labels
-        svg.selectAll(".n_victims_label")
+        svg_chart_002.selectAll(".n_victims_label_002")
             .data(data)
             .enter()
             .append("text")
                 .attr("id", d => `n_victims_label_${d.year}`)
-                .attr("class", "label n_victims_label")
+                .attr("class", "label_002 n_victims_label_002")
                 .attr("x", d => x(d.year) + 22)
                 .attr("y", d => y(d.n_victims) + 14)
                 .text(d => d.n_victims);
@@ -312,7 +286,7 @@ Released under the CC-BY-SA 4.0 license
         const pathInfoIcon = "M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2";
 
         // explainer about the line
-        const explainer2014 = svg.append("svg")
+        const explainer2014 = svg_chart_002.append("svg")
             .attr("xmlns", "http://www.w3.org/2000/svg")
             .attr("width", 16)
             .attr("height", 16)
@@ -322,40 +296,43 @@ Released under the CC-BY-SA 4.0 license
             .attr("x", x("2014") + 16)
             .attr("y", 20)
             .attr("data-bs-toggle", "tooltip")
-            .attr("data-bs-title", langData['explainer2014'][lang]);
+            .attr("data-bs-custom-class", "tooltip_barchart_n_crimes")
+            .attr("data-bs-title", "На 2014 год приходится пик количества преступлений. Кривая показывает среднее значение кол-ва преступлений за соседние 2 года. Мы смотрим на среднее, потому что год опубликования приговоров не всегда совпадает с годом совершения преступения.");
 
         explainer2014.append("path")
             .attr("d", pathInfoIcon);
 
         // mobile explainers about the laws
-        const explainerLaw_12_13 = svg.append("svg")
+        const explainerlaw_12_13_002 = svg_chart_002.append("svg")
             .attr("xmlns", "http://www.w3.org/2000/svg")
             .attr("width", 16)
             .attr("height", 16)
             .attr("fill", "rgb(177, 177, 177)")
-            .attr("class", "bi bi-info-circle-fill mobile_law_explainer")
+            .attr("class", "bi bi-info-circle-fill mobile_law_explainer_002")
             .attr("viewBox", "0 0 16 16")
             .attr("x", x("2013") - 12)
             .attr("y", 8)
             .attr("data-bs-toggle", "tooltip")
-            .attr("data-bs-title", langData['span_law_12_13'][lang]);
+            .attr("data-bs-custom-class", "tooltip_barchart_n_crimes")
+            .attr("data-bs-title", "Принятие закона о \"гей-пропаганде\"");
         
-        explainerLaw_12_13.append("path")
+        explainerlaw_12_13_002.append("path")
             .attr("d", pathInfoIcon);
 
-        const explainerLaw_22_23 = svg.append("svg")
+        const explainerlaw_22_23_002 = svg_chart_002.append("svg")
             .attr("xmlns", "http://www.w3.org/2000/svg")
             .attr("width", 16)
             .attr("height", 16)
             .attr("fill", "rgb(177, 177, 177)")
-            .attr("class", "bi bi-info-circle-fill mobile_law_explainer")
+            .attr("class", "bi bi-info-circle-fill mobile_law_explainer_002")
             .attr("viewBox", "0 0 16 16")
             .attr("x", x("2023") - 12)
             .attr("y", 8)
             .attr("data-bs-toggle", "tooltip")
-            .attr("data-bs-title", langData['span_law_22_23'][lang]);
+            .attr("data-bs-custom-class", "tooltip_barchart_n_crimes")
+            .attr("data-bs-title", "Расширение закона о \"гей-пропаганде\"");
         
-        explainerLaw_22_23.append("path")
+        explainerlaw_22_23_002.append("path")
             .attr("d", pathInfoIcon);
 
         // correcting the label positioning, so they're visible
@@ -365,18 +342,6 @@ Released under the CC-BY-SA 4.0 license
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
            
     });
-
-    // load lang content
-    function loadLangContent(langData, lang) {
-    for (let elementId in langData) {
-        let el = document.getElementById(elementId);
-        if (el) {
-        el.innerHTML = langData[elementId][lang];}
-        }
-    // changing the button text
-    btn = document.getElementById('width_control_btn');
-    btn.title = langData['btn_chart_contract'][lang];
-    }
 
     // auto scroll on mobile devices
     let scrollInterval;
@@ -430,16 +395,16 @@ Released under the CC-BY-SA 4.0 license
         observer.observe(target);
     }
 
-    observeVisibility('chart_col', () => {
-        detectUserInteracton('chart_col');
-        autoScroll('chart_col');
+    observeVisibility('chart_col_002', () => {
+        detectUserInteracton('chart_col_002');
+        autoScroll('chart_col_002');
     });
 
     function resizeBarChart() {
         userInteracted = true;
         const viewportWidth = window.innerWidth;
         const svgBarChart = document.getElementById('svg_chart');
-        const chartCol = document.getElementById('chart_col');
+        const chartCol = document.getElementById('chart_col_002');
         chartCol.scrollLeft = 0;
         chartCol.style.overflowX = 'hidden';
 
@@ -450,28 +415,28 @@ Released under the CC-BY-SA 4.0 license
 
     function restoreBarChart() {
         const svgBarChart = document.getElementById('svg_chart');
-        const chartCol = document.getElementById('chart_col');
+        const chartCol = document.getElementById('chart_col_002');
         chartCol.style.overflowX = 'auto';
         svgBarChart.setAttribute('width', 760);
         svgBarChart.setAttribute('height', 480);
     }
 
     // width button listener
-    const widthButton = document.getElementById('width_control_btn');
+    const widthButton = document.getElementById('width_control_btn_002');
     widthButton.addEventListener('click', () => {
 
         const icon = widthButton.querySelector('i');
-        const infoTexts = document.querySelectorAll('.background_law_info');
-        const chartRow = document.querySelector('.row.chart');
-        const scrollMessage = document.querySelector('.p_scroll');
-        const svgExplainers = document.querySelectorAll('.mobile_law_explainer');
+        const infoTexts = document.querySelectorAll('.background_law_info_002');
+        const chartRow = document.querySelector('.row.chart_002');
+        const scrollMessage = document.querySelector('.p_scroll_002');
+        const svgExplainers = document.querySelectorAll('.mobile_law_explainer_002');
 
         // resize to fit the screen
         if (icon.classList.contains('bi-arrows-angle-contract')) {
             icon.classList.remove('bi-arrows-angle-contract');
             icon.classList.add('bi-arrows-angle-expand');
             // change the button title
-            widthButton.title = langData['btn_chart_expand'][lang]
+            widthButton.title = "Увеличить график"
             // hide law explainers text
             infoTexts.forEach(el => {
                 el.style.display = 'none';
@@ -491,12 +456,12 @@ Released under the CC-BY-SA 4.0 license
         else {
             icon.classList.remove('bi-arrows-angle-expand');
             icon.classList.add('bi-arrows-angle-contract');
-            widthButton.title = langData['btn_chart_contract'][lang]
+            widthButton.title = "Уместить график в экран"
             // hide svg info icons in place of text
             svgExplainers.forEach(el => {
                 el.style.display = 'none';
             })
-            // show text background_law_info
+            // show text background_law_info_002
             infoTexts.forEach(el => {
                 el.style.display = 'block';
             });

@@ -10,17 +10,17 @@
 	margin: 0px !important;
 }
 
-#barchart {
+#barchart_002 {
   background-color: #1e1e1e;
 }
 
-.row.chart {
+.row.chart_002 {
   margin-top: -62px !important;
   padding-left: 12px !important;
   padding-right: 12px !important;
 }
 
-#chart_col {
+#chart_col_002 {
   width: 100%;
   max-width: 800px;
   overflow-x: auto;
@@ -28,7 +28,7 @@
   padding-left: 10px;
 }
 
-.barchart_mobile_header {
+.barchart_mobile_header_002 {
   position: relative;
   z-index: 2;
   width: 100% !important;
@@ -38,30 +38,30 @@
 	display: flex;
 }
 
-.full_width_control {
+.full_width_control_002 {
   margin-left: auto;
   color: #979797;
   width: fit-content !important;
 }
 
-.full_width_btn {
+.full_width_btn_002 {
   width: 28px !important;
   height: 28px !important;
   padding: 0px !important;
 }
 
-.scroll_explainer {
+.scroll_explainer_002 {
   margin-left: 12px !important;
   width: fit-content !important;
 }
 
-.scroll_arrows {
+.scroll_arrows_002 {
   font-size: 1.6rem;
   color: #979797;
   padding: 0px 4px 0px 0px !important;
 }
 
-.p_scroll {
+.p_scroll_002 {
 	margin: 0px !important;
 	padding: 0px !important;
 	color: #979797;
@@ -71,7 +71,7 @@
 	display: flex;
 }
 
-.legend_bar {
+.legend_bar_002 {
   max-width: 148px !important;
   margin-left: 12px !important;
   border: 1px solid #777;
@@ -81,69 +81,69 @@
   position: relative;
 }
 
-.n_crimes_legend {
+.n_crimes_legend_002 {
   padding: 0px 3px 0px 3px !important;
   width: 100% !important;
 }
 
-.n_victims_legend {
+.n_victims_legend_002 {
   padding: 0px 3px 0px 3px !important;
   width: 100% !important;
   color: #310000;
   background-color: rgb(132, 100, 100);
 }
 
-.n_fatalities_legend {
+.n_fatalities_legend_002 {
   padding: 0px 3px 0px 3px !important;
   width: 100% !important;
   background-color: rgb(112, 0, 0);
 }
 
-.chart {
+.chart_002 {
   margin-top: 40px;
 }
 
-.year_label {
+.year_label_002 {
   font-size: 10px;
   color: lightgrey;
   letter-spacing: 1.2px;
 }
 
-.x_line {
+.x_line_002 {
   stroke: gray;
   stroke-width: 1px;
 }
 
-.n_crimes {
+.n_crimes_002 {
 	fill: none;
 	stroke: #777;
 	stroke-width: 0.6px;
 }
 
-.label {
+.label_002 {
   font-size: 10px;
 }
 
-.n_crimes_label {
+.n_crimes_label_002 {
   fill: gray;
   text-anchor: middle;
 }
 
-.n_fatalities_label {
+.n_fatalities_label_002 {
   fill: gray;
   text-anchor: middle;
 }
 
-.n_victims_label {
+.n_victims_label_002 {
   fill: #310000;
   text-anchor: middle;
 }
 
-.n_victims {
+.n_victims_002 {
   fill:rgb(132, 100, 100);
 }
 
-.n_fatalities {
+.n_fatalities_002 {
   fill:rgb(112, 0, 0);
 }
 
@@ -151,38 +151,33 @@
 	box-shadow: black;
 }
 
-.background_law_info {
+.background_law_info_002 {
   position: relative;
   font-size: 10px;
   color: rgb(177, 177, 177);
 }
 
-.tooltip {
+.tooltip_barchart_n_crimes {
   --bs-tooltip-arrow-color: #979797 !important;
   --bs-tooltip-bg: #979797 !important;
+  --bs-tooltip-color: black !important;
   --bs-tooltip-max-width: 180px !important;
+  --bs-tooltip-font-size: 10px !important;
 }
 
 .tooltip-inner {
-  color: #000000 !important;
-  font-size: 10px !important;
   text-align: left !important;
 }
 
-.info_icon {
-  color: rgb(177, 177, 177);
-  font-size: 0.8rem;
-}
-
-.mobile_law_explainer {
+.mobile_law_explainer_002 {
   display: none;
 }
 
 @media (min-width:800px) {
-  #chart_col {
+  #chart_col_002 {
     overflow-x:hidden;
   }
-  .barchart_mobile_header {
+  .barchart_mobile_header_002 {
     display: none !important;
   }
 }
