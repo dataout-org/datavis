@@ -138,8 +138,8 @@ border-color: #f4f4f4 !important;
 
 /* occupied regions -- */
 
-.tooltip {
-  font-size: 10px !important;
+.tooltip_map_tile {
+  --bs-tooltip-font-size: 10px !important;
 }
 
 .tooltip-inner {

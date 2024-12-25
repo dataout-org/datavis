@@ -348,6 +348,7 @@ function updateMap(data, selectedYear, toDisplay, lang, updateTable=true) {
       var bootstrapTooltip = new bootstrap.Tooltip(tile.node(), {
         html: true, // HTML inside tooltips
         placement: 'auto',
+        customClass: 'tooltip_map_tile',
         title: function() {
           // tooltip content based on lang
           if (lang === "en") {
