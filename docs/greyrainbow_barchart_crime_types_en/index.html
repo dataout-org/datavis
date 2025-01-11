@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<!--
+Developed by dataout.org
+
+Released under the CC-BY-SA 4.0 license
+-->
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Bar chart – types of crimes committed against LGBTQIA+ people in Russia/ Developed for greyrainbow.dataout.org</title>
+
+<link rel="stylesheet" href="barchart_style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+<div class="container-fluid" id="github_description">
+  <p id="text_description">
+    This bar chart displays the types of crimes committed against LGBTQIA+ people in Russia according to the court cases data. This page is developed for the website greyrainbow.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
+  </p>
+</div>
+
+<!--  The content below is fetched by hatecrimes.dataout.org -->
+
+<div id="content_to_fetch">
+  <div class="container-fluid" id="barchart_gr004ru">
+    
+    <div class="row barchart_mobile_header_gr004ru">
+
+        <div class="col-md-auto scroll_explainer_gr004ru">
+                <p class="p_scroll_gr004ru" id="scroll_message_gr004ru"><i class='bi bi-arrows scroll_arrows_gr004ru'></i>Scroll horizontally</p>
+        </div>
+
+        <div class="col-md-auto full_width_control_gr004ru">
+            <button type="button" class="btn btn-sm btn-dark full_width_btn_gr004ru" id="width_control_btn_gr004ru" title="Fit chart to screen"><i class="bi bi-arrows-angle-contract"></i></button>
+        </div>
+
+    </div>
+
+    <div class="row legend_bar_gr004ru">
+        
+        <div class="col-md-auto premeditated_legend_gr004ru">premeditated</div>
+        <div class="col-md-auto unpremeditated_legend_gr004ru">unpremeditated</div>
+        <div class="col-md-auto other_legend_gr004ru">other</div>
+
+    </div>
+
+
+    <div class="row chart_gr004ru">
+        <div class="col-md-auto chart_col" id="chart_col_gr004ru">
+          <!-- bar chart goes here -->
+            <div class="background_law_info_gr004ru" id="law_12_13_gr004ru">
+                <span class="law_info_text_gr004ru">The enactment of the "gay propaganda" law</span>
+            </div>
+
+            <div class="background_law_info_gr004ru" id="law_22_23_gr004ru">
+                    <span class="law_info_text_gr004ru">The expansion of the "gay propaganda" law</span>
+            </div>
+
+        </div>
+    </div>
+  
+  </div>
+
+  <script id="d3vis_barchart_gr004ru">
+
+    // chart dimensions and margins
+    const margin_chart_gr004ru = {top: 10, right: 0, bottom: 20, left: 0};
+    
+    width_chart_gr004ru = 760 - margin_chart_gr004ru.left - margin_chart_gr004ru.right,
+    height_chart_gr004ru = 480 - margin_chart_gr004ru.top - margin_chart_gr004ru.bottom;
+
+    // appending SVG
+    const svg_chart_gr004ru = d3.select("#chart_col_gr004ru")
+        .append("svg")
+            .attr("id","svg_chart_gr004ru")
+            .attr("width", width_chart_gr004ru + margin_chart_gr004ru.left + margin_chart_gr004ru.right)
+            .attr("height", height_chart_gr004ru + margin_chart_gr004ru.top + margin_chart_gr004ru.bottom)
+            .attr("viewBox", "0 0 760 480")
+        .append("g")
+            .attr("transform", `translate(${margin_chart_gr004ru.left},${margin_chart_gr004ru.top})`);
+
+    const defs_chart_gr004ru = svg_chart_gr004ru.append("defs");
+
+    defs_chart_gr004ru.append("pattern")
+        .attr("id", "lawHash_gr004ru")
+        .attr("width", 4)
+        .attr("height", 4)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("path")
+            .attr("d", "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2") // diagonal pattern "up right"
+            .attr("stroke", "rgb(58, 58, 58)")
+            .attr("stroke-width", 0.6);
+
+    // fetching the data -> csv is in the russian version
+    d3.csv("https://raw.githubusercontent.com/dataout-org/datavis/refs/heads/main/docs/greyrainbow_barchart_crime_types_en/crime_types_10_23.csv").then(function(data) {
+        data.forEach(d => {
+                d.year = d.year.toString().trim(); // convert years to str, trim whitespace
+                d.premeditated = +d.premeditated; // N premeditated
+                d.unpremeditated = +d.unpremeditated; // N unpremeditated
+                d.other = +d.other; // N other
+            });
+
+        // all years
+        const years_gr004ru = data.map(d => d.year);
+        const categories_gr004ru = ["premeditated", "unpremeditated", "other"];
+
+        // x axis for years
+        const x0 = d3.scaleBand()
+            .domain(years_gr004ru)
+            .range([0, width_chart_gr004ru])
+            .padding(0.2);
+
+        const x1 = d3.scaleBand()
+            .domain(categories_gr004ru) // inner scale for categories
+            .range([0, x0.bandwidth()])
+            .padding(0);
+
+        // add y axis
+        const y_gr004ru = d3.scaleLinear()
+            .domain([0, d3.max(data, d => Math.max(d.premeditated, d.unpremeditated, d.other))])
+            .nice()
+            .range([height_chart_gr004ru, 0]);
+
+        svg_chart_gr004ru.append("g")
+            .attr("transform", `translate(0,${height_chart_gr004ru})`)
+            .call(d3.axisBottom(x0).tickSize(0))
+            .attr("class", "year_label_gr004ru")
+            .selectAll("text")
+                .attr("transform", "translate(0,4)rotate(0)")
+                .style("text-anchor", "middle");
+
+        // tick line
+        svg_chart_gr004ru.selectAll(".domain")
+            .attr("class", "x_line_gr004ru");
+        
+        const backgroundLawMargin_gr004ru = 2;
+
+        // law 2012–2013 background
+        const x0_12_13_gr004ru = x0("2012") - backgroundLawMargin_gr004ru; // start position
+        const x1_12_13_gr004ru  = x0("2013") + x0.bandwidth() + backgroundLawMargin_gr004ru; // end position
+        const backgroundLawWidthTotal_gr004ru = x1_12_13_gr004ru - x0_12_13_gr004ru; // total width
+
+        svg_chart_gr004ru.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_12_13_gr004ru)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal_gr004ru)
+            .attr("height", height_chart_gr004ru + 36)
+            .style("fill", "url(#lawHash_gr004ru)")
+            .style("stroke", "none");
+
+        // positioning of the info
+        const info_12_13_gr004ru = document.getElementById("law_12_13_gr004ru");
+        info_12_13_gr004ru.style.width = `${backgroundLawWidthTotal_gr004ru - 12}px`;
+        info_12_13_gr004ru.style.left = `${(x0_12_13_gr004ru + 10)}px`;
+        info_12_13_gr004ru.style.top = "100px";
+
+        // law 2022–2023 background
+        const x0_22_23_gr004ru = x0("2022") - backgroundLawMargin_gr004ru; // start position
+        const x1_22_23_gr004ru  = x0("2023") + x0.bandwidth() + backgroundLawMargin_gr004ru; // end position
+
+        svg_chart_gr004ru.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_22_23_gr004ru)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal_gr004ru) // width stays the same for 2 bars
+            .attr("height", height_chart_gr004ru + 36)
+            .style("fill", "url(#lawHash_gr004ru)")
+            .style("stroke", "none");
+
+        // positioning of the info
+        const info_22_23_gr004ru = document.getElementById("law_22_23_gr004ru");
+        info_22_23_gr004ru.style.width = `${backgroundLawWidthTotal_gr004ru - 12}px`;
+        info_22_23_gr004ru.style.left = `${(x0_22_23_gr004ru + 10)}px`;
+        info_22_23_gr004ru.style.top = "56px";
+
+        // add groups for each year
+        const yearGroups_gr004ru = svg_chart_gr004ru.selectAll(".year-group")
+                .data(data)
+                .enter()
+                .append("g")
+                .attr("class", "year-group")
+                .attr("transform", d => `translate(${x0(d.year)},0)`);
+        
+        // add bars
+        yearGroups_gr004ru.selectAll(".bar")
+            .data(d => categories_gr004ru.map(cat => ({ category: cat, value: d[cat] })))
+            .enter()
+            .append("rect")
+            .attr("class", d => `bar bar-${d.category}`)
+            .attr("x", d => x1(d.category))
+            .attr("y", d => y_gr004ru(d.value))
+            .attr("width", x1.bandwidth())
+            .attr("height", d => height_chart_gr004ru - y_gr004ru(d.value))
+            .attr("fill", d => {
+                if (d.category === "premeditated") return "rgb(112, 0, 0)";
+                if (d.category === "unpremeditated") return "rgb(132, 100, 100)";
+                if (d.category === "other") return "#aaa";
+            });
+        
+        // add line above 2014–2016
+        svg_chart_gr004ru.append("line")
+            .attr("class", "line_14_16_gr004ru")
+            .attr("x1", x0("2014"))
+            .attr("x2", x0("2016") + 36)
+            .attr("y1", 14)
+            .attr("y2", 14)
+            .style("stroke", "rgb(132, 100, 100)")
+            .attr("stroke-width", 4)
+            .attr("stroke-linecap", "round");
+        
+        // add line above 2017–2019
+        svg_chart_gr004ru.append("line")
+            .attr("class", "line_17_19_gr004ru")
+            .attr("x1", x0("2017"))
+            .attr("x2", x0("2019") + 36)
+            .attr("y1", 118)
+            .attr("y2", 118)
+            .style("stroke", "rgb(112, 0, 0)")
+            .attr("stroke-width", 4)
+            .attr("stroke-linecap", "round");
+
+        // add explainers for the lines
+        // info icon
+        const pathInfoIcon_gr004ru = "M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2";
+
+        const explainer_line_14_16_gr004ru = svg_chart_gr004ru.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("fill", "rgb(132, 100, 100)")
+            .attr("class", "bi bi-info-circle-fill")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x0("2014") + 64)
+            .attr("y", -8)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-custom-class", "tooltip_gr004ru")
+            .attr("data-bs-title", "Unpremeditated crimes were the most frequent in 2014–2016");
+        
+        explainer_line_14_16_gr004ru.append("path")
+            .attr("d", pathInfoIcon_gr004ru);
+
+        const explainer_line_17_19_gr004ru = svg_chart_gr004ru.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("fill", "rgb(112, 0, 0)")
+            .attr("class", "bi bi-info-circle-fill")
+            .attr("viewBox", "0 0 16 16")
+            .attr( "x", x0("2017") + 64)
+            .attr("y", 98)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-custom-class", "tooltip_gr004ru")
+            .attr("data-bs-title", "Premeditated crimes were the most frequent in 2017–2019");
+        
+        explainer_line_17_19_gr004ru.append("path")
+            .attr("d", pathInfoIcon_gr004ru);
+        
+        // add labels
+        yearGroups_gr004ru.selectAll(".label_gr004ru")
+            .data(d => categories_gr004ru.map(cat => ({ category: cat, value: d[cat] })))
+            .enter()
+            .append("text")
+            .attr("class", "label_gr004ru")
+            .attr("x", d => x1(d.category) + x1.bandwidth() / 2)
+            .attr("y", d => y_gr004ru(d.value) + 12)
+            .attr("text-anchor", "middle")
+            .attr("fill", d => {
+                if (d.category === "premeditated") return "gray";
+                if (d.category === "unpremeditated") return "#310000";
+                if (d.category === "other") return "black";
+            })
+            .text(d => d.value);
+
+        // mobile explainers about the laws
+        const explainerlaw_12_13_gr004ru = svg_chart_gr004ru.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("fill", "rgb(177, 177, 177)")
+            .attr("class", "bi bi-info-circle-fill mobile_law_explainer_gr004ru")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x0("2013") - 12)
+            .attr("y", 8)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-custom-class", "tooltip_gr004ru")
+            .attr("data-bs-title", "The enactment of the \"gay propaganda\" law");
+        
+        explainerlaw_12_13_gr004ru.append("path")
+            .attr("d", pathInfoIcon_gr004ru);
+
+        const explainerlaw_22_23_gr004ru = svg_chart_gr004ru.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("fill", "rgb(177, 177, 177)")
+            .attr("class", "bi bi-info-circle-fill mobile_law_explainer_gr004ru")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x0("2023") - 12)
+            .attr("y", 8)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-custom-class", "tooltip_gr004ru")
+            .attr("data-bs-title", "The expansion of the \"gay propaganda\" law");
+        
+        explainerlaw_22_23_gr004ru.append("path")
+            .attr("d", pathInfoIcon_gr004ru);
+
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+           
+    });
+
+    // auto scroll on mobile devices
+    let scrollInterval_gr004ru;
+    let userInteracted_gr004ru = false; // flag for user interaction
+
+     // scrolling to the right automatically
+     function autoScroll_gr004ru(containerId) {
+        const container = document.getElementById(containerId);
+        let currentScroll = 0;
+        const maxScroll = container.scrollWidth - container.clientWidth; // max scrollable width
+
+        const scrollInterval_gr004ru = setInterval(() => {
+            // stop if user interacts
+            if (userInteracted_gr004ru) {
+                clearInterval(scrollInterval_gr004ru);
+                return;
+            }
+            currentScroll += 2; // scroll speed
+            container.scrollLeft = currentScroll;
+
+            // stop if the end is reached
+            if (currentScroll >= maxScroll) {
+                clearInterval(scrollInterval_gr004ru);
+            }
+        }, 30); // interval
+    }
+
+    // detecting user clicks
+    function detectUserInteracton_gr004ru(containerId) {
+        const container = document.getElementById(containerId);
+
+        container.addEventListener('click', () => {
+            userInteracted_gr004ru = true;
+            clearInterval(scrollInterval_gr004ru);
+        });
+    }
+
+       // determining the visibility of the chart with Intersection Observer
+       function observeVisibility_gr004ru(targetId, callback) {
+        const target = document.getElementById(targetId);
+
+        const observer = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    callback();
+                    observerInstance.unobserve(target);
+                }
+            });
+        }, { threshold: 0.8 }); // 80% is visible
+
+        observer.observe(target);
+    }
+
+    observeVisibility_gr004ru('chart_col_gr004ru', () => {
+        detectUserInteracton_gr004ru('chart_col_gr004ru');
+        autoScroll_gr004ru('chart_col_gr004ru');
+    });
+
+    function resizeBarChart_gr004ru() {
+        userInteracted_gr004ru = true;
+        const viewportWidth = window.innerWidth;
+        const svgBarChart = document.getElementById('svg_chart_gr004ru');
+        const chartCol = document.getElementById('chart_col_gr004ru');
+        chartCol.scrollLeft = 0;
+        chartCol.style.overflowX = 'hidden';
+
+        const aspectRatio = 0.6; // SVG aspect ratio 760 480
+        svgBarChart.setAttribute('width', viewportWidth * 0.84);
+        svgBarChart.setAttribute('height', viewportWidth * aspectRatio);
+    }
+
+    function restoreBarChart_gr004ru() {
+        const svgBarChart = document.getElementById('svg_chart_gr004ru');
+        const chartCol = document.getElementById('chart_col_gr004ru');
+        chartCol.style.overflowX = 'auto';
+        svgBarChart.setAttribute('width', 760);
+        svgBarChart.setAttribute('height', 480);
+    }
+
+    // width button listener
+    const widthButton = document.getElementById('width_control_btn_gr004ru');
+    widthButton.addEventListener('click', () => {
+
+        const icon = widthButton.querySelector('i');
+        const infoTexts = document.querySelectorAll('.background_law_info_gr004ru');
+        const chartRow = document.querySelector('.row.chart_gr004ru');
+        const scrollMessage = document.querySelector('.p_scroll_gr004ru');
+        const svgExplainers = document.querySelectorAll('.mobile_law_explainer_gr004ru');
+
+        // resize to fit the screen
+        if (icon.classList.contains('bi-arrows-angle-contract')) {
+            icon.classList.remove('bi-arrows-angle-contract');
+            icon.classList.add('bi-arrows-angle-expand');
+            // change the button title
+            widthButton.title = "Enlarge chart"
+            // hide law explainers text
+            infoTexts.forEach(el => {
+                el.style.display = 'none';
+            });
+            // instead, show svg info icons
+            svgExplainers.forEach(el => {
+                el.style.display = 'block';
+            })
+            // hide vertical scroll message 
+            scrollMessage.style.display = 'none';
+            // change the chart margin-top
+            chartRow.style.setProperty('margin-top', '24px', 'important');
+
+            resizeBarChart_gr004ru();
+        }
+        // restore initial
+        else {
+            icon.classList.remove('bi-arrows-angle-expand');
+            icon.classList.add('bi-arrows-angle-contract');
+            widthButton.title = "Fit chart to screen"
+            // hide svg info icons in place of text
+            svgExplainers.forEach(el => {
+                el.style.display = 'none';
+            })
+            // show text background_law_info_gr004ru
+            infoTexts.forEach(el => {
+                el.style.display = 'block';
+            });
+            // show vertical scroll message 
+            scrollMessage.style.display = 'flex';
+            // change the chart margin-top
+            chartRow.style.setProperty('margin-top', '-62px', 'important');
+            // restore initial bar chart
+            restoreBarChart_gr004ru();
+        }
+    });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+  </script>
+
+</div>
+
+</body>
+
+</html>
