@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<!--
+Developed by dataout.org
+
+Released under the CC-BY-SA 4.0 license
+-->
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Hate crimes barchart EN / Developed for greyrainbow.dataout.org</title>
+
+<link rel="stylesheet" href="barchart_style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+<div class="container-fluid" id="github_description">
+  <p id="text_description">
+    This bar chart displays the number of hate crimes against LGBTQ+ people in Russia according to the court cases data. This page is developed for the website greyrainbow.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
+  </p>
+</div>
+
+<!--  The content below is fetched by hatecrimes.dataout.org -->
+
+<div id="content_to_fetch">
+  <div class="container-fluid" id="barchart_003">
+    
+    <div class="row barchart_mobile_header_003">
+
+        <div class="col-md-auto scroll_explainer_003">
+                <p class="p_scroll_003" id="scroll_message_003"><i class='bi bi-arrows scroll_arrows_003'></i>Scroll horizontally</p>
+        </div>
+
+        <div class="col-md-auto full_width_control_003">
+            <button type="button" class="btn btn-sm btn-dark full_width_btn_003" id="width_control_btn_003" title="Fit chart to screen"><i class="bi bi-arrows-angle-contract"></i></button>
+        </div>
+
+    </div>
+
+    <div class="row legend_bar_003">
+        
+        <div class="col-md-auto n_crimes_legend_003">N crimes</div>
+        <div class="col-md-auto n_victims_legend_003">incl. N victims</div>
+        <div class="col-md-auto n_fatalities_legend_003">of them N fatatilies</div>
+
+    </div>
+
+
+    <div class="row chart_003">
+        <div class="col-md-auto chart_col" id="chart_col_003">
+          <!-- bar chart goes here -->
+            <div class="background_law_info_003" id="law_12_13_003">
+                <span class="law_info_text_003">The enactment of the "gay propaganda" law</span>
+            </div>
+
+            <div class="background_law_info_003" id="law_22_23_003">
+                    <span class="law_info_text_003">The expansion of the "gay propaganda" law</span>
+            </div>
+
+        </div>
+      </div>
+  
+  </div>
+
+  <script id="d3vis_barchart_003">
+
+    // chart dimensions and margins
+    const margin_chart_003 = {top: 10, right: 0, bottom: 20, left: 0};
+    
+    width_chart_003 = 760 - margin_chart_003.left - margin_chart_003.right,
+    height_chart_003 = 480 - margin_chart_003.top - margin_chart_003.bottom;
+
+    // appending SVG
+    const svg_chart_003 = d3.select("#chart_col_003")
+        .append("svg")
+            .attr("id","svg_chart")
+            .attr("width", width_chart_003 + margin_chart_003.left + margin_chart_003.right)
+            .attr("height", height_chart_003 + margin_chart_003.top + margin_chart_003.bottom)
+            .attr("viewBox", "0 0 760 480")
+        .append("g")
+            .attr("transform", `translate(${margin_chart_003.left},${margin_chart_003.top})`);
+
+    const defs_chart_003 = svg_chart_003.append("defs");
+
+    defs_chart_003.append("pattern")
+        .attr("id", "lawHash")
+        .attr("width", 4)
+        .attr("height", 4)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("path")
+            .attr("d", "M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2") // diagonal pattern "up right"
+            .attr("stroke", "rgb(58, 58, 58)")
+            .attr("stroke-width", 0.6);
+
+    // to calculate smooth average over 2 years
+    function getSmoothAverage(data, key) {
+        const smoothed = [];
+        for (let i = 0; i < data.length; i++) {
+            if (i < data.length - 1) { // Check if there's a next year (pair)
+                const curr = data[i][key];    // Current year's value
+                const next = data[i + 1][key]; // Next year's value
+                smoothed.push((curr + next) / 2); // Average of current and next year
+            }
+        }
+        return smoothed;
+    }
+
+    // fetching the data -> csv is in the russian version
+    d3.csv ("https://raw.githubusercontent.com/dataout-org/datavis/refs/heads/main/docs/greyrainbow_n_crimes_barchart_ru/hatecrimes_overall_2010_2023.csv").then(function(data) {
+        data.forEach(d => {
+                d.year = d.year.toString().trim(); // convert years to str, trim whitespace
+                d.n_crimes = +d.n_crimes; // N crimes
+                d.n_victims = +d.n_victims; // N victims
+                d.n_fatalities = +d.n_fatalities; // N fatalities
+            });
+
+        // all years
+        const years_003 = data.map(d => d.year);
+
+        // x axis for years
+        const x = d3.scaleBand()
+            .domain(years_003)
+            .range([0, width_chart_003])
+            .padding(0.12);
+
+        svg_chart_003.append("g")
+            .attr("transform", `translate(0,${height_chart_003})`)
+            .call(d3.axisBottom(x).tickSize(0))
+            .attr("class", "year_label_003")
+            .selectAll("text")
+                .attr("transform", "translate(0,4)rotate(0)")
+                .style("text-anchor", "middle");
+
+        // add y axis
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.n_crimes)])
+            .nice()
+            .range([height_chart_003, 0]);
+
+        // tick line
+        svg_chart_003.selectAll(".domain")
+            .attr("class", "x_line_003");
+
+        // smooth averages for each key
+        const smoothCrimes = getSmoothAverage(data, 'n_crimes');
+        const smoothVictims = getSmoothAverage(data, 'n_victims');
+        const smoothFatalities = getSmoothAverage(data, 'n_fatalities');
+
+        function drawSmoothAverage(data, smoothData, color) {
+            const line = d3.line()
+                .x((d, i) => x(data[i].year) + x.bandwidth()/ 2)
+                .y((d, i) => y(smoothData[i]))
+                .curve(d3.curveMonotoneX);
+
+            svg_chart_003.append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("class", "smooth_avg_line")
+                .attr("stroke", color)
+                .attr("stroke-width", 1)
+                .style("stroke-linecap", "round")
+                .attr("d", line);
+        }
+        
+        const backgroundLawMargin = 2;
+
+        // law 2012–2013 background
+        const x0_12_13 = x("2012") - backgroundLawMargin; // start position
+        const x1_12_13  = x("2013") + x.bandwidth() + backgroundLawMargin; // end position
+        const backgroundLawWidthTotal = x1_12_13 - x0_12_13; // total width
+
+        svg_chart_003.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_12_13)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal)
+            .attr("height", height_chart_003 + 36)
+            .style("fill", "url(#lawHash)")
+            .style("stroke", "none");
+
+        // positioning of the info
+        const info_12_13 = document.getElementById("law_12_13_003");
+        info_12_13.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_12_13.style.left = `${(x0_12_13 + 10)}px`;
+        info_12_13.style.top = "100px";
+
+        // law 2022–2023 background
+        const x0_22_23 = x("2022") - backgroundLawMargin; // start position
+        const x1_22_23  = x("2023") + x.bandwidth() + backgroundLawMargin; // end position
+
+        svg_chart_003.append("rect")
+            .attr("class", "law_background")
+            .attr("x", x0_22_23)
+            .attr("y", -36)
+            .attr("width", backgroundLawWidthTotal) // width stays the same for 2 bars
+            .attr("height", height_chart_003 + 36)
+            .style("fill", "url(#lawHash)")
+            .style("stroke", "none");
+
+        // positioning of the info
+        const info_22_23 = document.getElementById("law_22_23_003");
+        info_22_23.style.width = `${backgroundLawWidthTotal - 12}px`;
+        info_22_23.style.left = `${(x0_22_23 + 10)}px`;
+        info_22_23.style.top = "56px";
+
+        // N crimes bars
+        svg_chart_003.selectAll(".n_crimes")
+            .data(data)
+            .enter()
+            .append("rect")
+                .attr("class", "n_crimes_003")
+                .attr("x", d => x(d.year))
+                .attr("y", d => y(d.n_crimes))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height_chart_003 - y(d.n_crimes));
+
+        // N crimes labels
+        svg_chart_003.selectAll(".n_crimes_label_003")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("id", d => `n_crimes_label_${d.year}`)
+                .attr("class", "label_003 n_crimes_label_003")
+                .attr("x", d => x(d.year) + 22)
+                .attr("y", d => y(d.n_crimes) - 4)
+                .text(d => d.n_crimes);
+
+        // N fatalities bars (y = 0)
+        svg_chart_003.selectAll(".n_fatalities_003")
+        .data(data)
+        .enter()
+        .append("rect")
+            .attr("class", "n_fatalities_003")
+            .attr("x", d => x(d.year))
+            .attr("y", d => y(d.n_fatalities))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height_chart_003 - y(d.n_fatalities));
+
+        // N fatalities labels
+        svg_chart_003.selectAll(".n_fatalities_label_003")
+                .data(data)
+                .enter()
+                .append("text")
+                    .attr("id", d => `n_fatalities_label_${d.year}`)
+                    .attr("class", "label_003 n_fatalities_label_003")
+                    .attr("x", d => x(d.year) + 22)
+                    .attr("y", d => y(d.n_fatalities) + 16)
+                    .text(d => d.n_fatalities);
+
+        // N victims bars (incl. N fatalities)
+        svg_chart_003.selectAll(".n_victims_003")
+            .data(data)
+            .enter()
+            .append("rect")
+                .attr("class", "n_victims_003")
+                .attr("x", d => x(d.year))
+                .attr("y", d => y(d.n_victims))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height_chart_003 - y(d.n_victims - d.n_fatalities));
+
+        // N victims labels
+        svg_chart_003.selectAll(".n_victims_label_003")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("id", d => `n_victims_label_${d.year}`)
+                .attr("class", "label_003 n_victims_label_003")
+                .attr("x", d => x(d.year) + 22)
+                .attr("y", d => y(d.n_victims) + 14)
+                .text(d => d.n_victims);
+
+        // drawing smooth averages lines
+        drawSmoothAverage(data, smoothCrimes, "rgb(151, 151, 151)");
+
+        // append explainers
+        const pathInfoIcon = "M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2";
+
+        // explainer about the line
+        const explainer2014 = svg_chart_003.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("fill", "rgb(177, 177, 177)")
+            .attr("class", "bi bi-info-circle-fill")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x("2014") + 16)
+            .attr("y", 20)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-custom-class", "tooltip_barchart_n_crimes")
+            .attr("data-bs-title", "2014 saw the peak of hate crimes. The curved line displays the average number of hate crimes for two neighbouring years. We look at this average because the year of court hearings does not always coincide with the year when a crime was committed.");
+
+        explainer2014.append("path")
+            .attr("d", pathInfoIcon);
+
+        // mobile explainers about the laws
+        const explainerlaw_12_13_003 = svg_chart_003.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("fill", "rgb(177, 177, 177)")
+            .attr("class", "bi bi-info-circle-fill mobile_law_explainer_003")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x("2013") - 12)
+            .attr("y", 8)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-custom-class", "tooltip_barchart_n_crimes")
+            .attr("data-bs-title", "The enactment of the \"gay propaganda\" law");
+        
+        explainerlaw_12_13_003.append("path")
+            .attr("d", pathInfoIcon);
+
+        const explainerlaw_22_23_003 = svg_chart_003.append("svg")
+            .attr("xmlns", "http://www.w3.org/2000/svg")
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("fill", "rgb(177, 177, 177)")
+            .attr("class", "bi bi-info-circle-fill mobile_law_explainer_003")
+            .attr("viewBox", "0 0 16 16")
+            .attr("x", x("2023") - 12)
+            .attr("y", 8)
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-custom-class", "tooltip_barchart_n_crimes")
+            .attr("data-bs-title", "The expansion of the \"gay propaganda\" law");
+        
+        explainerlaw_22_23_003.append("path")
+            .attr("d", pathInfoIcon);
+
+        // correcting the label positioning, so they're visible
+        d3.select("#n_crimes_label_2018").attr("y", 108);
+
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+           
+    });
+
+    // auto scroll on mobile devices
+    let scrollInterval;
+    let userInteracted = false; // flag for user interaction
+
+     // scrolling to the right automatically
+     function autoScroll(containerId) {
+        const container = document.getElementById(containerId);
+        let currentScroll = 0;
+        const maxScroll = container.scrollWidth - container.clientWidth; // max scrollable width
+
+        const scrollInterval = setInterval(() => {
+            // stop if user interacts
+            if (userInteracted) {
+                clearInterval(scrollInterval);
+                return;
+            }
+            currentScroll += 2; // scroll speed
+            container.scrollLeft = currentScroll;
+
+            // stop if the end is reached
+            if (currentScroll >= maxScroll) {
+                clearInterval(scrollInterval);
+            }
+        }, 30); // interval
+    }
+
+    // detecting user clicks
+    function detectUserInteracton(containerId) {
+        const container = document.getElementById(containerId);
+
+        container.addEventListener('click', () => {
+            userInteracted = true;
+            clearInterval(scrollInterval);
+        });
+    }
+
+       // determining the visibility of the chart with Intersection Observer
+       function observeVisibility(targetId, callback) {
+        const target = document.getElementById(targetId);
+
+        const observer = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    callback();
+                    observerInstance.unobserve(target);
+                }
+            });
+        }, { threshold: 0.8 }); // 80% is visible
+
+        observer.observe(target);
+    }
+
+    observeVisibility('chart_col_003', () => {
+        detectUserInteracton('chart_col_003');
+        autoScroll('chart_col_003');
+    });
+
+    function resizeBarChart() {
+        userInteracted = true;
+        const viewportWidth = window.innerWidth;
+        const svgBarChart = document.getElementById('svg_chart');
+        const chartCol = document.getElementById('chart_col_003');
+        chartCol.scrollLeft = 0;
+        chartCol.style.overflowX = 'hidden';
+
+        const aspectRatio = 0.6; // SVG aspect ratio 760 480
+        svgBarChart.setAttribute('width', viewportWidth * 0.84);
+        svgBarChart.setAttribute('height', viewportWidth * aspectRatio);
+    }
+
+    function restoreBarChart() {
+        const svgBarChart = document.getElementById('svg_chart');
+        const chartCol = document.getElementById('chart_col_003');
+        chartCol.style.overflowX = 'auto';
+        svgBarChart.setAttribute('width', 760);
+        svgBarChart.setAttribute('height', 480);
+    }
+
+    // width button listener
+    const widthButton = document.getElementById('width_control_btn_003');
+    widthButton.addEventListener('click', () => {
+
+        const icon = widthButton.querySelector('i');
+        const infoTexts = document.querySelectorAll('.background_law_info_003');
+        const chartRow = document.querySelector('.row.chart_003');
+        const scrollMessage = document.querySelector('.p_scroll_003');
+        const svgExplainers = document.querySelectorAll('.mobile_law_explainer_003');
+
+        // resize to fit the screen
+        if (icon.classList.contains('bi-arrows-angle-contract')) {
+            icon.classList.remove('bi-arrows-angle-contract');
+            icon.classList.add('bi-arrows-angle-expand');
+            // change the button title
+            widthButton.title = "Enlarge chart"
+            // hide law explainers text
+            infoTexts.forEach(el => {
+                el.style.display = 'none';
+            });
+            // instead, show svg info icons
+            svgExplainers.forEach(el => {
+                el.style.display = 'block';
+            })
+            // hide vertical scroll message 
+            scrollMessage.style.display = 'none';
+            // change the chart margin-top
+            chartRow.style.setProperty('margin-top', '24px', 'important');
+
+            resizeBarChart();
+        }
+        // restore initial
+        else {
+            icon.classList.remove('bi-arrows-angle-expand');
+            icon.classList.add('bi-arrows-angle-contract');
+            widthButton.title = "Fit chart to screen"
+            // hide svg info icons in place of text
+            svgExplainers.forEach(el => {
+                el.style.display = 'none';
+            })
+            // show text background_law_info_003
+            infoTexts.forEach(el => {
+                el.style.display = 'block';
+            });
+            // show vertical scroll message 
+            scrollMessage.style.display = 'flex';
+            // change the chart margin-top
+            chartRow.style.setProperty('margin-top', '-62px', 'important');
+            // restore initial bar chart
+            restoreBarChart();
+        }
+    });
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+  </script>
+
+</div>
+
+</body>
+
+</html>
