@@ -400,56 +400,56 @@ Released under the CC-BY-SA 4.0 license
     }
 
     // width button listener
-    const widthButton = document.getElementById('width_control_btn_gr004ru');
-    widthButton.addEventListener('click', () => {
+    const widthButton_gr004ru = document.getElementById('width_control_btn_gr004ru');
+    widthButton_gr004ru.addEventListener('click', () => {
 
-        const icon = widthButton.querySelector('i');
-        const infoTexts = document.querySelectorAll('.background_law_info_gr004ru');
-        const chartRow = document.querySelector('.row.chart_gr004ru');
-        const scrollMessage = document.querySelector('.p_scroll_gr004ru');
-        const svgExplainers = document.querySelectorAll('.mobile_law_explainer_gr004ru');
+    const icon_gr004ru = widthButton_gr004ru.querySelector('i');
+    const infoTexts_gr004ru = document.querySelectorAll('.background_law_info_gr004ru');
+    const chartRow_gr004ru = document.querySelector('.row.chart_gr004ru');
+    const scrollMessage_gr004ru = document.querySelector('.p_scroll_gr004ru');
+    const svgExplainers_gr004ru = document.querySelectorAll('.mobile_law_explainer_gr004ru');
 
-        // resize to fit the screen
-        if (icon.classList.contains('bi-arrows-angle-contract')) {
-            icon.classList.remove('bi-arrows-angle-contract');
-            icon.classList.add('bi-arrows-angle-expand');
-            // change the button title
-            widthButton.title = "Enlarge chart"
-            // hide law explainers text
-            infoTexts.forEach(el => {
-                el.style.display = 'none';
-            });
-            // instead, show svg info icons
-            svgExplainers.forEach(el => {
-                el.style.display = 'block';
-            })
-            // hide vertical scroll message 
-            scrollMessage.style.display = 'none';
-            // change the chart margin-top
-            chartRow.style.setProperty('margin-top', '24px', 'important');
+    // resize to fit the screen
+    if (icon_gr004ru.classList.contains('bi-arrows-angle-contract')) {
+        icon_gr004ru.classList.remove('bi-arrows-angle-contract');
+        icon_gr004ru.classList.add('bi-arrows-angle-expand');
+        // change the button title
+        widthButton_gr004ru.title = "Enlarge chart"
+        // hide law explainers text
+        infoTexts_gr004ru.forEach(el => {
+            el.style.display = 'none';
+        });
+        // instead, show svg info icons
+        svgExplainers_gr004ru.forEach(el => {
+            el.style.display = 'block';
+        })
+        // hide vertical scroll message 
+        scrollMessage_gr004ru.style.display = 'none';
+        // change the chart margin-top
+        chartRow_gr004ru.style.setProperty('margin-top', '24px', 'important');
 
-            resizeBarChart_gr004ru();
-        }
-        // restore initial
-        else {
-            icon.classList.remove('bi-arrows-angle-expand');
-            icon.classList.add('bi-arrows-angle-contract');
-            widthButton.title = "Fit chart to screen"
-            // hide svg info icons in place of text
-            svgExplainers.forEach(el => {
-                el.style.display = 'none';
-            })
-            // show text background_law_info_gr004ru
-            infoTexts.forEach(el => {
-                el.style.display = 'block';
-            });
-            // show vertical scroll message 
-            scrollMessage.style.display = 'flex';
-            // change the chart margin-top
-            chartRow.style.setProperty('margin-top', '-62px', 'important');
-            // restore initial bar chart
-            restoreBarChart_gr004ru();
-        }
+        resizeBarChart_gr004ru();
+    }
+    // restore initial
+    else {
+        icon_gr004ru.classList.remove('bi-arrows-angle-expand');
+        icon_gr004ru.classList.add('bi-arrows-angle-contract');
+        widthButton_gr004ru.title = "Fit chart to screen"
+        // hide svg info icons in place of text
+        svgExplainers_gr004ru.forEach(el => {
+            el.style.display = 'none';
+        })
+        // show text background_law_info_gr004ru
+        infoTexts_gr004ru.forEach(el => {
+            el.style.display = 'block';
+        });
+        // show vertical scroll message 
+        scrollMessage_gr004ru.style.display = 'flex';
+        // change the chart margin-top
+        chartRow_gr004ru.style.setProperty('margin-top', '-62px', 'important');
+        // restore initial bar chart
+        restoreBarChart_gr004ru();
+    }
     });
 
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
