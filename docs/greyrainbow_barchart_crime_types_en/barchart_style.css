@@ -10,17 +10,17 @@
 	margin: 0px !important;
 }
 
-#barchart_gr004ru {
+#barchart_gr004en {
   background-color: #1e1e1e;
 }
 
-.row.chart_gr004ru {
+.row.chart_gr004en {
   margin-top: -62px !important;
   padding-left: 12px !important;
   padding-right: 12px !important;
 }
 
-#chart_col_gr004ru {
+#chart_col_gr004en {
   width: 100%;
   max-width: 800px;
   overflow-x: auto;
@@ -28,7 +28,7 @@
   padding-left: 10px;
 }
 
-.barchart_mobile_header_gr004ru {
+.barchart_mobile_header_gr004en {
   position: relative;
   z-index: 2;
   width: 100% !important;
@@ -38,30 +38,30 @@
 	display: flex;
 }
 
-.full_width_control_gr004ru {
+.full_width_control_gr004en {
   margin-left: auto;
   color: #979797;
   width: fit-content !important;
 }
 
-.full_width_btn_gr004ru {
+.full_width_btn_gr004en {
   width: 28px !important;
   height: 28px !important;
   padding: 0px !important;
 }
 
-.scroll_explainer_gr004ru {
+.scroll_explainer_gr004en {
   margin-left: 12px !important;
   width: fit-content !important;
 }
 
-.scroll_arrows_gr004ru {
+.scroll_arrows_gr004en {
   font-size: 1.6rem;
   color: #979797;
   padding: 0px 4px 0px 0px !important;
 }
 
-.p_scroll_gr004ru {
+.p_scroll_gr004en {
 	margin: 0px !important;
 	padding: 0px !important;
 	color: #979797;
@@ -71,7 +71,7 @@
 	display: flex;
 }
 
-.legend_bar_gr004ru {
+.legend_bar_gr004en {
   max-width: max-content !important;
   flex-wrap: nowrap !important;
   margin-left: 12px !important;
@@ -82,53 +82,53 @@
   position: relative;
 }
 
-.premeditated_legend_gr004ru {
+.premeditated_legend_gr004en {
   padding: 0px 3px 0px 3px !important;
   max-width: fit-content !important;
   background-color: rgb(112, 0, 0);
 }
 
-.unpremeditated_legend_gr004ru {
+.unpremeditated_legend_gr004en {
   padding: 0px 3px 0px 3px !important;
   max-width: fit-content !important;
   color: #310000;
   background-color: rgb(132, 100, 100);
 }
 
-.other_legend_gr004ru {
+.other_legend_gr004en {
   padding: 0px 3px 0px 3px !important;
   max-width: fit-content !important;
   background-color: #aaa;
   color: black;
 }
 
-.chart_gr004ru {
+.chart_gr004en {
   margin-top: 40px;
 }
 
-.year_label_gr004ru {
+.year_label_gr004en {
   font-size: 10px;
   color: lightgrey;
   letter-spacing: 1.2px;
 }
 
-.x_line_gr004ru {
+.x_line_gr004en {
   stroke: gray;
   stroke-width: 1px;
 }
 
-.label_gr004ru {
+.label_gr004en {
   font-size: 10px;
   text-anchor: middle;
 }
 
-.background_law_info_gr004ru {
+.background_law_info_gr004en {
   position: relative;
   font-size: 10px;
   color: rgb(177, 177, 177);
 }
 
-.tooltip_gr004ru {
+.tooltip_gr004en {
   --bs-tooltip-arrow-color: #979797 !important;
   --bs-tooltip-bg: #979797 !important;
   --bs-tooltip-color: black !important;
@@ -140,15 +140,15 @@
   text-align: left !important;
 }
 
-.mobile_law_explainer_gr004ru {
+.mobile_law_explainer_gr004en {
   display: none;
 }
 
 @media (min-width:800px) {
-  #chart_col_gr004ru {
+  #chart_col_gr004en {
     overflow-x:hidden;
   }
-  .barchart_mobile_header_gr004ru {
+  .barchart_mobile_header_gr004en {
     display: none !important;
   }
 }
