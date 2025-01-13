@@ -220,10 +220,6 @@ margin-bottom: 10px;
   padding: 10px 6px 0px 0px !important;
 }
 
-#year_selectors {
-  flex-wrap: nowrap !important;
-}
-
 p.all_years {
   font-size: 12px;
   margin-top: 4px;
