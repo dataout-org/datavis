@@ -85,8 +85,8 @@ Released under the CC-BY-SA 4.0 license
         </div>
         <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="playButton"></button></div>
         <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="allRegionsButton"></button></div>
-        <div class="col-md-auto" id="col_pad"><a class="btn btn-dark map_controls_btn" href="#" role="button" id="downloadAllDataButton"></a></div>
-        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="downloadFilteredDataButton"></button></div>
+        <!-- these buttons are temporarily hidden <div class="col-md-auto" id="col_pad"><a class="btn btn-dark map_controls_btn" href="#" role="button" id="downloadAllDataButton"></a></div>
+        <div class="col-md-auto" id="col_pad"><button type="button" class="btn btn-dark map_controls_btn" id="downloadFilteredDataButton"></button></div> -->
     </div>
   </div>
     
@@ -120,6 +120,7 @@ if (pathname.includes('-ru')) {
 }
 
 // storing translations
+  // the column <th>Full text (RU)</th> was removed from the table header
 const langData = {"info_text_p1": {"en":"This tiled map of Russia shows the number of hate crime victims by regions: darker regions have more victims. Hover on the tiles to see more info. See the full table under the map. Click on a region to filter the table.","ru":"Эта плиточная карта России отображает количество посрадавших от преступлений ненависти по регионам: пострадавших больше в более тёмных регионах. Наведите на регион, чтобы увидеть точную цифру. Полные данные доступны в таблице ниже. Таблицу можно фильтровать, кликая на регион или выбирая год."},
 	"info_text_p2": {"en":"* Sevastopol and Crimea are Ukranian territories occupied by Russia. We presented them on this map, because data for these regions was availbale on the Russian court websites.","ru":"* Севастополь и Крым – это украинские территории, оккупированные Россией. Мы отобразили их на этой карте, потому что данные по этим регионам были доступны на сайтах российских судов."},
 	"legend_victims": {"en":"Victims:","ru":"Пострадавших:"},
@@ -129,7 +130,7 @@ const langData = {"info_text_p1": {"en":"This tiled map of Russia shows the numb
 	"playButton": {"en":"<i class='bi bi-play-circle'></i> Dynamic by years","ru":"<i class='bi bi-play-circle'></i> Динамика по годам"},
   "downloadAllDataButton":{"en":"<i class='bi bi-download case_download_icon'></i> Download all data","ru":"<i class='bi bi-download case_download_icon'></i> "},
   "downloadFilteredDataButton":{"en":"<i class='bi bi-download case_download_icon'></i> Download filtered data","ru":"<i class='bi bi-download case_download_icon'></i> "},
-  "table_header":{"en":"<thead><tr><th>Case number</th> <th>Region</th> <th>Article</th> <th>Crimes</th> <th>Victims</th> <th>Fatalities</th> <th>Premeditated</th> <th>Full text (RU)</th> </tr> </thead> <tbody>","ru":"<thead><tr><th>Номер дела</th> <th>Регион</th> <th>Статья</th> <th>Преступлений</th> <th>Пострадавших</th> <th>Погибших</th> <th>Группа ненависти</th> <th>Полный текст</th> </tr> </thead> <tbody>"},
+  "table_header":{"en":"<thead><tr><th>Case number</th> <th>Region</th> <th>Article</th> <th>Crimes</th> <th>Victims</th> <th>Fatalities</th> <th>Premeditated</th> </tr> </thead> <tbody>","ru":"<thead><tr><th>Номер дела</th> <th>Регион</th> <th>Статья</th> <th>Преступлений</th> <th>Пострадавших</th> <th>Погибших</th> <th>Группа ненависти</th> <th>Полный текст</th> </tr> </thead> <tbody>"},
 	"landscape_on":{"en":"<i class='bi bi-phone-landscape'></i> Rotate to landscape for a better view","ru":"<i class='bi bi-phone-landscape'></i> Поверните горизонтально для лучшего просмотра"}
 }
 
@@ -416,10 +417,11 @@ function generateTable(data,lang) {
     data.forEach(function(d) {
       // formatting cell values 
        // download case
-       let caseURL = '';
-      if(d.case_text_url !== ''){
-        caseURL = `<a href="${d.case_text_url}" class="case_download"><i class="bi bi-download case_download_icon"></i></a>`
-        }
+      // links to cases are temporarily hidden 
+      //let caseURL = '';
+      //if(d.case_text_url !== ''){
+      //  caseURL = `<a href="${d.case_text_url}" class="case_download"><i class="bi bi-download case_download_icon"></i></a>`
+      //  }
         
       if (lang === "ru") {
         // premeditated badge
@@ -430,7 +432,7 @@ function generateTable(data,lang) {
         if (premeditatedValue === 'нет') {
           premeditatedValue = `<span class="badge_premeditated_no">${premeditatedValue}</span>`;
         }
-        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + caseURL + "</td></tr>";
+        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_ru + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td></tr>"; //+ caseURL + "</td></tr>";
 
       }
 
@@ -443,7 +445,7 @@ function generateTable(data,lang) {
         if (premeditatedValue === 'no') {
           premeditatedValue = `<span class="badge_premeditated_no">${premeditatedValue}</span>`;
         }
-        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_en + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td><td>" + caseURL + "</td></tr>";
+        tableHTML += "<tr><td>" + d.case_number + "</td><td>" + d.region_name_en + "</td><td>" + d.article + "</td><td>" + d.n_crimes + "</td><td>" + d.n_victims + "</td><td>" + d.n_fatalities + "</td><td>" + premeditatedValue + "</td></tr>"; // + caseURL + "</td></tr>";
       }
       
   });
