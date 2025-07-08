@@ -1,0 +1,81 @@
+#github_description {
+  background-color: #1e1e1e;
+}
+
+#text_description {
+	color: rgb(206, 206, 206);
+	font-size: 12px;
+  padding: 10px !important;
+  padding-bottom: 20px !important;
+	margin: 0px !important;
+}
+
+#map_container {
+  background-color: #1e1e1e;
+  position: relative;
+}
+
+ #cases_map {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.display_msg {
+  font-size: 0.8rem;
+  color: #bbbbbb;
+  align-items: center;
+  padding: 0px 0px 6px 12px !important;
+}
+
+.bi-arrows-fullscreen, .bi-phone-landscape {
+  font-size: 1rem !important;
+  padding-right: 10px !important;
+}
+
+.legend {
+  font-size: 0.8rem;
+  color: #bbbbbb;
+}
+
+.case_icon_legend {
+  color: #911C1C;
+}
+
+.credit_text {
+  font-style: italic;
+  color: #575757;
+  font-size: 0.8rem;
+  padding: 0px 0px 12px 0px;
+}
+
+.credit_text a {
+  color: #575757;
+}
+
+/* case popovers */
+
+.popover-anchor {
+  pointer-events: auto;
+  background: transparent;
+  border: none;
+}
+
+.case_popover {
+  --bs-popover-header-bg: transparent !important;
+  --bs-popover-header-font-size: 0.8rem !important;
+  --bs-popover-font-size: 0.8rem !important;
+  --bs-popover-bg: rgba(194, 194, 194, 0.9) !important;
+  --bs-popover-header-color: black !important;
+  --bs-popover-header-padding-x: 1em !important;
+  --bs-popover-header-padding-y: 0.4em !important;
+  --bs-popover-border-width: 0px !important;
+  --bs-popover-body-padding-x: 1em !important;
+  --bs-popover-body-padding-y: 0.6em !important;
+  --bs-popover-body-color: black !important;
+  --bs-popover-inner-border-radius: 0px !important;
+  --bs-border-radius-lg: 0px !important;
+  --bs-popover-border-radius: 4px !important;
+  --bs-popover-max-width: 300px !important;
+  z-index: 1001 !important;
+}
