@@ -76,6 +76,6 @@
   --bs-popover-inner-border-radius: 0px !important;
   --bs-border-radius-lg: 0px !important;
   --bs-popover-border-radius: 4px !important;
-  --bs-popover-max-width: 300px !important;
+  --bs-popover-max-width: 600px !important;
   z-index: 1001 !important;
 }
