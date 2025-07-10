@@ -79,6 +79,7 @@ const svg = d3.select("#cases_map")
 
 Promise.all([
       // this file is taken from "geoBoundaries", www.geoboundaries.org, 2017
+      // it is allowed only on the Dataout websites and GitHub
       d3.json("https://datavis-dataout.s3.eu-west-1.amazonaws.com/geoBoundaries-RUS-ADM1_simplified.topojson"),
       d3.dsv(";","https://raw.githubusercontent.com/dataout-org/datavis/refs/heads/main/docs/gr_map_24_06/map_data.csv")
     ]).then(([topoData, cases]) => {
