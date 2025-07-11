@@ -53,29 +53,62 @@
   color: #575757;
 }
 
-/* case popovers */
+/* case info blocks */
 
-.popover-anchor {
+.case-info-block {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.85);
+  width: 600px;
+  background: #272727dc;
+  color: #fff;
+  border-radius: 4px;
+  z-index: 2000;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+}
+.case-info-block.open {
+  opacity: 1;
   pointer-events: auto;
-  background: transparent;
-  border: none;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.case_popover {
-  --bs-popover-header-bg: transparent !important;
-  --bs-popover-header-font-size: 0.8rem !important;
-  --bs-popover-font-size: 0.8rem !important;
-  --bs-popover-bg: rgba(194, 194, 194, 0.9) !important;
-  --bs-popover-header-color: black !important;
-  --bs-popover-header-padding-x: 1em !important;
-  --bs-popover-header-padding-y: 0.4em !important;
-  --bs-popover-border-width: 0px !important;
-  --bs-popover-body-padding-x: 1em !important;
-  --bs-popover-body-padding-y: 0.6em !important;
-  --bs-popover-body-color: black !important;
-  --bs-popover-inner-border-radius: 0px !important;
-  --bs-border-radius-lg: 0px !important;
-  --bs-popover-border-radius: 4px !important;
-  --bs-popover-max-width: 600px !important;
-  z-index: 1001 !important;
+.case_id {
+	margin: 0rem 0rem 0.5rem 0rem;
+	font-size: 1rem;
+}
+
+.case_meta {
+	margin: 0px !important;
+	font-size: 0.8rem;
+}
+
+.case_snippet {
+	margin: 0.5rem 0rem 0rem 0rem;
+	font-size: 0.9rem;
+	font-weight: 200;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+  z-index: 10;
+}
+
+@media (max-width: 600px) {
+  .case-info-block {
+    min-width: 0;
+    width: 95vw;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+  }
 }

@@ -34,9 +34,6 @@ Released under the CC-BY-SA 4.0 license
 <div id="content_to_fetch">
 
   <div class="container-fluid" id="map_container">
-    <div class="container-fluid display_msg" id="enlarge">
-        <i class="bi bi-arrows-fullscreen"></i> Enlarge the screen for a better view
-    </div>
 
     <div class="container-fluid display_msg" id="landscape_on">
         <i class='bi bi-phone-landscape'></i> Rotate to landscape for a better view
@@ -48,10 +45,14 @@ Released under the CC-BY-SA 4.0 license
 
     <svg id="cases_map"></svg>
 
+    <div id="case_info_block" class="case-info-block" style="display:none;">
+        <button id="close_case_info" class="close-btn" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+        <div id="case_info_content"></div>
+    </div>
+
     <p class="credit_text">The geographical information is according to <a href="https://www.geoboundaries.org/" target="_blank">geoboundaries.org</a></p>
       
   </div>
-
 
 <script id="map_24jun">
 
@@ -70,11 +71,11 @@ const COLORS = {
   none: "none"
 };
 
-const viewWidth = 1400;
-const viewHeight = 580;
+const viewWidth = 1160;
+const viewHeight = 540;
 
 const svg = d3.select("#cases_map")
-              .attr("viewBox", `190 0 ${viewWidth} ${viewHeight}`)
+              .attr("viewBox", `86 0 ${viewWidth} ${viewHeight}`)
               .attr("preserveAspectRatio", "xMidYMid meet");
 
 Promise.all([
@@ -129,8 +130,8 @@ Promise.all([
       const overlapping = cases.filter(d => excludeCities.includes(d.loc_name));
      
       const origCoords = projection([43.326122, 43.799921]);
-      const insetX = 300;
-      const insetY = 440;
+      const insetX = 230;
+      const insetY = 400;
       const insetRadius = 40;
 
        // a line to the inset circle
@@ -210,21 +211,15 @@ Promise.all([
           .html(createCaseIcon());
       });
 
-      // Remove old anchors
-      d3.select("#map_container").selectAll(".popover-anchor").remove();
-
-      // Main map popovers
-      createPopoverAnchors(visibleCases, projection);
-
-      // Inset (zoomed-in) popovers
-      createPopoverAnchors(overlapping, zoomedProjection);
+      createCaseInfoBlocks(visibleCases, projection);
+      createCaseInfoBlocks(overlapping, zoomedProjection);
 
       window.addEventListener("resize", () => {
         // delay to ensure DOM has updated
         setTimeout(() => {
           d3.selectAll(".popover-anchor").remove();
-          createPopoverAnchors(visibleCases, projection);
-          createPopoverAnchors(overlapping, zoomedProjection);
+          createCaseInfoBlocks(visibleCases, projection);
+          createCaseInfoBlocks(overlapping, zoomedProjection);
         }, 100);
       });
 });
@@ -235,46 +230,52 @@ function createCaseIcon() {
   </svg>`;
 }
 
-function createPopoverAnchors(cases, projectionFn) {
-
-  const svgNode = d3.select("#cases_map").node();
-  const svgPoint = svgNode.createSVGPoint();
-  const mapContainer = d3.select("#map_container");
-  const containerRect = mapContainer.node().getBoundingClientRect();
-
+// Creating info blocks
+function createCaseInfoBlocks(cases, projectionFn) {
   cases.forEach((d) => {
     const [x, y] = projectionFn([+d.lon, +d.lat]);
-
-    svgPoint.x = x;
-    svgPoint.y = y;
-
-    const screenPoint = svgPoint.matrixTransform(svgNode.getScreenCTM());
-    
-    // position relative to the map container
-    const relativeX = screenPoint.x - containerRect.left;
-    const relativeY = screenPoint.y - containerRect.top;
-
-    d3.select("#map_container").append("div")
-      .attr("class", "popover-anchor")
-      .style("position", "absolute")
-      .style("left", `${relativeX - 9}px`) // center on the icon
-      .style("top", `${relativeY - 9}px`)
-      .style("width", "18px")
-      .style("height", "18px")
-      .style("cursor", "pointer")
-      .style("z-index", "1000")
-      .attr("tabindex", "0") // required for popover triggering
-      .attr("data-bs-toggle", "popover")
-      .attr("data-bs-trigger", "focus") // close on outside click
-      .attr("data-bs-html", "true")
-      .attr("data-bs-title", `Case ${d.case_id} <br><small>${d.loc_name}<br>${d.date}</small>`)
-      .attr("data-bs-content", d.case_snippet)
-      .attr("data-bs-custom-class", "case_popover")
-      .attr("data-bs-placement", "top"); // popover above icon
+    // Find the icon at this position (within a small tolerance)
+    const icons = d3.selectAll("g.case_icon").nodes();
+    const icon = icons.find(g => {
+      const transform = g.getAttribute("transform");
+      if (!transform) return false;
+      const match = /translate\(([-\d.]+),\s*([\-\d.]+)\)/.exec(transform);
+      if (!match) return false;
+      const [tx, ty] = [parseFloat(match[1]), parseFloat(match[2])];
+      return Math.abs(tx - (x - 8)) < 1 && Math.abs(ty - (y - 8)) < 1;
+    });
+    if (icon) {
+      icon.style.cursor = "pointer";
+      icon.addEventListener("click", function(event) {
+        showCaseInfo(d);
+        event.stopPropagation();
+      });
+    }
   });
+}
 
-  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+// to store the info block scroll position
+let caseInfoBlockOpenScrollY = null;
+
+function showCaseInfo(d) {
+  const block = document.getElementById("case_info_block");
+  const content = document.getElementById("case_info_content");
+  content.innerHTML = `
+    <p class="case_id">Case ${d.case_id}</p>
+    <p class="case_meta">${d.loc_name}</p>
+    <p class="case_meta">${d.date}</p>
+    <p class="case_snippet">${d.case_snippet}</p>
+  `;
+  block.style.display = "block";
+  setTimeout(() => block.classList.add("open"), 10); // allow transition
+  caseInfoBlockOpenScrollY = window.scrollY;
+}
+
+function hideCaseInfo() {
+  const block = document.getElementById("case_info_block");
+  block.classList.remove("open");
+  setTimeout(() => block.style.display = "none", 250); // match transition
+  caseInfoBlockOpenScrollY = null;
 }
 
 // check device orientation and screen size
@@ -283,31 +284,65 @@ function checkOrientation() {
     const smallScreen = window.innerWidth <= 576;
     // check if screen is less than 900px
     const narrowScreen = window.innerWidth < 900;
-    
-    // the message blocks
+
+    // the message block
     const rotateMessage = document.getElementById("landscape_on");
-    const enlargeMessage = document.getElementById("enlarge");
 
     if (smallScreen) {
       // For small screens (≤576px), show rotate message when in portrait
       if (window.innerHeight > window.innerWidth) {
         rotateMessage.style.display = "flex";
-        enlargeMessage.style.display = "none";
       } else {
         rotateMessage.style.display = "none";
-        enlargeMessage.style.display = "none";
       }
     } else if (narrowScreen) {
-      // For medium screens (577px-899px), show enlarge message
+      // For medium screens (577px-899px)
       rotateMessage.style.display = "none";
-      enlargeMessage.style.display = "flex";
     } else {
-      // For large screens (≥900px), hide both messages
       rotateMessage.style.display = "none";
-      enlargeMessage.style.display = "none";
     }
   }
 
+// info blocks close button listener
+document.addEventListener("DOMContentLoaded", function() {
+  const closeBtn = document.getElementById("close_case_info");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      hideCaseInfo();
+    });
+  }
+  //hide on outside click
+  document.addEventListener("mousedown", function(e) {
+    const block = document.getElementById("case_info_block");
+    // click inside the block
+    if (block.classList.contains("open") && !block.contains(e.target)) {
+      // if click is on a case icon
+      let el = e.target;
+      let isCaseIcon = false;
+      while (el) {
+        if (el.classList && el.classList.contains("case_icon")) {
+          isCaseIcon = true;
+          break;
+        }
+        el = el.parentElement;
+      }
+      if (!isCaseIcon) {
+        hideCaseInfo();
+      }
+      // if isCaseIcon, do nothing: the icon's click handler will open the new block
+    }
+  });
+  // hide on scroll 
+  window.addEventListener("scroll", function() {
+  const block = document.getElementById("case_info_block");
+  if (block.classList.contains("open") && caseInfoBlockOpenScrollY !== null) {
+    if (Math.abs(window.scrollY - caseInfoBlockOpenScrollY) > 180) { // threshold
+      hideCaseInfo();
+    }
+  }
+  });
+});
 
 </script>
 
