@@ -137,6 +137,15 @@ Released under the CC-BY-SA 4.0 license
                 .attr('y2', -288);
         });
 
+        // Add spacer div at the end for margin
+        container.append('div')
+            .attr('id', 'timeline_spacer_1207')
+            .style('position', 'absolute')
+            .style('left', `${xScale(2023) + 80}px`)
+            .style('top', '0px')
+            .style('width', '100px')
+            .style('height', '1px');
+
         revealAnimation();
 
         // activating tooltips
@@ -265,7 +274,7 @@ Released under the CC-BY-SA 4.0 license
             container.scrollLeft = currentScroll;
 
             // stop if the end is reached
-            if (currentScroll >= maxScroll) {
+            if (currentScroll >= maxScroll + 100) {
                 clearInterval(scrollInterval);
             }
         }, 30); // interval
@@ -276,6 +285,26 @@ Released under the CC-BY-SA 4.0 license
         const container = document.querySelector(containerSelector);
 
         container.addEventListener('click', () => {
+            userInteracted = true;
+            clearInterval(scrollInterval);
+        });
+        
+        // Detect mouse wheel scrolling
+        container.addEventListener('wheel', (e) => {
+            if (Math.abs(e.deltaX) > 0 || Math.abs(e.deltaY) > 0) {
+                userInteracted = true;
+                clearInterval(scrollInterval);
+            }
+        });
+        
+        // Detect touch scrolling
+        container.addEventListener('touchstart', () => {
+            userInteracted = true;
+            clearInterval(scrollInterval);
+        });
+        
+        // Detect mouse drag scrolling
+        container.addEventListener('mousedown', () => {
             userInteracted = true;
             clearInterval(scrollInterval);
         });
