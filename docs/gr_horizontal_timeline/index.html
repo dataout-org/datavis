@@ -245,119 +245,53 @@ Released under the CC-BY-SA 4.0 license
         });
     }
 
-    // auto-scroll functionality
+    // auto scroll on mobile devices
     let scrollInterval;
-    let userInteracted = false;
-    let isAutoScrolling = false; // prevent scroll event during auto-scroll
+    let userInteracted = false; // flag for user interaction
 
-    function startAutoScroll() {
-        const timelineContainer = document.querySelector('.timeline-container_1207');
-        const viewportWidth = window.innerWidth;
-        const timelineWidth = timelineContainer.scrollWidth; // actual timeline width
+     // scrolling to the right automatically
+     function autoScroll(containerSelector) {
+        const container = document.querySelector(containerSelector);
+        let currentScroll = 0;
+        const maxScroll = container.scrollWidth - container.clientWidth; // max scrollable width
 
-        // auto-scroll if screen is narrower than timeline
-        if (viewportWidth < timelineWidth) {
-            
-            // if timeline is actually scrollable
-            const maxScroll = timelineContainer.scrollWidth - timelineContainer.clientWidth;
-            
-            // reset user interaction flag
-            userInteracted = false;
-            isAutoScrolling = false;
-            
-            // short delay to avoid immediate user interaction detection
-            setTimeout(() => {
-                if (!userInteracted) {
-                    isAutoScrolling = true;
-                    
-                    // start auto-scroll
-                    scrollInterval = setInterval(() => {
-                        if (userInteracted) {
-                            clearInterval(scrollInterval);
-                            isAutoScrolling = false;
-                            return;
-                        }
-                        
-                        timelineContainer.scrollLeft += 2;
-                        
-                        // reached the end
-                        if (timelineContainer.scrollLeft >= maxScroll) {
-                            clearInterval(scrollInterval);
-                            isAutoScrolling = false;
-                        }
-                    }, 30);
-                }
-            }, 1500); // delay
-        }
-    }
-
-    // user interaction: stop auto-croll
-    function stopAutoScroll() {
-        userInteracted = true;
-        if (scrollInterval) {
-            clearInterval(scrollInterval);
-            isAutoScrolling = false;
-        }
-    }
-
-    // reset to initial position
-    function resetTimelinePosition() {
-        const timelineContainer = document.querySelector('.timeline-container_1207');
-        timelineContainer.scrollLeft = 0;
-        userInteracted = false;
-        isAutoScrolling = false;
-        if (scrollInterval) {
-            clearInterval(scrollInterval);
-        }
-    }
-
-    // listeners
-    function addEventListeners() {
-        const timelineContainer = document.querySelector('.timeline-container_1207');
-        
-        // Click
-        timelineContainer.addEventListener('click', function(e) {
-            stopAutoScroll();
-        });
-        
-        // Scroll
-        let scrollTimeout;
-        timelineContainer.addEventListener('scroll', function(e) {
-            if (!isAutoScrolling) {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    stopAutoScroll();
-                }, 50);
+        const scrollInterval = setInterval(() => {
+            // stop if user interacts
+            if (userInteracted) {
+                clearInterval(scrollInterval);
+                return;
             }
-        });
-        
-        // Mouse wheel for horizontal scroll
-        timelineContainer.addEventListener('wheel', function(e) {
-            if (Math.abs(e.deltaX) > 0) {
-                stopAutoScroll();
+            currentScroll += 2; // scroll speed
+            container.scrollLeft = currentScroll;
+
+            // stop if the end is reached
+            if (currentScroll >= maxScroll) {
+                clearInterval(scrollInterval);
             }
-        });
-        
-        // Touch events for mobile
-        timelineContainer.addEventListener('touchstart', function(e) {
-            stopAutoScroll();
-        });
-        
-        // Mouse events
-        timelineContainer.addEventListener('mousedown', function(e) {
-            stopAutoScroll();
+        }, 30); // interval
+    }
+
+    // detecting user clicks
+    function detectUserInteracton(containerSelector) {
+        const container = document.querySelector(containerSelector);
+
+        container.addEventListener('click', () => {
+            userInteracted = true;
+            clearInterval(scrollInterval);
         });
     }
 
-    // start auto-scroll on page load
+    // Start auto-scroll on page load for narrow screens
     window.addEventListener('load', function() {
-        addEventListeners();
-        startAutoScroll();
-    });
+        const viewportWidth = window.innerWidth;
 
-    // reset timeline position when page is updated/refreshed
-    window.addEventListener('beforeunload', resetTimelinePosition);
-    window.addEventListener('pageshow', resetTimelinePosition);
+        if (viewportWidth < 1000) {
+            setTimeout(() => {
+                detectUserInteracton('.timeline-container_1207');
+                autoScroll('.timeline-container_1207');
+            }, 2000);
+        }
+    });
 
     </script>
 
