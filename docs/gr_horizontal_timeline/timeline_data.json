@@ -1,0 +1,56 @@
+[
+      {"type":"year_events",
+        "year": 2013,
+        "events": [
+        {
+            "description": "The \"gay propaganda\" law is nationwide",
+            "info": "The Federal law on \"gay propaganda\" (135-FZ) set an administrative offense for \"propaganda of non-traditional sexual relations\" among minors.",
+            "progressive": "False"
+        }
+    ]},
+
+    {"type":"year_note",
+        "year": 2014,
+        "note":"The data we collected <a href=\"https://greyrainbow.dataout.org/dataset-hate-crimes/\" target=\"_blank\">shows</a> an increse in the number of hate crimes"
+    },
+
+    {"type":"year_note",
+        "year": 2017,
+        "note":"According to <a href=\"https://greyrainbow.dataout.org/hate-crimes/\" target=\"_blank\">our research</a>, the number of crimes commited by organised groups increased"
+    },
+
+    {"type":"year_events",
+        "year": 2020,
+        "events": [
+        {
+            "description": "Constitutional Amendments",
+            "info": "Article 72 of the Constitution defined marriage as the union of a man and a woman. The further adoption of laws on same-sex unions would be impossible without constitutional reform.",
+            "progressive": "False"
+        }
+    ]},
+
+    {"type":"year_events",
+        "year": 2022,
+        "events": [
+        {
+            "description": "The \"gay propaganda\" law is updated",
+            "info": "Federal Law No. 479-FZ set administrative responsibility for \"propaganda of non-traditional sexual relations\" in general (not only among minors). This law also banned the so-called \"propaganda of pedophilia\" and \"propaganda of gender change\"",
+            "progressive": "False"
+        }
+    ]},
+
+    {"type":"year_events",
+        "year": 2023,
+        "events": [
+        {
+            "description": "Transgender transition ban",
+            "info": "Federal Law No. 386-FZ abolished the system of medical and legal procedures for transgender transition. Trans people no longer have the opportunity to receive necessary assistance.",
+            "progressive": "False"
+        },
+        {
+            "description": "Supreme Court: \"International LGBT movement\" is an extremist organisation",
+            "info": "The so-called \"International LGBT Movement\" labelled as an extremist organization. It is a criminal offence to \"participate\" in such extremist organization.",
+            "progressive": "False"
+        }
+    ]}    
+]
