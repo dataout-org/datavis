@@ -137,18 +137,21 @@ body {
 }
 
 .note_text_1207 {
-	background-color: #2f2f2f;
+  background-color: #2f2f2f;
+  line-height: 1rem !important;
 }
 
 .note_text_1207 a {
   font-size: 12px !important; 
   color: white !important;
   text-decoration: underline dashed !important;
+  line-height: 1rem !important;
 }
 
 .note_text_1207 a:hover {
   font-size: 12px !important; 
   color: rgb(184, 184, 184) !important;
+  line-height: 1rem !important;
 }
 
 .info_icon_1207 {
