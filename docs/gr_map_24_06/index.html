@@ -74,7 +74,7 @@ const COLORS = {
 const viewWidth = 1160;
 const viewHeight = 540;
 
-const svg = d3.select("#cases_map")
+const svg_cases_map = d3.select("#cases_map")
               .attr("viewBox", `86 0 ${viewWidth} ${viewHeight}`)
               .attr("preserveAspectRatio", "xMidYMid meet");
 
@@ -96,7 +96,7 @@ Promise.all([
       const path = d3.geoPath().projection(projection);
 
       // MAIN MAP
-      svg.selectAll("path")
+      svg_cases_map.selectAll("path")
           .data(geoData.features)
           .enter().append("path")
           .attr("d", path)
@@ -109,7 +109,7 @@ Promise.all([
       const visibleCases = cases.filter(d => !excludeCities.includes(d.loc_name));
 
       // mapping cases
-      svg.selectAll("g.icon")
+      svg_cases_map.selectAll("g.icon")
           .data(visibleCases)
           .enter()
           .append("g")
@@ -134,17 +134,17 @@ Promise.all([
       const insetY = 400;
       const insetRadius = 40;
 
-       // a line to the inset circle
-       svg.append("line")
-        .attr("x1", origCoords[0])
-        .attr("y1", origCoords[1])
-        .attr("x2", insetX)
-        .attr("y2", insetY - 6)
-        .attr("stroke", COLORS.white)
-        .attr("stroke-width", 0.5);
+      // a line to the inset circle
+      svg_cases_map.append("line")
+      .attr("x1", origCoords[0])
+      .attr("y1", origCoords[1])
+      .attr("x2", insetX)
+      .attr("y2", insetY - 6)
+      .attr("stroke", COLORS.white)
+      .attr("stroke-width", 0.5);
 
       // a circle indicating 2 cases
-      svg.append("g")
+      svg_cases_map.append("g")
         .attr("class", "cases-count-circle")
         .attr("transform", `translate(${origCoords[0]}, ${origCoords[1]})`)
         .style("pointer-events", "none") // avoid blocking mouse events
@@ -171,7 +171,7 @@ Promise.all([
       const zoomedPath = d3.geoPath().projection(zoomedProjection);
 
       // clipping circle
-      svg.append("clipPath")
+      svg_cases_map.append("clipPath")
         .attr("id", "insetClip")
         .append("circle")
         .attr("cx", insetX)
@@ -179,11 +179,11 @@ Promise.all([
         .attr("r", insetRadius);
 
       // creating an inset group and clipping it
-      const inset = svg.append("g")
+      const inset = svg_cases_map.append("g")
         .attr("clip-path", "url(#insetClip)");
 
       // circle boundaries – this is a separate transparent circle
-      svg.append("circle")
+      svg_cases_map.append("circle")
         .attr("cx", insetX)
         .attr("cy", insetY)
         .attr("r", insetRadius)
