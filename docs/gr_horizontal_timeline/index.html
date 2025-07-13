@@ -58,7 +58,7 @@ Released under the CC-BY-SA 4.0 license
     const margin = {top:280, right:30, bottom:0, left:16 };
     const containerWidth = 860;
     const containerHeight = 320;
-    const svg = d3.select('#timeline_1207')
+    const svg_timeline_1207 = d3.select('#timeline_1207')
         .attr('width', containerWidth)
         .attr('height', containerHeight)
         .append('g')
@@ -77,15 +77,15 @@ Released under the CC-BY-SA 4.0 license
                     .tickPadding(6)
                     .tickFormat(d => d);
 
-    svg.append('g')
+    svg_timeline_1207.append('g')
         .attr('class', 'x-axis')
         .call(xAxis);
 
-    svg.select('.domain')
+    svg_timeline_1207.select('.domain')
         .attr('opacity','0');
 
     // draw a solid line
-    svg.append('line')
+    svg_timeline_1207.append('line')
         .attr('x1', xScale(2013) - 12)
         .attr('x2', xScale(2023) + 12)
         .attr('y1', 0)
@@ -94,13 +94,13 @@ Released under the CC-BY-SA 4.0 license
         .attr('stroke-width', 1);
 
     // year labels
-    svg.selectAll('.tick text')
+    svg_timeline_1207.selectAll('.tick text')
         .attr('class','tick_label_1207')
         .style('text-anchor', 'middle')
         .attr('fill', '#bdbdbd');
 
     // ticks
-    svg.selectAll('.tick line')
+    svg_timeline_1207.selectAll('.tick line')
         .attr('x2', 0)
         .attr('stroke', '#bdbdbd')
         .attr('stroke-width', 1);
@@ -163,7 +163,7 @@ Released under the CC-BY-SA 4.0 license
                 .style('top', '152px')
                 .style('left', `${xScale(year) + 42}px`);
 
-        svg.append('line')
+        svg_timeline_1207.append('line')
                     .attr('id',`event_line_${year}_1207`)
                     .attr('x1', xScale(year) + 0.5)
                     .attr('x2', xScale(year) + 0.5)
@@ -197,7 +197,7 @@ Released under the CC-BY-SA 4.0 license
 
     function drawYearNote(year,note,note_link) {
 
-        svg.append('line')
+        svg_timeline_1207.append('line')
             .attr('id',`note_line_${year}_1207`)
             .attr('x1', xScale(year) + 0.5)
             .attr('x2', xScale(year) + 0.5)
