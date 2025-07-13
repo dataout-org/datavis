@@ -115,6 +115,10 @@ body {
     #event_2023_1_1207 {
       min-width: 146px !important;
     }
+
+    #event_2023_0_1207 {
+      min-width: 146px !important;
+    }
     /* */
 
 .event_1207 {
@@ -137,11 +141,13 @@ body {
 }
 
 .note_text_1207 a {
+  font-size: 12px !important; 
   color: white !important;
   text-decoration: underline dashed !important;
 }
 
 .note_text_1207 a:hover {
+  font-size: 12px !important; 
   color: rgb(184, 184, 184) !important;
 }
 
