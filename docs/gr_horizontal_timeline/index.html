@@ -109,7 +109,7 @@ Released under the CC-BY-SA 4.0 license
     const container = d3.select('.timeline-container_1207'); 
 
     // // visualising the timeline data
-    d3.json('timeline_data.json')
+    d3.json('https://raw.githubusercontent.com/dataout-org/datavis/refs/heads/main/docs/gr_horizontal_timeline/timeline_data.json')
         .then(function(data) {
             const timelineData = data; 
             drawEvents(timelineData);
