@@ -52,11 +52,13 @@
 .credit_text a {
   color: #575757;
   font-size: 0.8rem !important;
+  line-height: 1.4rem !important;
 }
 
 .credit_text a:hover {
   color: #575757;
   font-size: 0.8rem !important;
+  line-height: 1.4rem !important;
 }
 
 /* case info blocks */
