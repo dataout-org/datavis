@@ -1,0 +1,273 @@
+#github_description {
+  background-color: #1e1e1e;
+}
+
+#text_description {
+	color: rgb(206, 206, 206);
+	font-size: 12px;
+  padding: 10px !important;
+  padding-bottom: 20px !important;
+	margin: 0px !important;
+}
+
+#map_table_hcg2026 {
+	background-color: #1e1e1e;
+}
+
+.lang_switch_hcg2026 {
+  padding: 0px 0px 6px 0px !important;
+}
+
+.lang_btn_hcg2026 {
+height: 22px;
+padding: 0px 4px 0px 4px !important;
+color: #aaa !important;
+font-size: 12px !important;
+border-color: #f4f4f4 !important;
+}
+
+.lang_btn_hcg2026:hover {
+color: black !important;
+background-color: #f4f4f4 !important;
+border-color: #f4f4f4 !important;
+}
+
+.lang_btn_hcg2026:focus {
+box-shadow: none !important;
+}
+
+.lang_btn_hcg2026:active {
+color: black !important;
+background-color: #f4f4f4 !important;
+border-color: #f4f4f4 !important;
+}
+
+.lang_btn_hcg2026.active {
+color: black !important;
+background-color: #f4f4f4 !important;
+border-color: #f4f4f4 !important;
+}
+
+.above_map_hcg2026{
+  position: relative;
+  max-width: 840px;
+  background-color: rgb(244, 244, 244);
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.info_text_hcg2026 {
+  overflow: hidden;
+}
+
+#info_box_hcg2026 {
+  color: black;
+  font-size: 14px;
+}
+
+#info_box_hcg2026 .disclaimer_hcg2026 {
+  font-style: italic;
+  color: #575757;
+}
+
+.landscape_msg_hcg2026 {
+  color: #f4f4f4;
+  font-size: 12px !important;
+  align-items: center;
+  padding: 6px 0px 0px 0px !important;
+}
+
+.bi-phone-landscape {
+  font-size: 1.4rem !important;
+  padding-right: 10px !important;
+}
+
+.landscape_message {
+  margin: 0px !important;
+}
+
+.legend_hcg2026 {
+  padding: 6px 0px 0px 0px !important;
+  max-width: 840px;
+  flex-wrap: nowrap !important;
+  align-items: baseline !important;
+}
+
+.legend_item_hcg2026 {
+  max-width: fit-content !important;
+}
+
+.legend_label_hcg2026 {
+  font-size: 12px;
+  color: white;
+  fill: white;
+  margin: 0px !important;
+}
+
+#n_crimes_text_hcg2026 {
+  padding: 0px 0px 2px 16px;
+}
+
+#no_data_hcg2026 {
+  padding-left: 0px;
+}
+
+#rf_map_hcg2026 {
+  width: 760px;
+  height: 446px;
+
+}
+
+.counter_block_hcg2026 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 760px;
+  padding: 8px 0 14px;
+  text-align: center;
+}
+
+.counter_item_hcg2026 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.counter_value_hcg2026 {
+  color: #f4f4f4;
+  font-size: 3rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.counter_label_hcg2026 {
+  color: #aaa;
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+.legend_footer_hcg2026 {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 840px;
+  padding-top: 6px;
+}
+
+.map_note_hcg2026 {
+  flex: 1;
+  margin: 6px 0 0;
+  color: #aaa;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.container-fluid{
+  margin-left: 0 !important;
+}
+
+#rf_map_hcg2026 #names_container .name {
+  font-size:10px !important;
+  pointer-events:none; /* make sure the tile text is not selected */
+}
+
+/* -- occupied regions */
+
+#rf_map_hcg2026 #dashed_border {
+  stroke: white !important;
+  stroke-dasharray: 3 2;
+  fill: none !important; /* to overwrite auto colour */
+}
+
+@media (max-width: 575.98px) {
+  .counter_value_hcg2026 {
+    font-size: 22px;
+  }
+
+  .legend_footer_hcg2026 {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .map_note_hcg2026 {
+    flex-basis: 100%;
+    margin-top: 2px;
+  }
+}
+
+/* occupied regions -- */
+
+.tooltip_map_tile_hcg2026 {
+  --bs-tooltip-font-size: 10px !important;
+}
+
+.tooltip-inner {
+  text-align: left !important;
+}
+
+#controls_hcg2026 {
+margin-bottom: 10px;
+}
+
+.col_pad_hcg2026 {
+  max-width: fit-content;
+  padding: 10px 6px 0px 0px !important;
+}
+
+.selectors_hcg2026 {
+  flex-wrap: nowrap !important;
+  align-items: baseline !important; 
+}
+
+.display_options_hcg2026 {
+    font-size: 12px;
+    color: white;
+    margin: 0px !important;
+}
+
+.map_controls_btn_hcg2026 {
+  width: fit-content !important;
+  padding: 2px !important;
+  font-size: 12px !important;
+  background-color: #f4f4f4 !important;
+  color: black !important;
+  border-color: #f4f4f4 !important;
+}
+
+.map_controls_btn_hcg2026:hover {
+  background-color: #555 !important;
+  border-color: #555 !important;
+  color: rgb(224, 224, 224) !important;
+}
+
+.selected_hcg2026 {
+  background-color: #555 !important;
+  border-color: #555  !important;
+  color: rgb(224, 224, 224) !important;
+}
+
+/* Extra Small Devices (Portrait Phones) */
+@media (max-width: 575.98px) {
+  #map_table_hcg2026 {
+    padding-left: 0px !important;
+  }
+  #rf_map_hcg2026 {
+    width: 344px;
+    height: 224px;
+  }
+}
+
+/* Small Devices (Landscape Phones) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  #rf_map_hcg2026 {
+    width: 634px;
+    height: 424px;
+  }
+}
+
+/* Medium Devices (Tablets) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  #rf_map_hcg2026 {
+    width: 726px;
+    height: 524px;
+  }
+}

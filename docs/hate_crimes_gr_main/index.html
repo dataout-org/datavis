@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!--
+Developed by dataout.org
+
+Released under the CC-BY-SA 4.0 license
+-->
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Hate crimes map / Developed for greyrainbow.dataout.org</title>
+
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<body>
+
+<div class="container-fluid" id="github_description">
+  <p id="text_description">
+    Mapping hate crimes against LGBTQ+ people in Russia. This page is developed for the website greyrainbow.dataout.org. You can freely reuse and adapt this visualisation with the license CC-BY-SA 4.0.
+  </p>
+</div>
+
+<!--  The content below is fetched by greyrainbow.dataout.org -->
+
+<div id="content_to_fetch_hcg2026">
+
+  <div class="container-fluid map_table_hcg2026" id="map_table_hcg2026">
+    
+  <div id="rf_map_container_hcg2026">
+
+    <div class="counter_block_hcg2026" id="counter_block_hcg2026">
+      <div class="counter_item_hcg2026">
+        <span class="counter_value_hcg2026" id="counter_crimes_hcg2026">0</span>
+        <span class="counter_label_hcg2026">crimes</span>
+      </div>
+      <div class="counter_item_hcg2026">
+        <span class="counter_value_hcg2026" id="counter_victims_hcg2026">0</span>
+        <span class="counter_label_hcg2026">victims</span>
+      </div>
+      <div class="counter_item_hcg2026">
+        <span class="counter_value_hcg2026" id="counter_fatalities_hcg2026">0</span>
+        <span class="counter_label_hcg2026">deaths</span>
+      </div>
+    </div>
+
+    <svg id="rf_map_hcg2026"></svg>
+
+    <div class="legend_footer_hcg2026">
+      <div class="row legend_hcg2026" id="legend_hcg2026">
+
+        <div class="col-md-auto legend_item_hcg2026" id="n_crimes_text_hcg2026">
+          <p id="legend_crimes_hcg2026" class="legend_label_hcg2026"></p>
+        </div>
+
+        <div class="col-md-auto legend_item_hcg2026" id="colour_range_hcg2026">
+            <svg width="140" height="16" viewBox="-12 0 160 16"></svg>
+        </div>
+
+        <div class="col-md-auto legend_item_hcg2026" id="no_data_hcg2026">
+            <svg width="90" height="16">
+            <rect width="16" height="16" style='fill: #333;'></rect>
+            <text id="legend_no_data_hcg2026" x="20" y="12" class="legend_label_hcg2026">No data</text>
+            </svg>
+        </div>
+      </div>
+    </div>
+
+    <p class="map_note_hcg2026">* Sevastopol and Crimea are Ukrainian territories occupied by Russia. We presented them on this map, because data for these regions was available on the Russian court websites.</p>
+
+      
+  </div>
+
+</div>
+
+<script id="d3vis_hcg2026">
+
+// Load the SVG map dynamically from GitHub
+d3.text("https://raw.githubusercontent.com/dataout-org/datavis/main/rf_tiled_map/tilemaprf_xy.svg")
+.then(function(svgString_hcg2026) {
+  var parser_hcg2026 = new DOMParser();
+  var xml_hcg2026 = parser_hcg2026.parseFromString(svgString_hcg2026, "image/svg+xml");
+  var importedNode_hcg2026 = document.importNode(xml_hcg2026.documentElement, true);
+  // setting the viewBox
+  importedNode_hcg2026.setAttribute("viewBox", "16 -4 724 456");
+  document.getElementById("rf_map_hcg2026").appendChild(importedNode_hcg2026);
+
+  var spreadsheetUrl_hcg2026 = "https://docs.google.com/spreadsheets/d/18NSZd6RgeSjEW1RzbYY4lQbFYHWaGKIMb8KLGQuZfDc/export?format=csv";
+
+  // loading csv from the spreadsheet
+  d3.text(spreadsheetUrl_hcg2026)
+    .then(function(csvData_hcg2026) {
+      // Parse the CSV data
+      var data_hcg2026 = d3.csvParse(csvData_hcg2026);
+    
+    data_hcg2026.forEach(function(d_hcg2026) {
+      d_hcg2026.n_victims = +d_hcg2026.n_victims;
+      d_hcg2026.n_fatalities = +d_hcg2026.n_fatalities;
+      d_hcg2026.n_crimes = +d_hcg2026.n_crimes;
+    });
+
+    document.getElementById('legend_crimes_hcg2026').textContent = 'Crimes:';
+    document.getElementById('legend_no_data_hcg2026').textContent = 'No data';
+    observeCounters_hcg2026(data_hcg2026);
+    updateMap_hcg2026(data_hcg2026);
+});
+});
+
+function observeCounters_hcg2026(data_hcg2026) {
+  const counterBlock_hcg2026 = document.getElementById('counter_block_hcg2026');
+  const counterTargets_hcg2026 = [
+    ['counter_crimes_hcg2026', d3.sum(data_hcg2026, d_hcg2026 => d_hcg2026.n_crimes)],
+    ['counter_victims_hcg2026', d3.sum(data_hcg2026, d_hcg2026 => d_hcg2026.n_victims)],
+    ['counter_fatalities_hcg2026', d3.sum(data_hcg2026, d_hcg2026 => d_hcg2026.n_fatalities)]
+  ];
+  const counterObserver_hcg2026 = new IntersectionObserver(function(entries_hcg2026, observer_hcg2026) {
+    if (!entries_hcg2026[0].isIntersecting) {
+      return;
+    }
+
+    counterTargets_hcg2026.forEach(function(counterTarget_hcg2026) {
+      animateCounter_hcg2026(
+        document.getElementById(counterTarget_hcg2026[0]),
+        counterTarget_hcg2026[1]
+      );
+    });
+    observer_hcg2026.disconnect();
+  }, { threshold: 0.25 });
+
+  counterObserver_hcg2026.observe(counterBlock_hcg2026);
+}
+
+function animateCounter_hcg2026(element_hcg2026, target_hcg2026) {
+  const duration_hcg2026 = 2200;
+  const startTime_hcg2026 = performance.now();
+
+  function step_hcg2026(timestamp_hcg2026) {
+    const progress_hcg2026 = Math.min((timestamp_hcg2026 - startTime_hcg2026) / duration_hcg2026, 1);
+    const easedProgress_hcg2026 = 1 - Math.pow(1 - progress_hcg2026, 3);
+    element_hcg2026.textContent = Math.round(target_hcg2026 * easedProgress_hcg2026).toLocaleString();
+
+    if (progress_hcg2026 < 1) {
+      window.requestAnimationFrame(step_hcg2026);
+    }
+  }
+
+  window.requestAnimationFrame(step_hcg2026);
+}
+    
+// updating the map
+function updateMap_hcg2026(data_hcg2026) {
+  const crimeCounts_hcg2026 = d3.rollup(
+    data_hcg2026,
+    values_hcg2026 => d3.sum(values_hcg2026, d_hcg2026 => d_hcg2026.n_crimes),
+    d_hcg2026 => d_hcg2026.region_code
+  );
+  const crimeValues_hcg2026 = Array.from(crimeCounts_hcg2026.values());
+  const minCrimes_hcg2026 = d3.min(crimeValues_hcg2026);
+  const maxCrimes_hcg2026 = d3.max(crimeValues_hcg2026);
+  const colorScale_hcg2026 = d3.scaleLinear()
+    .domain([minCrimes_hcg2026, maxCrimes_hcg2026])
+    .interpolate(d3.interpolateRgb)
+    .range(["rgb(244, 244, 244)", "rgb(112, 0, 0)"]);
+
+  const legendSVG_hcg2026 = d3.select("#colour_range_hcg2026 svg");
+  legendSVG_hcg2026.selectAll("*").remove(); // clearing previous legend
+
+  const linearGradient_hcg2026 = legendSVG_hcg2026.append("defs")
+    .append("linearGradient")
+    .attr("id", "linear-gradient_hcg2026");
+
+      linearGradient_hcg2026.selectAll("stop")
+        .data(colorScale_hcg2026.ticks().map((t_hcg2026, i_hcg2026, n_hcg2026) => ({ offset: `${(100 * i_hcg2026 / n_hcg2026.length)}%`, color: colorScale_hcg2026(t_hcg2026) })))
+      .enter().append("stop")
+      .attr("offset", d => d.offset)
+      .attr("stop-color", d => d.color);
+
+  // Draw gradient rectangle
+  legendSVG_hcg2026.append("rect")
+      .attr("width", 120)
+      .attr("height", 16)
+      .style("fill", "url(#linear-gradient_hcg2026)");
+
+  // Add min and max labels
+  legendSVG_hcg2026.append("text")
+      .attr("x", -4)
+      .attr("y", 12)
+      .attr("class", "legend_label_hcg2026")
+      .attr("text-anchor", "end")
+      .text(minCrimes_hcg2026);
+
+  legendSVG_hcg2026.append("text")
+      .attr("x", 124)
+      .attr("y", 12)
+      .attr("class", "legend_label_hcg2026")
+      .attr("text-anchor", "start")
+      .text(maxCrimes_hcg2026);
+
+  const tilesContainer_hcg2026 = d3.select("#rf_map_hcg2026 #tiles_container");
+
+  tilesContainer_hcg2026.selectAll("rect").each(function() {
+    const tile_hcg2026 = d3.select(this);
+    const regionCode_hcg2026 = tile_hcg2026.attr("id").replace('tile_', '');
+    const regionCrimes_hcg2026 = crimeCounts_hcg2026.get(regionCode_hcg2026);
+    const regionAbbr_hcg2026 = tile_hcg2026.attr('regNameAbbrEn');
+    const textElement_hcg2026 = d3.select("#rf_map_hcg2026 #name_" + regionCode_hcg2026);
+    textElement_hcg2026.text(regionAbbr_hcg2026);
+    const fillColor_hcg2026 = regionCrimes_hcg2026 === undefined ? "#333" : colorScale_hcg2026(regionCrimes_hcg2026);
+    const textColor_hcg2026 = regionCrimes_hcg2026 === undefined ? "#828282" : getContrastColor_hcg2026(fillColor_hcg2026);
+
+    tile_hcg2026.transition().duration(1500).style("fill", fillColor_hcg2026);
+    textElement_hcg2026.transition().duration(1500).style("fill", textColor_hcg2026);
+    
+    // hover on tiles with data
+    if (regionCrimes_hcg2026 !== undefined) {
+      new bootstrap.Tooltip(tile_hcg2026.node(), {
+        html: true,
+        placement: 'auto',
+        customClass: 'tooltip_map_tile_hcg2026',
+        title: `${tile_hcg2026.attr('regionNameEn')}<br> Crimes: ${regionCrimes_hcg2026}`
+      });
+      }
+    else {
+      var tooltipInstance_hcg2026 = bootstrap.Tooltip.getInstance(tile_hcg2026.node());
+      if (tooltipInstance_hcg2026) {
+        tooltipInstance_hcg2026.dispose();
+      }
+    }
+    });
+    
+}
+
+// function to calculate perceived brightness based on HSL color space
+function getPerceivedBrightness_hcg2026(color_hcg2026) {
+  var rgb_hcg2026 = d3.rgb(color_hcg2026);
+  var hsl_hcg2026 = d3.hsl(rgb_hcg2026);
+  return hsl_hcg2026.l;
+}
+
+// function to dynamically determine text color based on perceived brightness
+function getContrastColor_hcg2026(bgColor_hcg2026) {
+  var brightness_hcg2026 = getPerceivedBrightness_hcg2026(bgColor_hcg2026);
+  return brightness_hcg2026 > 0.5 ? "black" : "white"; // black text for light backgrounds, white text for dark
+}
+
+</script>
+
+</div>
+
+<!--  The content above is fetched by greyrainbow.dataout.org -->
+
+</body>
+</html>
